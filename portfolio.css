@@ -57,10 +57,16 @@ body {
     text-align: center;    
 }
 
+
 .projectThumbnail {
-    max-width: 100%;
-    max-height: 100%;
-    min-width: 5cm;
+    @media only screen and (min-width: 20cm){
+        max-width: 100%;
+        max-height: 100%;
+    }
+    @media only screen and (max-width: 20cm){
+        min-width: 90vw;
+        min-height: 90vw;
+    }    
 }
 
 .projectItem p {
