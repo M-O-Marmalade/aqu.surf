@@ -1,0 +1,73 @@
+@font-face {
+    font-family: Interceptor;
+    font-style: italic;
+    src: url("interceptor italic.otf") format("opentype");
+}
+
+body {
+    margin: 0;
+    background-image: linear-gradient(192deg, #00f6ff, #005eff);
+    background-position: left top;
+    background-attachment: fixed;
+    /* height: 3000px; */
+}
+
+.mainHeader {
+    position: sticky;
+    top: 0;
+    height: 53px;
+    background-color: hsl(49, 100%, 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainHeaderLogo {
+    height: 57%;
+}
+
+.mainHeaderName {
+    color: #4400ff;
+    font-family: monofur;
+}
+
+.projectsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+    margin-top: 5vh;
+}
+
+.projectItem {
+    margin: 45px;
+    min-width: 15vw;
+    max-width: 80vw;
+    min-height: 30vh;
+    max-height: 80vh;
+    padding: 15px;
+    border-top-right-radius: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-image: radial-gradient(#005eff00 64%, #00c3ff);
+    border: 10px outset #00c3ff;
+    text-align: center;    
+}
+
+.projectThumbnail {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.projectItem p {
+    font-family: monofur;
+    font-size: larger;
+    color: white;
+}
+
+/* {
+    border: 1px inset black;
+}*/
