@@ -61,6 +61,7 @@ body {
     }
     .projectItem {
         margin: 15px;
+        background-color: red;
     }
 }
 
@@ -69,11 +70,17 @@ body {
         min-width: auto;
         max-width: 100%;
     }
+    .projectItem {
+        background-color: blue;
+    }
 }
 
 @media only screen and (min-width: 1921px){
     .projectThumbnail {
         min-width: 21vw;
+    }
+    .projectItem {
+        background-color: green;
     }
 }
 
