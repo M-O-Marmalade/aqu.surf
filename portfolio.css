@@ -9,7 +9,6 @@ body {
     background-image: linear-gradient(192deg, #00f6ff, #005eff);
     background-position: left top;
     background-attachment: fixed;
-    /* height: 3000px; */
 }
 
 .mainHeader {
@@ -41,45 +40,49 @@ body {
 }
 
 .projectItem {
-    margin: 45px;
-    min-width: 15vw;
+    margin: 25px;
+    /* min-width: 15vw;
     max-width: 80vw;
     min-height: 30vh;
-    max-height: 80vh;
+    max-height: 80vh; */
     padding: 15px;
-    border-top-right-radius: 45px;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background-image: radial-gradient(#005eff00 64%, #00c3ff);
-    border: 10px outset #00c3ff;
+    background-color: white;
     text-align: center;    
 }
 
-
-
-
-/* Small & Medium devices (landscape tablets, 992px and down) */
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 768px) {
     .projectThumbnail {
-        width: 70vw;
+        width: 77vw;
+    }
+    .projectItem {
+        margin: 15px;
     }
 }
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+
+@media only screen and (min-width: 769px) {
     .projectThumbnail {
+        min-width: auto;
         max-width: 100%;
-        max-height: 100%;
+    }
+}
+
+@media only screen and (min-width: 1921px){
+    .projectThumbnail {
+        min-width: 21vw;
     }
 }
 
 .projectItem p {
     font-family: monofur;
-    font-size: larger;
-    color: white;
+    font-size: 1.25rem;
+    color: #00a2ff;
 }
 
 /* {
     border: 1px inset black;
-}*/
+} */
