@@ -1,3 +1,9 @@
+body {
+	background-image: url(graphics/BlueGradient.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 .intro {
 	color: red;
 	background-color: yellow;

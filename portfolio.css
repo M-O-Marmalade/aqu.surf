@@ -12,7 +12,8 @@
 
 body {
     margin: 0;
-    background-image: linear-gradient(192deg, #00f6ff, #005eff);
+    background-image: url("graphics/BlueGradient.png");
+    background-size: cover;
     background-position: left top;
     background-attachment: fixed;
 }
@@ -21,7 +22,9 @@ body {
     position: sticky;
     top: 0;
     height: 53px;
-    background-color: hsl(49, 100%, 50%);
+    background-image: url("graphics/JuicyOrange.png");
+    background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,41 +70,12 @@ body {
     max-width: 77vw;
 }
 
-/* @media only screen and (max-width: 768px) {
-    .projectThumbnail {
-        width: 77vw;
-    }
-    .projectItem {
-        margin: 15px;
-        background-color: red;
-    }
-}
-
-@media only screen and (min-width: 769px) and (max-width: 1920) {
-    .projectThumbnail {
-        min-width: auto;
-        max-width: 100%;
-    }
-    .projectItem {
-        background-color: blue;
-    }
-}
-
-@media only screen and (min-width: 1921px){
-    .projectThumbnail {
-        min-width: 21vw;
-    }
-    .projectItem {
-        background-color: green;
-    }
-} */
-
 .projectItem p {
     font-family: monof55;
     font-size: 1.25rem;
     color: #00a2ff;
 }
 
-/* {
+/* * {
     border: 1px inset black;
 } */
