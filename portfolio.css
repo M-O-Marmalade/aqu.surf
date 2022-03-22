@@ -1,7 +1,13 @@
 @font-face {
-    font-family: Interceptor;
+    font-family: "interceptor italic";
     font-style: italic;
-    src: url("interceptor italic.otf") format("opentype");
+    src: local("interceptor italic"),
+        url("fonts/interceptor italic.otf");
+}
+@font-face {
+    font-family: monof55;
+    src: local(monof55),
+        url("fonts/monof55.ttf");
 }
 
 body {
@@ -27,7 +33,7 @@ body {
 
 .mainHeaderName {
     color: #4400ff;
-    font-family: monofur;
+    font-family: monof55;
 }
 
 .projectsGrid {
@@ -91,7 +97,7 @@ body {
 } */
 
 .projectItem p {
-    font-family: monofur;
+    font-family: monof55;
     font-size: 1.25rem;
     color: #00a2ff;
 }
