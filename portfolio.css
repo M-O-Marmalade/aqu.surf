@@ -70,7 +70,18 @@ body {
     max-width: 77vw;
 }
 
-.projectItem p {
+.projectLanguage {
+    margin: 2px 0px .25em;
+    font-family: "interceptor italic";
+    padding: 0.20em;
+    align-self: flex-start;
+    justify-content: flex-start;
+    border: 2px solid black;
+    border-bottom-right-radius: 0.5em;
+}
+
+.projectDescription {
+    margin: .25em;
     font-family: monof55;
     font-size: 1.25rem;
     color: #00a2ff;
