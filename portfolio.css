@@ -1,5 +1,5 @@
 @font-face {
-    font-family: "interceptor italic";
+    font-family: interceptor-italic;
     font-style: italic;
     src: local("interceptor italic"),
         url("fonts/interceptor italic.otf");
@@ -12,7 +12,7 @@
 
 body {
     margin: 0;
-    background-image: url("graphics/BlueGradient.png");
+    background-image: url("graphics/BG/BlueGradient.png");
     background-size: cover;
     background-position: left top;
     background-attachment: fixed;
@@ -22,7 +22,7 @@ body {
     position: sticky;
     top: 0;
     height: 53px;
-    background-image: url("graphics/JuicyOrange.png");
+    background-image: url("graphics/BG/JuicyOrange.png");
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -32,11 +32,6 @@ body {
 
 .mainHeaderLogo {
     height: 57%;
-}
-
-.mainHeaderName {
-    color: #4400ff;
-    font-family: monof55;
 }
 
 .projectsGrid {
@@ -70,20 +65,24 @@ body {
     max-width: 77vw;
 }
 
-.projectLanguage {
-    margin: 2px 0px .25em;
-    font-family: "interceptor italic";
-    padding: 0.20em;
-    align-self: flex-start;
-    justify-content: flex-start;
+.projectTech {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.projectTech p {
+    margin: 2px 5px 0 0;
+    font-family: interceptor-italic;
+    padding: 0.10em 0.75em 0.05em 0.25em;
     border: 2px solid black;
-    border-bottom-right-radius: 0.5em;
+    border-bottom-right-radius: 1.75em;
 }
 
 .projectDescription {
     margin: .25em;
     font-family: monof55;
-    font-size: 1.25rem;
+    font-size: x-large;
     color: #00a2ff;
 }
 
