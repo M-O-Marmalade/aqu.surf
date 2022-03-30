@@ -65,16 +65,6 @@ body {
 
 .projectThumbnail {
     image-rendering: pixelated;
-    width: calc(-webkit-device-pixel-ratio * 297px);
-}
-
-@media all and (-webkit-device-pixel-ratio: 1dppx),
-       all and (-webkit-device-pixel-ratio: 2dppx),
-       all and (-webkit-device-pixel-ratio: 3dppx),
-       all and (-webkit-device-pixel-ratio: 4dppx) {
-    .projectThumbnail {
-        image-rendering: pixelated;
-    }
 }
 
 .projectTech {

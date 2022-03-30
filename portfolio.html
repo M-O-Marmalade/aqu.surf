@@ -4,7 +4,31 @@
         <title>James Graham</title>
         <link rel="stylesheet" href="portfolio.css">
         <link rel="icon" type="image/x-icon" href="graphics/flavicon.svg">
-        <!--<meta http-equiv="refresh" content="3" >-->
+        <style>
+            :root {
+                --scalingfactor: 1;
+            }
+            @media all and (-webkit-device-pixel-ratio: 1dppx) {
+                :root {
+                    --scalingfactor: 1;
+                }
+            }
+            @media all and (-webkit-device-pixel-ratio: 2dppx) {
+                :root {
+                    --scalingfactor: 2;
+                }
+            }
+            @media all and (-webkit-device-pixel-ratio: 3dppx) {
+                :root {
+                    --scalingfactor: 3;
+                }
+            }
+            @media all and (-webkit-device-pixel-ratio: 4dppx) {
+                :root {
+                    --scalingfactor: 4;
+                }
+            }
+        </style>
     </head>
     <body>
         <header class="mainHeader">
@@ -12,7 +36,7 @@
         </header>
         <section class="projectsGrid">
             <article class="projectItem">
-                <img class="projectThumbnail" src="graphics/paddlesgameplay.apng" alt="Paddles Gameplay">
+                <img class="projectThumbnail" src="graphics/paddlesgameplay.apng" alt="Paddles Gameplay" style="width: calc(var(--scalingfactor) * 297px);">
                 <article class="projectTech">
                     <p class="projectLanguage">Lua</p>
                     <p class="projectAPI">Renoise API</p>
