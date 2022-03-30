@@ -63,6 +63,10 @@ body {
     text-align: center;    
 }
 
+.projectThumbnail {
+    image-rendering: pixelated;
+}
+
 @media all and (-webkit-device-pixel-ratio: 1dppx),
        all and (-webkit-device-pixel-ratio: 2dppx),
        all and (-webkit-device-pixel-ratio: 3dppx),
