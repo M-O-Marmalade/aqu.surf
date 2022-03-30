@@ -49,10 +49,7 @@ body {
 
 .projectItem {
     margin: clamp(15px, 25px, 25px);
-    /* min-width: 15vw;
-    max-width: 80vw;
-    min-height: 30vh;
-    max-height: 80vh; */
+    max-width: 90vw;
     padding: 15px;
     border-radius: 15px;
     display: flex;
@@ -86,6 +83,11 @@ body {
     padding: 0.10em 0.75em 0.05em 0.25em;
     border: 2px solid black;
     border-bottom-right-radius: 1.75em;
+}
+
+.projectAPI {
+    color: gray;
+    border: 2px solid black;
 }
 
 .projectDescription {
