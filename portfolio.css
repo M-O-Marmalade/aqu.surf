@@ -63,13 +63,9 @@ body {
     text-align: center;    
 }
 
-.projectThumbnail {
-    image-rendering: pixelated;
-}
-
-@media only screen and (max-width: 450px) {
+@media all and (resolution: 1dppx) or (resolution: 2dppx) or (resolution: 3dppx) or (resolution: 4dppx){
     .projectThumbnail {
-        min-width: 88vw;
+        image-rendering: pixelated;
     }
 }
 
@@ -94,6 +90,6 @@ body {
     color: #00a2ff;
 }
 
-* {
+/* * {
     border: 1px inset black;
-}
+} */
