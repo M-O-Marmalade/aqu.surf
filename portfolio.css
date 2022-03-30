@@ -64,7 +64,14 @@ body {
 }
 
 .projectThumbnail {
+    max-width: 100%;
     image-rendering: pixelated;
+}
+
+@media not screen and (resolution: 1dppx) and (resolution: 2dppx) and (resolution: 3dppx) and (resolution: 4dppx) {
+    .projectThumbnail {
+        image-rendering: auto;
+    }
 }
 
 .projectTech {
