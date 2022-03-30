@@ -30,7 +30,7 @@ body {
 
 .mainHeaderLogo {
     font-family: monof55;
-    font-size: clamp(4vh, 43px, 53px);
+    font-size: clamp(6vh, 43px, 53px);
     background-image: url("graphics/BG/BlueGradient.png");
     background-size: cover;
     background-position: left top;
