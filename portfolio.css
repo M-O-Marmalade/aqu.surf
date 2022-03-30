@@ -64,7 +64,15 @@ body {
 }
 
 .projectThumbnail {
+    min-width: 300px;
     max-width: 100%;
+}
+
+@media only screen and (max-width: 450px) {
+    .projectThumbnail {
+        min-width: 90vw;
+        max-width: 90vw;
+    }
 }
 
 .projectTech {
