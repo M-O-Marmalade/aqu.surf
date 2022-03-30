@@ -30,11 +30,12 @@ body {
 
 .mainHeaderLogo {
     font-family: monof55;
-    font-size: clamp(6vh, 43px, 53px);
+    font-size: 53px;
     background-image: url("graphics/BG/BlueGradient.png");
     background-size: cover;
     background-position: left top;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -49,7 +50,7 @@ body {
 
 .projectItem {
     margin: clamp(15px, 25px, 25px);
-    max-width: 90vw;
+    max-width: 94vw;
     padding: 15px;
     border-radius: 15px;
     display: flex;
@@ -65,7 +66,14 @@ body {
     image-rendering: pixelated;
 }
 
-@media not screen and (resolution: 1dppx) and (resolution: 2dppx) and (resolution: 3dppx) and (resolution: 4dppx) {
+@media not screen and (resolution: 1dppx) 
+                  and (resolution: 2dppx) 
+                  and (resolution: 3dppx) 
+                  and (resolution: 4dppx) 
+                  and (-webkit-device-pixel-ratio: 1) 
+                  and (-webkit-device-pixel-ratio: 2) 
+                  and (-webkit-device-pixel-ratio: 3) 
+                  and (-webkit-device-pixel-ratio: 4) {
     .projectThumbnail {
         image-rendering: auto;
     }
