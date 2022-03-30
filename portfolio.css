@@ -65,6 +65,7 @@ body {
 
 .projectThumbnail {
     image-rendering: pixelated;
+    width: calc(-webkit-device-pixel-ratio * 297px);
 }
 
 @media all and (-webkit-device-pixel-ratio: 1dppx),
