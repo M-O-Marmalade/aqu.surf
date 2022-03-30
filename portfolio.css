@@ -31,7 +31,13 @@ body {
 }
 
 .mainHeaderLogo {
-    height: 57%;
+    font-family: monof55;
+    font-size: 43px;
+    background-image: url("graphics/BG/BlueGradient.png");
+    background-size: cover;
+    background-position: left top;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .projectsGrid {
