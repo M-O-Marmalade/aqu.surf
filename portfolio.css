@@ -63,20 +63,20 @@ body {
 
 .projectPic {
     max-width: 100%;
-    image-rendering: pixelated;
+    image-rendering: auto;
     margin: 0;
 }
 
-@media not screen and (resolution: 1dppx) 
-                  and (resolution: 2dppx) 
-                  and (resolution: 3dppx) 
-                  and (resolution: 4dppx) 
-                  and (-webkit-device-pixel-ratio: 1) 
-                  and (-webkit-device-pixel-ratio: 2) 
-                  and (-webkit-device-pixel-ratio: 3) 
-                  and (-webkit-device-pixel-ratio: 4) {
+@media screen and (resolution: 1dppx), 
+       screen and (resolution: 2dppx), 
+       screen and (resolution: 3dppx), 
+       screen and (resolution: 4dppx), 
+       screen and (-webkit-device-pixel-ratio: 1), 
+       screen and (-webkit-device-pixel-ratio: 2), 
+       screen and (-webkit-device-pixel-ratio: 3), 
+       screen and (-webkit-device-pixel-ratio: 4) {
     .projectPic {
-        image-rendering: auto;
+        image-rendering: pixelated;
     }
 }
 
