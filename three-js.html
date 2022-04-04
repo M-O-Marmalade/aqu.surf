@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+            // function resizeCanvas() {
+                
+            // }
+            // window.addEventListener('resize', resizeCanvas)
+            
+            //scene & camera
+			const scene = new THREE.Scene();
+            const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 2000);
+            camera.position.z = 5;
+
+            //renderer
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+
+            //light
+            const light = new THREE.DirectionalLight(0xffffff, 1.5);
+            light.position.set(10,10,10);
+            scene.add( light );
+
+            //geometry
+            const POINTS_COUNT = 121;
+            const geometry = new THREE.BufferGeometry();
+
+            //attributes
+            const positions = new Float32Array(POINTS_COUNT * 3);
+
+            //material
+            const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+            const waterMesh = new THREE.Mesh( geometry, material );
+            scene.add( waterMesh );
+
+            //update
+            function update() {
+                requestAnimationFrame( animate );
+
+                renderer.render( scene, camera );
+            }
+            update();
+		</script>
+	</body>
+</html>
