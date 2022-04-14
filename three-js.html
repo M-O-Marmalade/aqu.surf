@@ -1,55 +1,149 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<meta charset="utf-8">
-		<title>My first three.js app</title>
+		<title>three-js</title>
 		<style>
 			body { margin: 0; }
 		</style>
 	</head>
 	<body>
-		<script src="js/three.js"></script>
-		<script>
-            // function resizeCanvas() {
-                
-            // }
-            // window.addEventListener('resize', resizeCanvas)
+        <script src="js/three.js"></script>
+		<script>			
+
+            let mouseX = 0.0;
+            let mouseY = 0.0;
             
             //scene & camera
-			const scene = new THREE.Scene();
-            const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 2000);
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color( 0x050505 );
+            const camera = new THREE.OrthographicCamera(0, 2, 2, 0, 0.1, 2000);
             camera.position.z = 5;
 
             //renderer
             const renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
-            //light
-            const light = new THREE.DirectionalLight(0xffffff, 1.5);
-            light.position.set(10,10,10);
+            // light
+            const light = new THREE.AmbientLight(0xffffff);
+            light.position.set(0,0,10);
             scene.add( light );
 
-            //geometry
+            // material
+            const material = new THREE.MeshPhongMaterial( { vertexColors: true , side: THREE.DoubleSide } );
+
+            // geometry
             const POINTS_COUNT = 121;
             const geometry = new THREE.BufferGeometry();
 
             //attributes
-            const positions = new Float32Array(POINTS_COUNT * 3);
+            const indices = [];
+            const vertices = [];
+            const normals = [];
+            const colors = [];
+            const segments = 10;
 
-            //material
-            const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
-            const waterMesh = new THREE.Mesh( geometry, material );
-            scene.add( waterMesh );
+            // generate vertices, normals and color data for a simple grid geometry
+            for ( let i = 0; i <= segments; i ++ ) {
 
-            //update
-            function update() {
-                requestAnimationFrame( animate );
+                const y = i / segments;    //set y position from 0 - 1
 
-                renderer.render( scene, camera );
+                for ( let j = 0; j <= segments; j ++ ) {
+
+                    const x = j / segments;    //set x position from 0 - 1
+
+                    vertices.push( x, y, 0 );
+                    normals.push( 0, 0, 1 );
+
+                    colors.push( 0,0,1 );
+                }
             }
-            update();
+
+            // generate indices (data for element array buffer)
+            for ( let i = 0; i < segments; i ++ ) {
+
+                for ( let j = 0; j < segments; j ++ ) {
+
+                    const a = i * ( segments + 1 ) + ( j + 1 );
+                    const b = i * ( segments + 1 ) + j;
+                    const c = ( i + 1 ) * ( segments + 1 ) + j;
+                    const d = ( i + 1 ) * ( segments + 1 ) + ( j + 1 );
+
+                    // generate two faces (triangles) per iteration
+                    indices.push( a, b, d ); // face one
+                    indices.push( b, c, d ); // face two
+                }
+            }
+
+            geometry.setIndex( indices );
+            geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+            geometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
+            geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+
+            const mesh = new THREE.Mesh( geometry, material );
+            scene.add( mesh );
+
+            // const wireframe = new THREE.WireframeGeometry(geometry);
+            // const line = new THREE.LineSegments(wireframe, material);
+            // line.material.depthTest = false;
+            // line.material.opacity = 1.0;
+            // line.material.transparent = true;
+            // scene.add(line);
+
+            document.body.appendChild
+
+            function onPointerMove( event ) {
+
+                if ( event.isPrimary === false ) return;
+
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+
+            }
+
+            document.body.addEventListener( 'pointermove', onPointerMove );
+
+            const damping = 0.98;
+            let currentBuffer = 0;
+            const buffers = [new Array((segments+1) * (segments+1)), new Array((segments+1) * (segments+1))];
+            buffers[0].fill(0);
+            buffers[1].fill(0);
+            buffers[0][17] = 1;
+
+            function rippleAnimate() {
+                for (let x = 1; x < segments; x ++) {
+                    for (let y = 1; y < segments; y ++) {
+                        buffers[currentBuffer][x + (y * (segments+1))] = (buffers[1-currentBuffer][(x-1) + (y * (segments+1))] * buffers[1-currentBuffer][(x+1) + (y * (segments+1))] * buffers[1-currentBuffer][x + ((y+1) * (segments+1))] * buffers[1-currentBuffer][x + ((y-1) * (segments+1))] / 2 - buffers[currentBuffer][x + (y * (segments+1))]);
+                        buffers[currentBuffer][x + (y * (segments+1))] = buffers[currentBuffer][x + (y * (segments+1))] * damping;
+                        colors[x + (y * (segments+1))][1] = buffers[currentBuffer][x + (y * (segments+1))];
+                    }
+                }
+
+                currentBuffer = 1-currentBuffer;
+
+                mesh.geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+                mesh.geometry.attributes.color.needsUpdate = true;
+            }
+
+            //frame update
+            function animate() {
+                requestAnimationFrame( animate );
+                renderer.render( scene, camera );
+
+                xPos.innerHTML = mouseX / window.innerWidth;
+                yPos.innerHTML = mouseY / window.innerHeight;
+
+                rippleAnimate()
+            }
+
+            animate(scene, camera);            
+            
 		</script>
+        <div style="display: flex; flex-direction: column; position: fixed; top: 0; color: white;">
+            <p id="xPos">xPos</p>
+            <p id="yPos">yPos</p>
+        </div>
 	</body>
 </html>
