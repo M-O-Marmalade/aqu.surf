@@ -11,14 +11,35 @@
         <script src="js/three.js"></script>
 		<script>			
 
+            const fps = 60;
+            const msPerFrame = 1000/fps;
+            let readyToRender = true;
             let mouseX = 0.0;
             let mouseY = 0.0;
+            let indX = 0;
+            let indY = 0;
+            const damping = 0.98;
+            const pointerStrength = 0.005;
+            const pointerSize = 7;
+            const segments = 128;
+            const points = segments+1;
+            let intervalID;
+
+            function queueRender() {
+                readyToRender = true;
+                clearInterval(intervalID);
+            }
+            intervalID = setInterval(queueRender, msPerFrame);
             
             //scene & camera
             const scene = new THREE.Scene();
-            scene.background = new THREE.Color( 0x050505 );
-            const camera = new THREE.OrthographicCamera(0, 2, 2, 0, 0.1, 2000);
-            camera.position.z = 5;
+            scene.background = new THREE.Color( 0x808080 );
+            //const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 2000);
+            const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.5, 1000)
+            camera.position.x = 0;
+            camera.position.y = 0;
+            camera.position.z = 2;
+            camera.lookAt(0,0,0);
 
             //renderer
             const renderer = new THREE.WebGLRenderer();
@@ -31,8 +52,22 @@
             light.position.set(0,0,10);
             scene.add( light );
 
-            // material
-            const material = new THREE.MeshPhongMaterial( { vertexColors: true , side: THREE.DoubleSide } );
+            // materials
+            const refractiveMat = new THREE.MeshPhysicalMaterial({
+                roughness: 0.2,
+                transmission: 1,
+                thickness: 9999,
+                side: THREE.DoubleSide
+            });
+
+            const normalMat = new THREE.MeshNormalMaterial({
+                side: THREE.FrontSide
+            });
+
+            const vertMat = new THREE.MeshBasicMaterial({
+                vertexColors: true,
+                side: THREE.BackSide
+            });
 
             // geometry
             const POINTS_COUNT = 121;
@@ -43,14 +78,13 @@
             const vertices = [];
             const normals = [];
             const colors = [];
-            const segments = 10;
 
             // generate vertices, normals and color data for a simple grid geometry
-            for ( let i = 0; i <= segments; i ++ ) {
+            for ( let i = 0; i <= segments; i++ ) {
 
                 const y = i / segments;    //set y position from 0 - 1
 
-                for ( let j = 0; j <= segments; j ++ ) {
+                for ( let j = 0; j <= segments; j++ ) {
 
                     const x = j / segments;    //set x position from 0 - 1
 
@@ -62,9 +96,9 @@
             }
 
             // generate indices (data for element array buffer)
-            for ( let i = 0; i < segments; i ++ ) {
+            for ( let i = 0; i < segments; i++ ) {
 
-                for ( let j = 0; j < segments; j ++ ) {
+                for ( let j = 0; j < segments; j++ ) {
 
                     const a = i * ( segments + 1 ) + ( j + 1 );
                     const b = i * ( segments + 1 ) + j;
@@ -77,22 +111,48 @@
                 }
             }
 
-            geometry.setIndex( indices );
-            geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-            geometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
-            geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+            geometry.setIndex( indices );            
+            const colorsA = new THREE.Float32BufferAttribute(colors,3);
+            const positionsA = new THREE.Float32BufferAttribute(vertices,3);
+            const normalsA = new THREE.Float32BufferAttribute(normals,3);
+            geometry.setAttribute( 'color', colorsA);
+            geometry.setAttribute( 'position', positionsA );
+            geometry.setAttribute( 'normal', normalsA );
 
-            const mesh = new THREE.Mesh( geometry, material );
+            const mesh = new THREE.Mesh( geometry, refractiveMat );
+            mesh.position.x = -0.5;
+            mesh.position.y = -0.5;
             scene.add( mesh );
 
+            const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 300, 24);
+            const bgMesh = new THREE.Mesh( torusGeometry, normalMat);
+            bgMesh.position.z = -0.5;
+            bgMesh.scale.x = 0.02;
+            bgMesh.scale.y = 0.02;
+            bgMesh.scale.z = 0.02;
+			scene.add(bgMesh);
+
             // const wireframe = new THREE.WireframeGeometry(geometry);
-            // const line = new THREE.LineSegments(wireframe, material);
+            // const lineMat = new THREE.LineBasicMaterial({
+            //     //vertexColors: true,
+            //     color: 0xffffff,
+            //     depthTest: false,
+            //     opacity: 1.0,
+            //     transparent: false,
+            //     side: THREE.DoubleSide
+            // });
+            // const line = new THREE.LineSegments(wireframe, lineMat);
             // line.material.depthTest = false;
             // line.material.opacity = 1.0;
-            // line.material.transparent = true;
+            // line.material.transparent = false;
             // scene.add(line);
 
-            document.body.appendChild
+            document.body.addEventListener( 'pointermove', onPointerMove );
+
+            const prev = new Array(points * points).fill(0);
+            const curr = new Array(points * points).fill(0);
+
+            animate(scene, camera); 
 
             function onPointerMove( event ) {
 
@@ -101,49 +161,86 @@
                 mouseX = event.clientX;
                 mouseY = event.clientY;
 
-            }
-
-            document.body.addEventListener( 'pointermove', onPointerMove );
-
-            const damping = 0.98;
-            let currentBuffer = 0;
-            const buffers = [new Array((segments+1) * (segments+1)), new Array((segments+1) * (segments+1))];
-            buffers[0].fill(0);
-            buffers[1].fill(0);
-            buffers[0][17] = 1;
-
-            function rippleAnimate() {
-                for (let x = 1; x < segments; x ++) {
-                    for (let y = 1; y < segments; y ++) {
-                        buffers[currentBuffer][x + (y * (segments+1))] = (buffers[1-currentBuffer][(x-1) + (y * (segments+1))] * buffers[1-currentBuffer][(x+1) + (y * (segments+1))] * buffers[1-currentBuffer][x + ((y+1) * (segments+1))] * buffers[1-currentBuffer][x + ((y-1) * (segments+1))] / 2 - buffers[currentBuffer][x + (y * (segments+1))]);
-                        buffers[currentBuffer][x + (y * (segments+1))] = buffers[currentBuffer][x + (y * (segments+1))] * damping;
-                        colors[x + (y * (segments+1))][1] = buffers[currentBuffer][x + (y * (segments+1))];
+                indX = Math.floor((mouseX / window.innerWidth) * points);
+                indY = Math.floor((1 - mouseY / window.innerHeight) * points);
+                
+                for (let i = -(pointerSize-1); i < pointerSize; i++) {
+                    const xtemp = i + indX;
+                    for (let j = -(pointerSize-1); j < pointerSize; j++) {
+                        const ytemp = j + indY;
+                        if (0 < xtemp && xtemp < segments && 0 < ytemp && ytemp < segments) {
+                            const indtemp = xtemp + (ytemp * points);
+                            prev[indtemp] += pointerStrength * (pointerSize - (Math.abs(i) + Math.abs(j))) / pointerSize;
+                        }
                     }
                 }
 
-                currentBuffer = 1-currentBuffer;
+                xPos.innerHTML = mouseX;
+                yPos.innerHTML = mouseY;
+                indXP.innerHTML = indX;
+                indYP.innerHTML = indY;
+                extra.innerHTML = "prev[" + (indX + (indY * points)) + "] = " + prev[ind];
+            }
 
-                mesh.geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
-                mesh.geometry.attributes.color.needsUpdate = true;
+            function buttonfunc() {
+                for (let i = 0; i < points*points; i++) {
+                    colorsA.setX(i,1);
+                }
+            }
+
+            function rippleAnimate() {
+                for (let x = 1; x < points; x++) {
+                    for (let y = 1; y < points; y++) {
+                        curr[x + (y * points)] = (prev[(x-1) + y * points] + 
+                                                  prev[(x+1) + y * points] + 
+                                                  prev[x + (y+1) * points] + 
+                                                  prev[x + (y-1) * points]) / 2 - curr[x + (y * points)];
+                        curr[x + (y * points)] = curr[x + (y * points)] * damping;
+                        curr[x + (y * points)] = isNaN(curr[x + (y * points)]) ? 0 : curr[x + (y * points)];
+                    }
+                }
+
+                for (let i = 0; i < points*points; i++) {
+                    normalsA.setY(i,curr[i]);
+                }
+
+                for (let i = 0; i < points*points; i++) {
+                    const temp = prev[i];
+                    prev[i] = curr[i];
+                    curr[i] = temp;
+                }
+
+                normalsA.needsUpdate = true;
             }
 
             //frame update
             function animate() {
                 requestAnimationFrame( animate );
-                renderer.render( scene, camera );
 
-                xPos.innerHTML = mouseX / window.innerWidth;
-                yPos.innerHTML = mouseY / window.innerHeight;
-
-                rippleAnimate()
+				bgMesh.rotation.x += 0.01;
+				bgMesh.rotation.y += 0.01;
+                
+                if (readyToRender) {
+                    rippleAnimate()
+                    renderer.render( scene, camera );
+                    readyToRender = false;
+                    intervalID = setInterval(queueRender, msPerFrame);
+                }                
             }
 
-            animate(scene, camera);            
+            function resizeCanvas() {
+                renderer.setSize( window.innerWidth, window.innerHeight );
+            }
+            window.addEventListener('resize', resizeCanvas)
             
 		</script>
         <div style="display: flex; flex-direction: column; position: fixed; top: 0; color: white;">
             <p id="xPos">xPos</p>
             <p id="yPos">yPos</p>
+            <p id="indXP"></p>
+            <p id="indYP"></p>
+            <p id="extra"></p>
+            <button onclick="buttonfunc()" id="butt" style="width: 100px;">hi</button>
         </div>
 	</body>
 </html>
