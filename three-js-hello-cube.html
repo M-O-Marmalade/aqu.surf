@@ -30,7 +30,9 @@
 			const meshRefractiveMat = new THREE.MeshPhysicalMaterial({
 				transmission: 1.0,
 				roughness: 0.0,
-				thickness: 2
+				ior: 1.333,
+				thickness: 3,
+				flatShading: true,
 			})
 
 			const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 300, 24);
