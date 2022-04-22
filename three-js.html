@@ -4,10 +4,15 @@
 		<meta charset="utf-8">
 		<title>three-js</title>
 		<style>
-			body { margin: 0; }
+			body { 
+                margin: 0;
+                /* width: 100%;
+                height: 100%;  */
+            }
 		</style>
 	</head>
 	<body>
+        <canvas id="waterCanvas" style="position: fixed; top: 0;"></canvas>
         <script src="js/three.js"></script>
 		<script>
 
@@ -45,12 +50,14 @@
             camera.lookAt(0,0,0);
 
             //renderer
-            const renderer = new THREE.WebGLRenderer();
+            const renderer = new THREE.WebGLRenderer({
+                canvas: waterCanvas
+            });
             // renderer.alpha = true;
             // renderer.setClearColor(0x000000, 0);
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( wX, wY );
-            document.body.appendChild( renderer.domElement );
+            //document.body.appendChild( renderer.domElement );
 
             // light
             const light = new THREE.DirectionalLight(0xffffff);
@@ -230,7 +237,7 @@
             function resizedWindow() {
                 wX = window.innerWidth;
                 wY = window.innerHeight;
-                renderer.setSize(wX, wY);
+                waterCanvas.setSize(wX, wY);
             }
             window.addEventListener('resize', resizedWindow)
             
