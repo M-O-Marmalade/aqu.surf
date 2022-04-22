@@ -9,37 +9,34 @@
 	</head>
 	<body>
         <script src="js/three.js"></script>
-		<script>			
+		<script>
 
-            const fps = 24;
+            const segments = Math.sqrt(100000);
+            const fps = 120;
             const msPerFrame = 1000/fps;
             let readyToRender = true;
             let intervalID;
-            let mouseX = 0.0;
-            let mouseY = 0.0;
-            let indX = 0;
-            let indY = 0;
-            const damping = 0.99;
-            const pointerStrength = 0.3;
+            const damping = 0.984;
+            const pointerStrength = 0.037;
             const pointerSize = 4;
 
             let wX = window.innerWidth;
             let wY = window.innerHeight;
-            const wP = window.devicePixelRatio;
             let aspect = wX / wY;
-
-            let ySeg = 64;
-            let xSeg = Math.floor(ySeg * aspect);
+            const total = wX + wY;
+            let xPer = wX / total;
+            let yPer = wY / total;
+            let ySeg = Math.floor(yPer * segments);
+            let xSeg = Math.floor(xPer * segments);
             let yPoi = ySeg + 1;
             let xPoi = xSeg + 1;
-            const segments = 64;
-            const points = segments+1;
+
             const prev = new Array(xPoi * yPoi).fill(0);
             const curr = new Array(xPoi * yPoi).fill(0);
             
             //scene & camera
             const scene = new THREE.Scene();
-            scene.background = new THREE.Color( 0xc0c0c0 );
+            scene.background = new THREE.Color( 0x0044ff );
             // const camera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 1000);
             const camera = new THREE.PerspectiveCamera(53, wX / wY, 0.5, 1000)
             camera.position.x = 0;
@@ -49,7 +46,9 @@
 
             //renderer
             const renderer = new THREE.WebGLRenderer();
-            renderer.setPixelRatio( wP );
+            // renderer.alpha = true;
+            // renderer.setClearColor(0x000000, 0);
+            renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( wX, wY );
             document.body.appendChild( renderer.domElement );
 
@@ -86,18 +85,17 @@
             const colors = [];
 
             // generate vertices, normals and color data for a simple grid geometry
-            for ( let i = 0; i <= ySeg; i++ ) {
+            for ( let i = 0; i < yPoi; i++ ) {
 
-                const y = i / ySeg;    //set y position from 0 - 1
+                const y = (i / ySeg) - 0.5;    //set y position from 0 - 1
 
-                for ( let j = 0; j <= xSeg; j++ ) {
+                for ( let j = 0; j < xPoi; j++ ) {
 
-                    const x = j / xSeg * aspect;    //set x position from 0 - 1
+                    const x = ((j / xSeg) - 0.5) * aspect;    //set x position from 0 - 1
 
                     vertices.push( x, y, 0 );
                     normals.push( 0, 0, -1 );
-
-                    colors.push( 0,0,1 );
+                    colors.push( x,y,x/2 + y/2 );
                 }
             }
 
@@ -126,19 +124,18 @@
             geometry.setAttribute( 'normal', normalsA );
 
             const mesh = new THREE.Mesh( geometry, refractiveMat );
-            mesh.position.x = -0.5 * aspect;
-            mesh.position.y = -0.5;
             scene.add( mesh );
 
             const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 300, 24);
             const bgMesh = new THREE.Mesh( torusGeometry, normalMat);
             bgMesh.position.z = -0.5;
-            bgMesh.scale.x = 0.02;
-            bgMesh.scale.y = 0.02;
+            bgMesh.scale.x = 0.07;
+            bgMesh.scale.y = 0.03;
             bgMesh.scale.z = 0.02;
 			scene.add(bgMesh);
 
-            document.body.addEventListener( 'pointermove', onPointerMove );
+            document.body.addEventListener( 'mousemove', onMouseMove );
+            document.body.addEventListener( 'touchmove', onTouchMove );
 
             animate(scene, camera);             
 
@@ -148,15 +145,9 @@
             }
             intervalID = setInterval(queueRender, msPerFrame);
 
-            function onPointerMove( event ) {
-
-                if ( event.isPrimary === false ) return;
-
-                mouseX = event.clientX;
-                mouseY = event.clientY;
-
-                indX = Math.floor((mouseX / wX) * xPoi);
-                indY = Math.floor((1 - mouseY / wY) * yPoi);
+            function pointerMove(x, y) {
+                const indX = Math.floor((x / wX) * xPoi);
+                const indY = Math.floor((1 - y / wY) * yPoi);
                 
                 for (let i = -(pointerSize-1); i < pointerSize; i++) {
                     const xtemp = i + indX;
@@ -168,15 +159,21 @@
                         }
                     }
                 }
-
-                xPos.innerHTML = mouseX;
-                yPos.innerHTML = mouseY;
-                indXP.innerHTML = indX;
-                indYP.innerHTML = indY;
             }
 
-            function buttonfunc() {
-                butt.innerHTML = xPoi;
+            function onTouchMove(e) {
+                for(let i = 0; i < e.touches.length; i++) {
+                    pointerMove(e.touches[i].clientX, e.touches[i].clientY);
+                }
+            }
+
+            function onMouseMove(e) {
+                pointerMove(e.clientX, e.clientY)                
+
+                xPos.innerHTML = "mouseX: " + e.clientX;
+                yPos.innerHTML = "mouseY: " + e.clientY;
+                indXP.innerHTML = "indX: " + indX;
+                indYP.innerHTML = "indY: " + indY;
             }
 
             function rippleAnimate() {
@@ -203,6 +200,7 @@
                 }
 
                 normalsA.needsUpdate = true;
+                extra.innerHTML = prev[xPoi * yPoi / 2];
             }
 
             //frame update
@@ -217,7 +215,16 @@
                     renderer.render( scene, camera );
                     readyToRender = false;
                     intervalID = setInterval(queueRender, msPerFrame);
-                }                
+                }
+
+                wXP.innerHTML = "wX: " + wX;
+                wYP.innerHTML = "wY: " + wY;
+                xPerP.innerHTML = "xPer: " + xPer;
+                yPerP.innerHTML = "yPer: " + yPer;
+                ySegP.innerHTML = "ySeg: " + ySeg;
+                xSegP.innerHTML = "xSeg: " + xSeg;
+                yPoiP.innerHTML = "yPoi: " + yPoi;
+                xPoiP.innerHTML = "xPoi: " + xPoi;
             }
 
             function resizedWindow() {
@@ -234,7 +241,14 @@
             <p id="indXP"></p>
             <p id="indYP"></p>
             <p id="extra"></p>
-            <button onclick="buttonfunc()" id="butt" style="width: 100px;">hi</button>
+            <p id="wXP"></p>
+            <p id="wYP"></p>
+            <p id="xPerP"></p>
+            <p id="yPerP"></p>
+            <p id="ySegP"></p>
+            <p id="xSegP"></p>
+            <p id="yPoiP"></p>
+            <p id="xPoiP"></p>
         </div>
 	</body>
 </html>
