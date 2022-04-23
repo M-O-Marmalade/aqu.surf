@@ -6,8 +6,13 @@
 		<style>
 			body { 
                 margin: 0;
-                /* width: 100%;
-                height: 100%;  */
+                width: 100%;
+                height: 100%; 
+                overflow: hidden;
+            }
+
+            p {
+                margin: 1px;
             }
 		</style>
 	</head>
@@ -16,25 +21,22 @@
         <script src="js/three.js"></script>
 		<script>
 
-            const segments = Math.sqrt(100000);
-            const fps = 120;
+            const fps = 60;
             const msPerFrame = 1000/fps;
             let readyToRender = true;
-            let intervalID;
             const damping = 0.984;
-            const pointerStrength = 0.037;
-            const pointerSize = 4;
+            const pointerStrength = 0.064;
+            const pointerSize = 2;
 
+            const totalSegments = 15000;
             let wX = window.innerWidth;
             let wY = window.innerHeight;
-            let aspect = wX / wY;
-            const total = wX + wY;
-            let xPer = wX / total;
-            let yPer = wY / total;
-            let ySeg = Math.floor(yPer * segments);
-            let xSeg = Math.floor(xPer * segments);
-            let yPoi = ySeg + 1;
-            let xPoi = xSeg + 1;
+            let wXYgcd = gcd(wX, wY);
+            let aspectScale = aspectScaleSolve(wX/wXYgcd , wY/wXYgcd , totalSegments);
+            const xSeg = Math.floor(wX/wXYgcd * aspectScale);
+            const ySeg = Math.floor(wY/wXYgcd * aspectScale);
+            const yPoi = ySeg + 1;
+            const xPoi = xSeg + 1;            
 
             const prev = new Array(xPoi * yPoi).fill(0);
             const curr = new Array(xPoi * yPoi).fill(0);
@@ -91,6 +93,8 @@
             const normals = [];
             const colors = [];
 
+            let counter = 0;
+
             // generate vertices, normals and color data for a simple grid geometry
             for ( let i = 0; i < yPoi; i++ ) {
 
@@ -98,11 +102,13 @@
 
                 for ( let j = 0; j < xPoi; j++ ) {
 
-                    const x = ((j / xSeg) - 0.5) * aspect;    //set x position from 0 - 1
+                    const x = ((j / xSeg) - 0.5) * wX / wY;    //set x position from 0 - 1
 
                     vertices.push( x, y, 0 );
                     normals.push( 0, 0, -1 );
                     colors.push( x,y,x/2 + y/2 );
+
+                    counter++;
                 }
             }
 
@@ -143,14 +149,15 @@
 
             document.body.addEventListener( 'mousemove', onMouseMove );
             document.body.addEventListener( 'touchmove', onTouchMove );
+            window.addEventListener("resize", resizedWindow);
 
-            animate(scene, camera);             
+
+            setInterval(queueRender, msPerFrame);
+            animate(scene, camera);
 
             function queueRender() {
                 readyToRender = true;
-                clearInterval(intervalID);
-            }
-            intervalID = setInterval(queueRender, msPerFrame);
+            }            
 
             function pointerMove(x, y) {
                 const indX = Math.floor((x / wX) * xPoi);
@@ -175,12 +182,7 @@
             }
 
             function onMouseMove(e) {
-                pointerMove(e.clientX, e.clientY)                
-
-                xPos.innerHTML = "mouseX: " + e.clientX;
-                yPos.innerHTML = "mouseY: " + e.clientY;
-                indXP.innerHTML = "indX: " + indX;
-                indYP.innerHTML = "indY: " + indY;
+                pointerMove(e.clientX, e.clientY)
             }
 
             function rippleAnimate() {
@@ -207,7 +209,6 @@
                 }
 
                 normalsA.needsUpdate = true;
-                extra.innerHTML = prev[xPoi * yPoi / 2];
             }
 
             //frame update
@@ -221,41 +222,50 @@
                     rippleAnimate()
                     renderer.render( scene, camera );
                     readyToRender = false;
-                    intervalID = setInterval(queueRender, msPerFrame);
                 }
-
+                
                 wXP.innerHTML = "wX: " + wX;
                 wYP.innerHTML = "wY: " + wY;
-                xPerP.innerHTML = "xPer: " + xPer;
-                yPerP.innerHTML = "yPer: " + yPer;
                 ySegP.innerHTML = "ySeg: " + ySeg;
                 xSegP.innerHTML = "xSeg: " + xSeg;
                 yPoiP.innerHTML = "yPoi: " + yPoi;
                 xPoiP.innerHTML = "xPoi: " + xPoi;
+                totalVerticesP.innerHTML = "totalVertices: " + counter;
+                wXYgcdP.innerHTML = "wXYgcd: " + wXYgcd;
+                AspectP.innerHTML = "Aspect: " + wX/wXYgcd + ":" + wY/wXYgcd;
             }
 
             function resizedWindow() {
                 wX = window.innerWidth;
                 wY = window.innerHeight;
-                waterCanvas.setSize(wX, wY);
+                wXYgcd = gcd(wX, wY);
+                renderer.setSize(wX, wY);
             }
-            window.addEventListener('resize', resizedWindow)
+
+            function gcd (a, b) {
+                return (b == 0) ? a : gcd (b, a%b);
+            }
+
+            function aspectScaleSolve(a,b,c) {
+                const tempA = a;
+                a = tempA * b * 2;
+                b = tempA + b;
+                c = -c;
+                return (-1 * b + Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
+            }
             
 		</script>
         <div style="display: flex; flex-direction: column; position: fixed; top: 0; color: white;">
-            <p id="xPos">xPos</p>
-            <p id="yPos">yPos</p>
-            <p id="indXP"></p>
-            <p id="indYP"></p>
-            <p id="extra"></p>
             <p id="wXP"></p>
             <p id="wYP"></p>
-            <p id="xPerP"></p>
-            <p id="yPerP"></p>
-            <p id="ySegP"></p>
             <p id="xSegP"></p>
-            <p id="yPoiP"></p>
+            <p id="ySegP"></p>
             <p id="xPoiP"></p>
+            <p id="yPoiP"></p>
+            <p id="totalVerticesP"></p>
+            <p id="DimensionsP"></p>
+            <p id="wXYgcdP"></p>
+            <p id="AspectP"></p>
         </div>
 	</body>
 </html>
