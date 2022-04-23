@@ -176,6 +176,9 @@
             }
 
             function onTouchMove(e) {
+                if (e.touches.length > 1) {
+                    e.preventDefault();
+                }
                 for(let i = 0; i < e.touches.length; i++) {
                     pointerMove(e.touches[i].clientX, e.touches[i].clientY);
                 }
