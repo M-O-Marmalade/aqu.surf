@@ -4,7 +4,11 @@
 		<meta charset="utf-8">
 		<title>three-js</title>
 		<style>
-			body { 
+            body {
+                margin: 0;
+            }
+
+			.waterCanvas { 
                 margin: 0;
                 width: 100%;
                 height: 100%; 
@@ -21,16 +25,18 @@
         <script src="js/three.js"></script>
 		<script>
 
+            let wX = window.innerWidth;
+            let wY = window.innerHeight;
+            const portrait = wX > wY ? false : true;
+
             const fps = 60;
             const msPerFrame = 1000/fps;
             let readyToRender = true;
             const damping = 0.984;
-            const pointerStrength = 0.198;
-            const pointerSize = 2;
-
-            const totalSegments = 32000;
-            let wX = window.innerWidth;
-            let wY = window.innerHeight;
+            const pointerStrength = portrait ? 0.047 : 0.127;
+            const pointerSize = portrait ? 4 : 2;
+            
+            const totalSegments = portrait ? 21000 : 48000;
             let wXYgcd = gcd(wX, wY);
             let aspectScale = aspectScaleSolve(wX/wXYgcd , wY/wXYgcd , totalSegments);
             const xSeg = Math.floor(wX/wXYgcd * aspectScale);
@@ -57,7 +63,9 @@
             });
             // renderer.alpha = true;
             // renderer.setClearColor(0x000000, 0);
-            // renderer.setPixelRatio( window.devicePixelRatio );
+            if (!portrait) {  //if we're in landscape aspect, we'll assume desktop-grade performance
+                renderer.setPixelRatio( window.devicePixelRatio );
+            }            
             renderer.setSize( wX, wY );
 
             // light
@@ -83,18 +91,18 @@
                 side: THREE.BackSide
             });
 
-            // geometry
-            const geometry = new THREE.BufferGeometry();
+            // water geometry
+            const waterGeometry = new THREE.BufferGeometry();
 
-            //attributes
-            const indices = [];
-            const vertices = [];
-            const normals = [];
-            const colors = [];
+            //water attributes
+            const waterIndices = [];
+            const waterPositions = [];
+            const waterNormals = [];
+            // const waterColors = [];
 
             let counter = 0;
 
-            // generate vertices, normals and color data for a simple grid geometry
+            // generate water positions, normals and color data for a simple grid geometry
             for ( let i = 0; i < yPoi; i++ ) {
 
                 const y = (i / ySeg) - 0.5;    //set y position from 0 - 1
@@ -103,15 +111,15 @@
 
                     const x = ((j / xSeg) - 0.5) * wX / wY;    //set x position from 0 - 1
 
-                    vertices.push( x, y, 0 );
-                    normals.push( 0, 0, -1 );
-                    colors.push( x,y,x/2 + y/2 );
+                    waterPositions.push( x, y, 0 );
+                    waterNormals.push( 0, 0, -1 );
+                    // waterColors.push( x,y,x/2 + y/2 );
 
                     counter++;
                 }
             }
 
-            // generate indices (data for element array buffer)
+            // generate water indices (data for element array buffer)
             for ( let i = 0; i < ySeg; i++ ) {
 
                 for ( let j = 0; j < xSeg; j++ ) {
@@ -122,29 +130,33 @@
                     const d = ( i + 1 ) * ( xSeg + 1 ) + ( j + 1 );
 
                     // generate two faces (triangles) per iteration
-                    indices.push( a, b, d ); // face one
-                    indices.push( b, c, d ); // face two
+                    waterIndices.push( a, b, d ); // face one
+                    waterIndices.push( b, c, d ); // face two
                 }
             }
 
-            geometry.setIndex( indices );            
-            const colorsA = new THREE.Float32BufferAttribute(colors,3);
-            const positionsA = new THREE.Float32BufferAttribute(vertices,3);
-            const normalsA = new THREE.Float32BufferAttribute(normals,3);
-            geometry.setAttribute( 'color', colorsA);
-            geometry.setAttribute( 'position', positionsA );
-            geometry.setAttribute( 'normal', normalsA );
-
-            const mesh = new THREE.Mesh( geometry, refractiveMat );
+            //set water mesh data and add to scene
+            waterGeometry.setIndex( waterIndices );            
+            // const colorsA = new THREE.Float32BufferAttribute(waterColors,3);
+            const positionsA = new THREE.Float32BufferAttribute(waterPositions,3);
+            const normalsA = new THREE.Float32BufferAttribute(waterNormals,3);
+            // waterGeometry.setAttribute( 'color', colorsA);
+            waterGeometry.setAttribute( 'position', positionsA );
+            waterGeometry.setAttribute( 'normal', normalsA );
+            const mesh = new THREE.Mesh( waterGeometry, refractiveMat );
             scene.add( mesh );
 
+            //add torus to scene
             const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 300, 24);
-            const bgMesh = new THREE.Mesh( torusGeometry, normalMat);
-            bgMesh.position.z = -0.5;
-            bgMesh.scale.x = 0.07;
-            bgMesh.scale.y = 0.03;
-            bgMesh.scale.z = 0.02;
-			scene.add(bgMesh);
+            const torusMesh = new THREE.Mesh( torusGeometry, normalMat);
+            torusMesh.position.z = -0.5;
+            torusMesh.scale.x = 0.07;
+            torusMesh.scale.y = 0.03;
+            torusMesh.scale.z = 0.02;
+			scene.add(torusMesh);
+
+            //add bg plane to scene
+            const bgPlane = new THREE.BufferGeometry();
 
             document.body.addEventListener( 'mousemove', onMouseMove );
             document.body.addEventListener( 'touchmove', onTouchMove );
@@ -217,8 +229,8 @@
             function animate() {
                 requestAnimationFrame( animate );
 
-				// bgMesh.rotation.x += 0.01;
-				// bgMesh.rotation.y += 0.01;
+				// torusMesh.rotation.x += 0.01;
+				// torusMesh.rotation.y += 0.01;
                 
                 if (readyToRender) {
                     rippleAnimate()
