@@ -25,10 +25,10 @@
             const msPerFrame = 1000/fps;
             let readyToRender = true;
             const damping = 0.984;
-            const pointerStrength = 0.064;
+            const pointerStrength = 0.198;
             const pointerSize = 2;
 
-            const totalSegments = 15000;
+            const totalSegments = 32000;
             let wX = window.innerWidth;
             let wY = window.innerHeight;
             let wXYgcd = gcd(wX, wY);
@@ -59,7 +59,6 @@
             // renderer.setClearColor(0x000000, 0);
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( wX, wY );
-            //document.body.appendChild( renderer.domElement );
 
             // light
             const light = new THREE.DirectionalLight(0xffffff);
