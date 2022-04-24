@@ -1,10 +1,11 @@
 let waterCanvas = document.createElement("canvas");
 waterCanvas.style.position = "fixed";
-waterCanvas.style.top = 100;
+waterCanvas.style.top = 0;
 waterCanvas.style.margin = 0;
 waterCanvas.style.width = "100%";
 waterCanvas.style.height = "100%";
 waterCanvas.style.overflow = "hidden";
+waterCanvas.style.zIndex = -10;
 document.body.appendChild(waterCanvas);
 
 const portrait = screen.width > screen.height ? false : true;
@@ -13,10 +14,10 @@ const fps = 60;
 const msPerFrame = 1000/fps;
 let readyToRender = true;
 const damping = 0.984;
-const pointerStrength = portrait ? 0.047 : 0.127;
-const pointerSize = portrait ? 4 : 2;
+const pointerStrength = 0.127;
+const pointerSize = 2;
 
-const totalSegments = portrait ? 21000 : 48000;
+const totalSegments = 48000;
 let wX = window.innerWidth;
 let wY = window.innerHeight;
 let wXYgcd = gcd(wX, wY);
