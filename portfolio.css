@@ -21,7 +21,7 @@
     --orange-2: #ffb800;
     --orange-3: #ffda00;
 
-    --glass: #60ffff18;
+    --glass: #00ffff40;
 
     --project-text-color: var(--dark-1);
 }
@@ -64,7 +64,7 @@ body {
     justify-content: center;
     align-items: center;
     align-content: stretch;
-    margin: 3vh 0;
+    margin: 100vh 0 0;
 }
 
 .projectItem {
