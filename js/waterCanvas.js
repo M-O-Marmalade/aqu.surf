@@ -57,7 +57,7 @@ if (!mobileBrowser) {   //full rendering resolution for desktops
 renderer.setSize( wX, wY );
 
 // light
-const light = new THREE.DirectionalLight(0xf8f0f8, 1);
+const light = new THREE.DirectionalLight(0xf8f0f8, .05);
 light.position.set(-1,2,10);
 scene.add( light );
 
@@ -182,8 +182,8 @@ const bgPlaneColors = [
 ];
 
 //bgPlane material
-const bgPlaneTex = new THREE.TextureLoader().load('graphics/textures/texture.png');
-const bgPlaneMat = new THREE.MeshPhongMaterial({
+const bgPlaneTex = new THREE.TextureLoader().load('graphics/textures/texture3.png');
+const bgPlaneMat = new THREE.MeshBasicMaterial({
     map: bgPlaneTex
     // vertexColors: true
 });
@@ -198,27 +198,29 @@ const bgPlaneMesh = new THREE.Mesh( bgPlaneGeometry, bgPlaneMat );
 scene.add( bgPlaneMesh );
 
 
+//Create text geometry
+const loader = new THREE.FontLoader();
+let font;
+loader.load('fonts/helvetiker_regular.typeface.json', function ( response ) {
+    font = response;
+} );
 
-// const loader = new THREE.FontLoader();
+const textGeo = new THREE.TextGeometry( 'Hello three.js!', {
+    font: font,
+    size: 1,
+    height: 1,
+    curveSegments: 3,
+    bevelThickness: 3,
+    bevelSize: 3,
+    bevelEnabled: true
+} );
 
-// loader.load( 'fonts/monof55.ttf', function ( font ) {
+textGeo.computeBoundingBox();
 
-// 	const geometry = new TextGeometry( 'Hello three.js!', {
-// 		font: font,
-// 		size: 80,
-// 		height: 5,
-// 		curveSegments: 12,
-// 		bevelEnabled: true,
-// 		bevelThickness: 10,
-// 		bevelSize: 8,
-// 		bevelOffset: 0,
-// 		bevelSegments: 5
-// 	} );
-// } );
+scene.add(new THREE.Mesh(textGeo, normalMat));
 
 
-
-
+//add document event handlers
 document.body.addEventListener( 'mousemove', onMouseMove );
 document.body.addEventListener( 'touchmove', onTouchMove );
 window.addEventListener("resize", resizedWindow);

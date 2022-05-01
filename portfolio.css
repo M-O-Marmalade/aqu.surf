@@ -21,9 +21,20 @@
     --orange-2: #ffb800;
     --orange-3: #ffda00;
 
-    --glass: #00ffff40;
+    --glass: #acd7ffa0;
 
-    --project-text-color: var(--dark-1);
+    --project-text-color: var(--dark-2);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+:root::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+:root {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 body {

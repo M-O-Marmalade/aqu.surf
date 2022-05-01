@@ -48,6 +48,53 @@
 	<div class="box">
 	  <p>This is a paragraph inside of a div, using the class "box".</p>
 	</div>
-  
+
+  <div style="display: flex;">
+    <article id="projectItem">
+      <section id="projectFront">
+        <section>
+          <img class="projectPic" src="graphics/paddles-demo.apng" alt="Paddles Demo">
+          <section class="projectTech">
+              <p>Lua</p>
+              <p>Renoise API</p>
+          </section>
+        </section>
+        <p class="projectDesc">A game for <a href="https://www.renoise.com/"><span class="projectDescLink">Renoise</span></a></p>
+      </section>
+      <section id="projectBack">
+        <!-- <p>This is the back of the project I guess! Have a look around and see if everything is working correctly!</p> -->
+      </section>
+    </article>
+  </div>
+
+  <!-- <script>
+    let card = document.getElementById("projectItem");
+    let front = document.getElementById("projectFront");
+    let back = document.getElementById("projectBack");
+    let id;
+    let timer = 0;
+
+    card.addEventListener("click", projectOnClick);
+
+    function projectOnClick(e) {
+      
+    }
+
+    function myMove() {
+      clearInterval(id);
+      id = setInterval(frame, 5);
+      function frame() {
+        if (timer == 1) {
+          timer = 0;
+          clearInterval(id);
+        } 
+        else {
+          timer += 0.01;
+
+        }
+      }
+    }
+
+  </script> -->
   </body>
 </html>
