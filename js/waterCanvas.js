@@ -188,14 +188,14 @@ const bgPlaneMat = new THREE.MeshBasicMaterial({
     // vertexColors: true
 });
 
-//set bg mesh data and add to scene
-bgPlaneGeometry.setIndex( bgPlaneIndices );
-bgPlaneGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute(bgPlanePositions,3) );
-bgPlaneGeometry.setAttribute( 'normal', new THREE.Float32BufferAttribute(bgPlaneNormals,3) );
-bgPlaneGeometry.setAttribute( 'uv', new THREE.Float32BufferAttribute(bgPlaneUVs,2) );
-bgPlaneGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute(bgPlaneColors,3) );
-const bgPlaneMesh = new THREE.Mesh( bgPlaneGeometry, bgPlaneMat );
-scene.add( bgPlaneMesh );
+// //set bg mesh data and add to scene
+// bgPlaneGeometry.setIndex( bgPlaneIndices );
+// bgPlaneGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute(bgPlanePositions,3) );
+// bgPlaneGeometry.setAttribute( 'normal', new THREE.Float32BufferAttribute(bgPlaneNormals,3) );
+// bgPlaneGeometry.setAttribute( 'uv', new THREE.Float32BufferAttribute(bgPlaneUVs,2) );
+// bgPlaneGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute(bgPlaneColors,3) );
+// const bgPlaneMesh = new THREE.Mesh( bgPlaneGeometry, bgPlaneMat );
+// scene.add( bgPlaneMesh );
 
 
 //Create text geometry
