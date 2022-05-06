@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import { GLTFLoader } from 'https://unpkg.com/three@latest/examples/jsm/loaders/GLTFLoader.js';
+
 const mobileBrowser = window.mobileCheck;
 
 const waterCanvas = document.createElement("canvas");
@@ -12,7 +15,7 @@ document.body.appendChild(waterCanvas);
 
 const fps = 60;
 const msPerFrame = 1000/fps;
-const damping = 0.984;
+const damping = 0.994;
 const pointerStrength = 0.127;
 const pointerSize = 2;
 
@@ -22,7 +25,6 @@ let wY = window.innerHeight;
 let wAspectFloat = wX / wY;
 let wXYgcd = gcd(wX, wY);
 let aspectScale = aspectScaleSolve(wX/wXYgcd , wY/wXYgcd , totalSegments);
-console.log(aspectScale);
 const xSeg = Math.floor(wX/wXYgcd * aspectScale);
 const ySeg = Math.floor(wY/wXYgcd * aspectScale);
 const yPoi = ySeg + 1;
@@ -35,7 +37,7 @@ const curr = new Array(xPoi * yPoi).fill(0);
 //Three.js settings
 THREE.Cache.enabled = true;
 const textureLoader = new THREE.TextureLoader();
-const bgTex = textureLoader.load('graphics/textures/scene-background.png');
+const gltfLoader = new GLTFLoader();
 
 
 //renderer
@@ -50,28 +52,33 @@ renderer.setSize( wX, wY );
 
 //scene & camera
 const scene = new THREE.Scene();
+const bgTex = textureLoader.load('graphics/textures/scene-background.png');
+// scene.background = new THREE.Color(0x0080ff);
 scene.background = bgTex;
+scene.environment = bgTex;
 // const camera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 1000);
-const camera = new THREE.PerspectiveCamera(26.5, wAspectFloat, 0.5, 1000);
+const camera = new THREE.PerspectiveCamera(90, wAspectFloat, 0.5, 1000);
 camera.position.x = 0;
 camera.position.y = 0;
-camera.position.z = 2.1;
+camera.position.z = 8;
 camera.lookAt(0,0,0);
 
 
 // light
-const light = new THREE.DirectionalLight(0xf8f8f8, .05);
-light.position.set(-1,2,10);
+const light = new THREE.DirectionalLight(0xf8f8f8, 2);
+light.position.set(-40,80,100);
 scene.add( light );
+const ambientLight = new THREE.AmbientLight(0xf8f8f8, 0.77);
+scene.add( ambientLight );
 
 // materials
 const refractiveMat = new THREE.MeshPhysicalMaterial({
-    side: THREE.BackSide,
-    transmission: 1.0,
+    side: THREE.FrontSide,
+    transmission: 1,
     roughness: 0,
     ior: 1.333,
-    thickness: 10,
-    specularIntensity: 1,
+    thickness: 7,
+    // specularIntensity: 1,
     // reflectivity: 1,
 });
 
@@ -86,10 +93,10 @@ const vertMat = new THREE.MeshBasicMaterial({
 });
 
 const phongMat = new THREE.MeshPhongMaterial({
-    color: 0x000000,
+    color: 0x0060ff,
     specular: 0x0000ff,
     //vertexColors: true,
-    side: THREE.BackSide
+    side: THREE.FrontSide
 });
 
 // water geometry
@@ -101,18 +108,18 @@ const waterPositions = [];
 const waterNormals = [];
 
 let counter = 0;
-
+let waterScale = 16;
 // generate water positions, normals and color data for a simple grid geometry
 for ( let i = 0; i < yPoi; i++ ) {
 
-    const y = (i / ySeg) - 0.5;    //set y position from 0 - 1
+    const y = ((i / ySeg) - 0.5) * waterScale;    //set y position from 0 - 1
 
     for ( let j = 0; j < xPoi; j++ ) {
 
-        const x = ((j / xSeg) - 0.5) * wAspectFloat;    //set x position from 0 - 1
+        const x = ((j / xSeg) - 0.5) * wAspectFloat * waterScale;    //set x position from 0 - 1
 
         waterPositions.push( x, y, 0 );
-        waterNormals.push( 0, 0, -1 );
+        waterNormals.push( 0, 0, 1 );
 
         counter++;
     }
@@ -129,8 +136,8 @@ for ( let i = 0; i < ySeg; i++ ) {
         const d = ( i + 1 ) * ( xSeg + 1 ) + ( j + 1 );
 
         // generate two faces (triangles) per iteration
-        waterIndices.push( a, b, d ); // face one
-        waterIndices.push( b, c, d ); // face two
+        waterIndices.push( d, b, a ); // face one
+        waterIndices.push( d, c, b ); // face two
     }
 }
 
@@ -143,42 +150,34 @@ waterGeometry.setAttribute( 'normal', normalsA );
 const waterMesh = new THREE.Mesh( waterGeometry, refractiveMat );
 scene.add( waterMesh );
 
-//add torus to scene
-// const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 256, 64);
-// const torusMesh = new THREE.Mesh( torusGeometry, normalMat);
-// torusMesh.position.z = -5;
-// torusMesh.position.x = 0.9;
-// torusMesh.scale.x = 0.1;
-// torusMesh.scale.y = 0.1;
-// torusMesh.scale.z = 0.1;
-// scene.add(torusMesh);
-
-// const torusMesh2 = new THREE.Mesh( torusGeometry, normalMat);
-// torusMesh2.position.z = -5;
-// torusMesh2.position.x = -0.9;
-// torusMesh2.scale.x = 0.1;
-// torusMesh2.scale.y = 0.1;
-// torusMesh2.scale.z = 0.1;
-// scene.add(torusMesh2);
 
 //add name plane to scene
-const nameGeometry = new THREE.PlaneGeometry(1, 1);
-const nameTex = textureLoader.load('graphics/textures/texture3.png');
+const nameGeometry = new THREE.PlaneGeometry(26, 13);
+const nameTex = textureLoader.load('graphics/textures/texture4.png');
 const nameMat = new THREE.MeshBasicMaterial({map: nameTex});
 const nameMesh = new THREE.Mesh( nameGeometry, nameMat );
-nameMesh.position.z = -0.7;
+nameMesh.position.z = -5;
 if (wAspectFloat < 1) {
-    nameMesh.scale.x = wAspectFloat;
-    nameMesh.scale.y = wAspectFloat;
+    nameMesh.scale.set(wAspectFloat,wAspectFloat,wAspectFloat);
     // nameMesh.position.y = .5 * (1 - wAspectFloat);
 }
 scene.add( nameMesh );
 
-// const gltfLoader = new GLTFLoader();
-// gltfLoader.load("graphics/models/James Graham.gltf", function(gltf) {
-//     // const gltfMesh = new THREE.Mesh(gltf.asset, normalMat);
-//     scene.add(gltf.scene);
-// })
+
+//add name model to scene
+gltfLoader.load("graphics/models/James Graham.glb", function(gltf) {
+    gltf.scene.position.z = -2.5;
+    if (wAspectFloat < 1) {
+        gltf.scene.scale.set(26*wAspectFloat,26*wAspectFloat,26*wAspectFloat);
+        // nameMesh.position.y = .5 * (1 - wAspectFloat);
+    }
+    gltf.scene.traverse((o) => {
+        if (o.name === "Sphere") {
+            o.material = phongMat;
+        }
+    })
+    scene.add(gltf.scene);
+})
 
 
 //add document event handlers
@@ -224,18 +223,17 @@ function onMouseMove(e) {
 function rippleAnimate() {
     for (let x = 1; x < xPoi; x++) {
         for (let y = 1; y < yPoi; y++) {
-            curr[x + (y * xPoi)] = (prev[(x-1) + y * xPoi] + 
-                                        prev[(x+1) + y * xPoi] + 
-                                        prev[x + (y+1) * xPoi] + 
-                                        prev[x + (y-1) * xPoi]) / 2 - curr[x + (y * xPoi)];
-            curr[x + (y * xPoi)] = curr[x + (y * xPoi)] * damping;
-            curr[x + (y * xPoi)] = isNaN(curr[x + (y * xPoi)]) ? 0 : curr[x + (y * xPoi)];
-        }
-    }
+            const index = x + (y * xPoi);
+            curr[index] = (prev[index-1] + 
+                                        prev[index+1] + 
+                                        prev[index + xPoi] + 
+                                        prev[index - xPoi]) / 2 - curr[index];
+            curr[index] = curr[index] * damping;
+            curr[index] = isNaN(curr[index]) ? 0 : curr[index];
 
-    for (let i = 0; i < xPoi*yPoi; i++) {
-        normalsA.setY(i,curr[i]);
-        normalsA.setX(i,-curr[i]);
+            normalsA.setX(index, -curr[index]);
+            normalsA.setY(index, curr[index]);
+        }
     }
 
     for (let i = 0; i < xPoi*yPoi; i++) {
