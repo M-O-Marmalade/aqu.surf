@@ -12,60 +12,95 @@
         <!-- <header class="mainHeader">
             <h1 class="mainHeaderLogo">James Graham</h1>
         </header> -->
-        <section class="projectsFlex">
+        <section class="projectsFlex" id="projects">
             
-            <article class="projectItem">
-                <section>
-                    <img class="projectPic" src="graphics/paddles-demo.apng" alt="Paddles Demo">
-                    <section class="projectTech">
-                        <p>Lua</p>
-                        <p>Renoise API</p>
-                    </section>
-                </section>
-                <p class="projectDesc">A game for <a href="https://www.renoise.com/"><span class="projectDescLink">Renoise</span></a></p>
+            <article class="projectCard" id="paddles"">
+                <div class="projectCardInner">
+                    <div class="projectCardFront">
+                        <section>
+                            <img class="projectPic" src="graphics/paddles-demo.apng" alt="Paddles Demo">
+                            <section class="projectTech">
+                                <p>Lua</p>
+                                <p>Renoise API</p>
+                            </section>
+                        </section>
+                        <p class="projectDesc">A game for <a href="https://www.renoise.com/"><span class="projectDescLink">Renoise</span></a></p>
+                    </div>
+                    <div class="projectCardBack">
+                        <p>djflksdjflksdfjlskdjfklsdjflskd fjsldkfjsfjsdlfjslkdjflksd jkflsjldfkksjldfkjslkfdjklsjdlkfjsdlf jlskdfjklsjdflskd jflksjdflk<br>hello<br>hello<br>hello<br></a></p>
+                    </div>
+                </div>
             </article>
             
-            <article class="projectItem">
-                <section>
-                    <img class="projectPic" src="graphics/curves-demo.apng" alt="Curves Demo">
-                    <section class="projectTech">
-                        <p>Lua</p>
-                        <p>Renoise API</p>
-                    </section>
-                </section>
-                <p class="projectDesc">Pixel-perfect<br>weighted<br>Bézier curves<sup>n→∞</sup></p>
+            <article class="projectCard" id="curves">
+                <div class="projectCardInner">
+                    <div class="projectCardFront">
+                        <section>
+                            <img class="projectPic" src="graphics/curves-demo.apng" alt="Curves Demo">
+                            <section class="projectTech">
+                                <p>Lua</p>
+                                <p>Renoise API</p>
+                            </section>
+                        </section>
+                        <p class="projectDesc">Pixel-perfect<br>weighted<br>Bézier curves<sup>n→∞</sup></p>
+                    </div>
+                    <div class="projectCardBack">
+                        <p><br>hello<br>hello<br>hello<br></p>
+                    </div>
+                </div>
             </article>
             
-            <article class="projectItem">
-                <section>
-                    <img class="projectPic" src="graphics/snek-demo.apng" alt="SNEK Demo">
-                    <section class="projectTech">
-                        <p>C++</p>
-                        <p>Windows Console API</p>
-                    </section>
-                </section>
-                <p class="projectDesc">A game for the Windows Console</p>
+            <article class="projectCard" id="snek">
+                <div class="projectCardInner">
+                    <div class="projectCardFront">
+                        <section>
+                            <img class="projectPic" src="graphics/snek-demo.apng" alt="SNEK Demo">
+                            <section class="projectTech">
+                                <p>C++</p>
+                                <p>Windows Console API</p>
+                            </section>
+                        </section>
+                        <p class="projectDesc">A game for the Windows Console</p>
+                    </div>
+                    <div class="projectCardBack">
+
+                    </div>
+                </div>
             </article>
             
-            <article class="projectItem">
-                <section>
-                    <img class="projectPic" src="graphics/reform-demo.apng" alt="Reform Demo">
-                    <section class="projectTech">
-                        <p>Lua</p>
-                        <p>Renoise API</p>
-                    </section>
-                </section>
-                <p class="projectDesc">A note transformation tool for <a href="https://www.renoise.com/"><span class="projectDescLink">Renoise</span></a></p>
+            <article class="projectCard" id="reform">
+                <div class="projectCardInner">
+                    <div class="projectCardFront">
+                        <section>
+                            <img class="projectPic" src="graphics/reform-demo.apng" alt="Reform Demo">
+                            <section class="projectTech">
+                                <p>Lua</p>
+                                <p>Renoise API</p>
+                            </section>
+                        </section>
+                        <p class="projectDesc">A note transformation tool for <a href="https://www.renoise.com/"><span class="projectDescLink">Renoise</span></a></p>
+                    </div>
+                    <div class="projectCardBack">
+
+                    </div>
+                </div>
             </article>
 
-            <article class="projectItem" style="padding-top: 81vh; width: 81vw;">
-                <section>                    
-                    <section class="projectTech">
-                        <p>JavaScript</p>
-                        <p>Three.js</p>
-                    </section>
-                </section>
-                <p class="projectDesc">This website!</p>
+            <article class="projectCard">
+                <div class="projectCardInner" style="padding-top: 81vh; width: 81vw;">
+                    <div class="projectCardFront">
+                        <section>                    
+                            <section class="projectTech">
+                                <p>JavaScript</p>
+                                <p>Three.js</p>
+                            </section>
+                        </section>
+                        <p class="projectDesc">This website!</p>
+                    </div>
+                    <div class="projectCardBack">
+
+                    </div>
+                </div>
             </article>
 
         </section>
@@ -81,6 +116,7 @@
             }
         }
         </script>
+        <script src="js/projectCards.js"></script>
 		<script type="module" src="js/waterCanvas.js"></script>
     </body>
 </html>

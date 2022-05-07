@@ -72,12 +72,14 @@ const ambientLight = new THREE.AmbientLight(0xf8f8f8, 0.77);
 scene.add( ambientLight );
 
 // materials
+// const waterRoughTex = textureLoader.load('graphics/textures/waterRoughMap.png');
 const refractiveMat = new THREE.MeshPhysicalMaterial({
     side: THREE.FrontSide,
     transmission: 1,
     roughness: 0,
     ior: 1.333,
-    thickness: 7,
+    thickness: 10,
+    // roughnessMap: waterRoughTex,
     // specularIntensity: 1,
     // reflectivity: 1,
 });
@@ -106,22 +108,21 @@ const waterGeometry = new THREE.BufferGeometry();
 const waterIndices = [];
 const waterPositions = [];
 const waterNormals = [];
+// const waterUVs = [];
 
-let counter = 0;
-let waterScale = 16;
-// generate water positions, normals and color data for a simple grid geometry
+const waterScale = 16;
+// generate water positions, normals and UVs for a simple grid geometry
 for ( let i = 0; i < yPoi; i++ ) {
 
-    const y = ((i / ySeg) - 0.5) * waterScale;    //set y position from 0 - 1
+    const y = i / ySeg - 0.5;    //set y position from 0 - 1
 
     for ( let j = 0; j < xPoi; j++ ) {
 
-        const x = ((j / xSeg) - 0.5) * wAspectFloat * waterScale;    //set x position from 0 - 1
+        const x = j / xSeg - 0.5;    //set x position from 0 - 1
 
-        waterPositions.push( x, y, 0 );
+        waterPositions.push( x * waterScale * wAspectFloat, y * waterScale, 0 );
         waterNormals.push( 0, 0, 1 );
-
-        counter++;
+        // waterUVs.push(x,y);
     }
 }
 
@@ -145,8 +146,10 @@ for ( let i = 0; i < ySeg; i++ ) {
 waterGeometry.setIndex( waterIndices );            
 const positionsA = new THREE.Float32BufferAttribute(waterPositions,3);
 const normalsA = new THREE.Float32BufferAttribute(waterNormals,3);
+// const UVsA = new THREE.Float32BufferAttribute(waterUVs,2);
 waterGeometry.setAttribute( 'position', positionsA );
 waterGeometry.setAttribute( 'normal', normalsA );
+// waterGeometry.setAttribute( 'uv', UVsA) ;
 const waterMesh = new THREE.Mesh( waterGeometry, refractiveMat );
 scene.add( waterMesh );
 
