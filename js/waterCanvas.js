@@ -61,14 +61,14 @@ renderer.setSize( wX, wY );
 //scene & camera
 const scene = new THREE.Scene();
 const bgTex = textureLoader.load('graphics/textures/scene-background.png');
-// scene.background = new THREE.Color(0x0080ff);
-scene.background = bgTex;
+scene.background = new THREE.Color(0x0080ff);
+// scene.background = bgTex;
 scene.environment = bgTex;
 // const camera = new THREE.OrthographicCamera(-8 * wAspectFloat, 8 * wAspectFloat, 8, -8, 0.1, 1000);
-const camera = new THREE.PerspectiveCamera(90, wAspectFloat, 0.5, 1000);
+const camera = new THREE.PerspectiveCamera(53, wAspectFloat, 0.5, 1000);
 camera.position.x = 0;
 camera.position.y = 0;
-camera.position.z = 8;
+camera.position.z = 1;
 camera.lookAt(0,0,0);
 
 
@@ -83,10 +83,10 @@ scene.add( ambientLight );
 // const waterRoughTex = textureLoader.load('graphics/textures/waterRoughMap.png');
 const refractiveMat = new THREE.MeshPhysicalMaterial({
     side: THREE.FrontSide,
-    transmission: 1,
+    transmission: 1.0,
     roughness: 0,
     ior: 1.333,
-    thickness: 10,
+    thickness: 3,
     // roughnessMap: waterRoughTex,
     // specularIntensity: 1,
     // reflectivity: 1,
@@ -118,7 +118,7 @@ const waterPositions = [];
 const waterNormals = [];
 // const waterUVs = [];
 
-const waterScale = 16;
+const waterScale = 1;
 // generate water positions, normals and UVs for a simple grid geometry
 for ( let i = 0; i < yPoi; i++ ) {
 
@@ -162,17 +162,27 @@ const waterMesh = new THREE.Mesh( waterGeometry, refractiveMat );
 scene.add( waterMesh );
 
 
-//add name plane to scene
-const nameGeometry = new THREE.PlaneGeometry(26, 13);
-const nameTex = textureLoader.load('graphics/textures/texture4.png');
-const nameMat = new THREE.MeshBasicMaterial({map: nameTex});
-const nameMesh = new THREE.Mesh( nameGeometry, nameMat );
-nameMesh.position.z = -5;
-if (wAspectFloat < 1) {
-    nameMesh.scale.set(wAspectFloat,wAspectFloat,wAspectFloat);
-    // nameMesh.position.y = .5 * (1 - wAspectFloat);
-}
-scene.add( nameMesh );
+//add torus to scene
+const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 256, 64);
+const torusMesh = new THREE.Mesh( torusGeometry, normalMat);
+torusMesh.position.z = -0.5;
+torusMesh.scale.x = 0.06;
+torusMesh.scale.y = 0.032;
+torusMesh.scale.z = 0.04;
+scene.add(torusMesh);
+
+
+// //add name plane to scene
+// const nameGeometry = new THREE.PlaneGeometry(26, 13);
+// const nameTex = textureLoader.load('graphics/textures/texture4.png');
+// const nameMat = new THREE.MeshBasicMaterial({map: nameTex});
+// const nameMesh = new THREE.Mesh( nameGeometry, nameMat );
+// nameMesh.position.z = -5;
+// if (wAspectFloat < 1) {
+//     nameMesh.scale.set(wAspectFloat,wAspectFloat,wAspectFloat);
+//     // nameMesh.position.y = .5 * (1 - wAspectFloat);
+// }
+// scene.add( nameMesh );
 
 
 //add name model to scene
