@@ -1,7 +1,9 @@
 document.querySelectorAll('.projectCard').forEach(card => {
     card.addEventListener('click', function handleClick(e) {
         const element = e.currentTarget;
-        console.log(element.id + " projectCard clicked!")
+        console.log(element.id + " projectCard was clicked!")
+
+        if (element.classList.contains('clicked')) {return;}
 
         const eBoundRect = element.getBoundingClientRect();
         // these are relative to the viewport, i.e. the window
@@ -24,15 +26,15 @@ document.querySelectorAll('.projectCard').forEach(card => {
         element.style.left = eBoundRect.left + 'px';
         element.style.width = eBoundRect.width + 'px';
         element.style.height = eBoundRect.height + 'px';
-        element.style.transition = '1s';
+        element.style.transition = '0.75s';
         element.style.zIndex = 10;
 
         requestAnimationFrame(function() {
             element.classList.add("clicked");
-            element.style.top = '5vh';
-            element.style.left = '5vw';
-            element.style.width = '90vw';
-            element.style.height = '90vh';
+            element.style.top = '0px';
+            element.style.left = '0px';
+            element.style.minWidth = '100vw';
+            element.style.minHeight = '100vh';
             element.style.margin = '0px';
         });
 

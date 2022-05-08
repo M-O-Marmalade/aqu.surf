@@ -1,6 +1,14 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'https://unpkg.com/three@latest/examples/jsm/loaders/GLTFLoader.js';
 
+const xAxis = new THREE.Vector3(1,0,0);
+const yAxis = new THREE.Vector3(0,1,0);
+const zAxis = new THREE.Vector3(0,0,1);
+// let exampleVector = new THREE.Vector3(0,0,1);
+// console.log(exampleVector.x + ' : ' + exampleVector.y + ' : ' + exampleVector.z);
+// exampleVector.applyAxisAngle(xAxis, 1);
+// console.log(exampleVector.x + ' : ' + exampleVector.y + ' : ' + exampleVector.z);
+
 const mobileBrowser = window.mobileCheck;
 
 const waterCanvas = document.createElement("canvas");
@@ -15,7 +23,7 @@ document.body.appendChild(waterCanvas);
 
 const fps = 60;
 const msPerFrame = 1000/fps;
-const damping = 0.994;
+const damping = 0.99;
 const pointerStrength = 0.127;
 const pointerSize = 2;
 
@@ -56,7 +64,7 @@ const bgTex = textureLoader.load('graphics/textures/scene-background.png');
 // scene.background = new THREE.Color(0x0080ff);
 scene.background = bgTex;
 scene.environment = bgTex;
-// const camera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.1, 1000);
+// const camera = new THREE.OrthographicCamera(-8 * wAspectFloat, 8 * wAspectFloat, 8, -8, 0.1, 1000);
 const camera = new THREE.PerspectiveCamera(90, wAspectFloat, 0.5, 1000);
 camera.position.x = 0;
 camera.position.y = 0;
@@ -195,9 +203,11 @@ animate();
 
 
 function pointerMove(x, y) {
+    //determine which vertex the cursor is closest to
     const indX = Math.floor((x / wX) * xPoi);
     const indY = Math.floor((1 - y / wY) * yPoi);
-    
+
+    //apply an offset to the selected vertex and its neighboring vertices
     for (let i = -(pointerSize-1); i < pointerSize; i++) {
         const xtemp = i + indX;
         for (let j = -(pointerSize-1); j < pointerSize; j++) {
@@ -233,9 +243,14 @@ function rippleAnimate() {
                                         prev[index - xPoi]) / 2 - curr[index];
             curr[index] = curr[index] * damping;
             curr[index] = isNaN(curr[index]) ? 0 : curr[index];
+            
+            let normalVector = new THREE.Vector3(0,0,1);
 
-            normalsA.setX(index, -curr[index]);
-            normalsA.setY(index, curr[index]);
+            normalVector.applyAxisAngle(xAxis, -curr[index]);
+            normalVector.applyAxisAngle(yAxis, curr[index]);
+            normalsA.setX(index, normalVector.x);
+            normalsA.setY(index, normalVector.y);
+            normalsA.setZ(index, normalVector.z);
         }
     }
 
@@ -245,6 +260,7 @@ function rippleAnimate() {
         curr[i] = temp;
     }
 
+    // console.log(normalsA.getX(3 + xPoi * (yPoi-3)) + ' : ' + normalsA.getY(3 + xPoi * (yPoi-3)) + ' : ' + normalsA.getZ(3 + xPoi * (yPoi-3)));
     normalsA.needsUpdate = true;
 }
 
