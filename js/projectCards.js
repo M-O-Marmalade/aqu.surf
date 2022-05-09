@@ -14,8 +14,8 @@ document.querySelectorAll('.projectCard').forEach(card => {
 
 
         const placeholderDiv = document.createElement("div");
-        const newContent = document.createTextNode("hi there");
-        placeholderDiv.appendChild(newContent);
+        // const newContent = document.createTextNode("hi there");
+        // placeholderDiv.appendChild(newContent);
         placeholderDiv.style.width = eBoundRect.width + 'px';
         placeholderDiv.style.height = eBoundRect.height + 'px';
         placeholderDiv.style.margin = 'clamp(5px, 25px, 25px)';
@@ -31,10 +31,10 @@ document.querySelectorAll('.projectCard').forEach(card => {
 
         requestAnimationFrame(function() {
             element.classList.add("clicked");
-            element.style.top = '0px';
-            element.style.left = '0px';
-            element.style.minWidth = '100vw';
-            element.style.minHeight = '100vh';
+            element.style.top = '7.5vh';
+            element.style.left = '10vw';
+            element.style.minWidth = '80vw';
+            element.style.minHeight = '80vh';
             element.style.margin = '0px';
         });
 
