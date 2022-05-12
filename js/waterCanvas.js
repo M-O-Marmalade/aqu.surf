@@ -74,7 +74,7 @@ camera.lookAt(0, 0, 0);
 
 // light
 const light = new THREE.DirectionalLight(0xf8f8f8, 1.5);
-light.position.set(-1, 2, 10);
+light.position.set(-2, 2, 10);
 scene.add(light);
 
 // materials
@@ -252,7 +252,7 @@ function rippleAnimate() {
 
             let normalVector = new THREE.Vector3(0, 0, 1);
 
-            normalVector.applyAxisAngle(xAxis, -curr[index]);
+            normalVector.applyAxisAngle(xAxis, curr[index]);
             normalVector.applyAxisAngle(yAxis, curr[index]);
             normalsA.setX(index, normalVector.x);
             normalsA.setY(index, normalVector.y);

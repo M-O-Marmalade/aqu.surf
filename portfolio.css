@@ -22,7 +22,7 @@
     --orange-3: #ffda00;
 
     --glass: #acd7ffa0;
-    --glass-2: rgba(12, 92, 166, 0.961);
+    --glass-2: rgba(12, 92, 166, 0.989);
 
     --project-text-color: var(--dark-2);
 }
@@ -75,34 +75,30 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    align-content: stretch;
     margin: 100vh 0 0;
     /* border: 1px solid yellow; */
 }
 
 .projectCard {
     margin: 25px;
-    max-width: 90vw;
-    max-height: 90vh;
-    min-width: 1vw;
-    min-height: 1vh;
     background-color: transparent;
-    /* border: 1px solid yellow; */
+    border: 1px solid yellow;
+    transition: 1s;
 }
 
 .projectCardInner {
     position: relative;
     top: 0;
+    height: 100%;
     padding: 14px;
     border-radius: 15px;
-    height: 100%;
+    border: 2px outset var(--glass);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     background-color: var(--glass);
-    border: 2px outset var(--glass);
     transition: 0.75s;
     transform-style: preserve-3d;
     box-shadow: 5px 14px 4px 0 rgba(7, 0, 142, 0.096);
@@ -112,10 +108,12 @@ body {
     background-color: var(--glass-2);
     border: 14px outset var(--glass-2);
     transform: rotateY(180deg);
+    color: white;
+    z-index: 10;
 }
 
 .projectCardFront, .projectCardBack {
-    position: relative;
+    /* position: relative; */
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }

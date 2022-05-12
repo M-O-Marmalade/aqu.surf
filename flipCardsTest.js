@@ -1,34 +1,33 @@
-document.querySelectorAll('.itemDiv').forEach(div => {
-    div.addEventListener('click', function handleClick(e) {
-        const element = e.currentTarget;
+//TODO
+//keep track of which element is currently flipped, and allow it to transition back to its original state when a button on the backside is clicked
+//only allow one element to be flipped at a time
 
-        if (element.classList.contains('clicked')) {return;}
+document.querySelectorAll('.itemDiv').forEach(item => {
+    item.addEventListener('click', function handleClick(e) {
+        if (e.currentTarget.classList.contains('clicked')) {return;}
+        
+        const elem = e.currentTarget;
+        const elemRect = elem.getBoundingClientRect();  //store the element's bounding rectangle before any changes are made
 
-        const eBoundRect = element.getBoundingClientRect();
+        const clone = elem.cloneNode(true); //create and add the clone to be flipped
+        document.body.after(clone);
 
-        const placeholderDiv = document.createElement("div");
-        placeholderDiv.style.width = eBoundRect.width + 'px';
-        placeholderDiv.style.height = eBoundRect.height + 'px';
-        placeholderDiv.style.margin = '25px';
-        document.getElementById("flexDiv").insertBefore(placeholderDiv, element);
+        elem.style.visibility = 'hidden';   //hide the original element
+        
+        clone.style.position = "fixed"; //set the clone's starting position/size to be transitioned from
+        clone.style.margin = '0px';
+        clone.style.top = elemRect.top + 'px';
+        clone.style.left = elemRect.left + 'px';
+        clone.style.width = elemRect.width + 'px';
+        clone.style.height = elemRect.height + 'px';
 
-        element.style.position = 'fixed';
-        element.style.top = eBoundRect.top + 'px';
-        element.style.left = eBoundRect.left + 'px';
-        element.style.width = eBoundRect.width + 'px';
-        element.style.height = eBoundRect.height + 'px';
-        element.style.transition = '0.75s';
-        element.style.zIndex = 10;
 
-        element.style.border = "1px solid black";
-
-        requestAnimationFrame(function() {
-            element.classList.add("clicked");
-            element.style.top = '7.5vh';
-            element.style.left = '10vw';
-            element.style.width = '80vw';
-            element.style.height = '80vh';
-            element.style.margin = '0px';
+        requestAnimationFrame(function() {  //set the clone's ending position/size to be transitioned to on the next frame, so it will actually transition
+            clone.style.width = '90vw';
+            clone.style.height = '90vh';
+            clone.style.top = '5vh'
+            clone.style.left = '5vw';
+            clone.classList.add("clicked");            
         });
 
     });

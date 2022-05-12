@@ -1,27 +1,23 @@
 document.querySelectorAll('.projectCard').forEach(card => {
     card.addEventListener('click', function handleClick(e) {
         const element = e.currentTarget;
-        console.log(element.id + " projectCard was clicked!")
-
         if (element.classList.contains('clicked')) {return;}
-
         const eBoundRect = element.getBoundingClientRect();
 
         const placeholderDiv = document.createElement("div");
         placeholderDiv.style.width = eBoundRect.width + 'px';
         placeholderDiv.style.height = eBoundRect.height + 'px';
-        placeholderDiv.style.margin = 'clamp(5px, 25px, 25px)';
+        placeholderDiv.style.margin = '25px';
         document.getElementById("projects").insertBefore(placeholderDiv, element);
 
         element.style.position = 'fixed';
         element.style.top = eBoundRect.top + 'px';
         element.style.left = eBoundRect.left + 'px';
-        element.style.width = eBoundRect.width + 'px';
-        element.style.height = eBoundRect.height + 'px';
-        element.style.transition = '0.75s';
-        element.style.zIndex = 10;
+        // element.style.width = eBoundRect.width + 'px';
+        // element.style.height = eBoundRect.height + 'px';
+        // element.style.zIndex = 10;
 
-        element.style.border = "1px solid black";
+        element.style.border = "1px solid red";
 
         requestAnimationFrame(function() {
             element.classList.add("clicked");
