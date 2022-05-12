@@ -81,7 +81,7 @@ body {
 }
 
 .projectCard {
-    margin: clamp(5px, 25px, 25px);
+    margin: 25px;
     max-width: 90vw;
     max-height: 90vh;
     min-width: 1vw;

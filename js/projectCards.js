@@ -6,16 +6,8 @@ document.querySelectorAll('.projectCard').forEach(card => {
         if (element.classList.contains('clicked')) {return;}
 
         const eBoundRect = element.getBoundingClientRect();
-        // these are relative to the viewport, i.e. the window
-        console.log("top: " + eBoundRect.top);
-        console.log("left: " + eBoundRect.left);
-        console.log("width: " + eBoundRect.width);
-        console.log("height: " + eBoundRect.height);
-
 
         const placeholderDiv = document.createElement("div");
-        // const newContent = document.createTextNode("hi there");
-        // placeholderDiv.appendChild(newContent);
         placeholderDiv.style.width = eBoundRect.width + 'px';
         placeholderDiv.style.height = eBoundRect.height + 'px';
         placeholderDiv.style.margin = 'clamp(5px, 25px, 25px)';
@@ -29,12 +21,14 @@ document.querySelectorAll('.projectCard').forEach(card => {
         element.style.transition = '0.75s';
         element.style.zIndex = 10;
 
+        element.style.border = "1px solid black";
+
         requestAnimationFrame(function() {
             element.classList.add("clicked");
             element.style.top = '7.5vh';
             element.style.left = '10vw';
-            element.style.minWidth = '80vw';
-            element.style.minHeight = '80vh';
+            element.style.width = '80vw';
+            element.style.height = '80vh';
             element.style.margin = '0px';
         });
 

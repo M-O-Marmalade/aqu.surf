@@ -1,0 +1,25 @@
+body {
+    background-color: midnightblue;
+    color: white;
+}
+
+.flexDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemDiv {
+    margin: 20px;
+}
+
+.frontDiv {
+    background-color: blue;
+}
+
+.backDiv {
+    background-color: aqua;
+    color: black;
+}
