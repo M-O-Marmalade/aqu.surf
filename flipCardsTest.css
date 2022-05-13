@@ -19,14 +19,15 @@ p {
     margin: 0px;
 }
 
-.flexDiv {
+#flexDiv {
     margin: 50vh 0px 0px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    perspective: 100vh;
+    perspective: 1000px;
+    border: 1px solid yellow;
 }
 
 .itemDiv {
@@ -35,19 +36,6 @@ p {
     /* border: 1px solid yellow; */
     transform-style: preserve-3d;
     flex-grow: grow;
-}
-
-.itemDiv.clicked {
-    transform: rotateY(180deg);
-    z-index: 10;
-}
-
-.itemDiv.clicked .frontDiv {
-    position: absolute;
-}
-
-.itemDiv.clicked .backDiv {
-    position: static;
 }
 
 .frontDiv, .backDiv {
