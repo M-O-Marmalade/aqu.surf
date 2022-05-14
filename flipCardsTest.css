@@ -63,11 +63,14 @@ p {
 
 .backDiv {
     position: absolute;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     background-color: aqua;
     color: black;
     transform: rotateY(180deg);
+    box-sizing: border-box;
+    border-radius: 5em;
 }
 
 .closeCardButton {    
