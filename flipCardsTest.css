@@ -1,9 +1,7 @@
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* hide main scrollbar */
 :root::-webkit-scrollbar {
-    display: none;
+    display: none;  /*Chrome, Safari and Opera */
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
 :root {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -20,12 +18,14 @@ p {
 }
 
 #flexDiv {
-    margin: 50vh 0px 0px;
+    margin: 50vh 0 0;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    
     perspective: 1000px;
     border: 1px solid yellow;
 }
@@ -33,49 +33,59 @@ p {
 .itemDiv {
     margin: 20px;
     transition: 1.5s, visibility 0s;
-    /* border: 1px solid yellow; */
     transform-style: preserve-3d;
-    flex-grow: grow;
 }
 
 .frontDiv, .backDiv {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
-    overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.frontDiv::-webkit-scrollbar, .backDiv::-webkit-scrollbar {
-    display: none;
-}
 
 .frontDiv {
     background-color: blue;
-    box-sizing: border-box;
     padding: 1em;
     border-radius: 1em;
     cursor: pointer;
+    box-shadow: 3px 7px 2px 2px black;
 }
 
 .backDiv {
     position: absolute;
+    background-color: aqua;
+    transform: rotateY(180deg);
+    border-radius: 5em;
+    overflow: hidden;
+    box-shadow: 14px 27px 7px 13px black;
+}
+
+.writeUp {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
     padding: 30px;
     display: flex;
     flex-direction: column;
-    background-color: aqua;
     color: black;
-    transform: rotateY(180deg);
-    box-sizing: border-box;
-    border-radius: 5em;
+    overflow: scroll;
+}
+
+/* hide writeUp's scrollbar */
+.writeUp::-webkit-scrollbar {
+    display: none;  /*Chrome, Safari and Opera */
+}
+.writeUp {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .closeCardButton {    
-    align-self: flex-end;
-    margin: 1em;
+    position: absolute;
+    top: 2em;
+    right: 2em;
     width: 20px;
     height: 20px;
     cursor: pointer;

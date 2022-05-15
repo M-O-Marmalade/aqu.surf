@@ -23,7 +23,7 @@ document.body.appendChild(waterCanvas);
 
 const fps = 60;
 const msPerFrame = 1000 / fps;
-const damping = 0.99;
+const damping = 0.984;
 const pointerStrength = 0.177;
 const pointerSize = 2;
 

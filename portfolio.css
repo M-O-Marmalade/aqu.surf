@@ -1,3 +1,12 @@
+/* hide main scrollbar */
+:root::-webkit-scrollbar {
+    display: none;  /*Chrome, Safari and Opera */
+}
+:root {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 @font-face {
     font-family: interceptor;
     src: url("fonts/interceptor.otf");
@@ -21,119 +30,111 @@
     --orange-2: #ffb800;
     --orange-3: #ffda00;
 
-    --glass: #acd7ffa0;
-    --glass-2: rgba(12, 92, 166, 0.989);
+    --glass: #44c1ff60;
+    --glass-2: rgba(6, 75, 139, 0.992);
 
     --project-text-color: var(--dark-2);
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-:root::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-:root {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
 body {
-    margin: 0;
+    margin: 0px;
+
     background-image: url("graphics/BG/BlueGradient.png");
     background-size: cover;
     background-position: left top;
     background-attachment: fixed;
 }
 
-/* .mainHeader {
-    position: sticky;
-    top: 0;
-    height: 53px;
-    min-height: 7vh;
-    background-image: url("graphics/BG/JuicyOrange.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
-/* .mainHeaderLogo {
-    font-family: monof55;
-    font-size: 53px;
-    background-image: url("graphics/BG/BlueGradient.png");
-    background-size: cover;
-    background-position: left top;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-} */
-
 .projectsFlex {
+    margin: 100vh 0 0;
+
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: 100vh 0 0;
+    
+    perspective: 2000px;
+
     /* border: 1px solid yellow; */
 }
 
 .projectCard {
     margin: 25px;
-    background-color: transparent;
-    border: 1px solid yellow;
-    transition: 1s;
+
+    transition: 1s, visibility 0s;
+    transform-style: preserve-3d;
+
+    /* border: 1px solid yellow; */
 }
 
-.projectCardInner {
-    position: relative;
-    top: 0;
+.projectCardFront, .projectCardBack {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    width: 100%;
     height: 100%;
+}
+
+.projectCardFront {
     padding: 14px;
-    border-radius: 15px;
-    border: 2px outset var(--glass);
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    cursor: pointer;
     background-color: var(--glass);
-    transition: 0.75s;
-    transform-style: preserve-3d;
+    border: 2px outset var(--glass);
+    border-radius: 15px;
     box-shadow: 5px 14px 4px 0 rgba(7, 0, 142, 0.096);
 }
 
-.projectCard.clicked .projectCardInner {
-    background-color: var(--glass-2);
-    border: 14px outset var(--glass-2);
-    transform: rotateY(180deg);
-    color: white;
-    z-index: 10;
-}
-
-.projectCardFront, .projectCardBack {
-    /* position: relative; */
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-
-.projectCardFront {
-    /* border: 1px solid red; */
-}
-
 .projectCardBack {
-    /* width: 100%; */
-    /* height: 80vh; */
+    position: absolute; 
+
     transform: rotateY(180deg);
-    position: absolute;
-    /* background-color: white; */
-    display: flex;
-    flex-direction: column;
+
+    color: white;
+    background-color: var(--glass-2);
+
+    transition: border-radius 2s;
+    border: 14px outset var(--glass-2);
+    border-radius: clamp(5vw, 50px, 50px);
+    box-shadow: 5px 14px 4px 0 rgba(7, 0, 142, 0.096);
 }
 
 .projectWriteup {
-    margin: 0;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: scroll;
+
+    display: flex;
+    flex-direction: column;
+
+    color: black;
+}
+/* hide writeUp's scrollbar */
+.projectWriteup::-webkit-scrollbar {
+    display: none;  /*Chrome, Safari and Opera */
+}
+.projectWriteup {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.closeCardButton {    
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    filter: invert(14%) sepia(56%) saturate(3860%) hue-rotate(231deg) brightness(87%) contrast(119%);
 }
 
 .projectPic {
