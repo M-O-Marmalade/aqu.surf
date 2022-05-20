@@ -182,15 +182,15 @@ scene.add(torusMesh);
 
 
 //add name model to scene
-gltfLoader.load("graphics/models/James Graham.glb", function (gltf) {
+gltfLoader.load("graphics/models/james-graham.glb", function (gltf) {
     gltf.scene.position.z = -2.5;
     if (wAspectFloat < 1) {
-        gltf.scene.scale.set(26 * wAspectFloat, 26 * wAspectFloat, 26 * wAspectFloat);
+        gltf.scene.scale.set(wAspectFloat, wAspectFloat, wAspectFloat);
         // nameMesh.position.y = .5 * (1 - wAspectFloat);
     }
     gltf.scene.traverse((o) => {
-        if (o.name === "Sphere") {
-            o.material = phongMat;
+        if (o.name === "Text") {
+            o.material = normalMat;
         }
     })
     scene.add(gltf.scene);

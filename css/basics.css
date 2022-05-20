@@ -38,7 +38,7 @@
 }
 
 body {
-	background-image: url(graphics/BG/BlueGradient.png);
+	background-image: url("../graphics/BG/BlueGradient.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 }

@@ -39,7 +39,7 @@
 body {
     margin: 0px;
 
-    background-image: url("graphics/BG/BlueGradient.png");
+    background-image: url("../graphics/BG/BlueGradient.png");
     background-size: cover;
     background-position: left top;
     background-attachment: fixed;
