@@ -1,0 +1,14 @@
+#titleArt {
+    display: block;
+    margin: 10px auto;
+}
+
+#demoAnimation {
+    display: block;
+    margin: 10px auto;
+}
+
+body {
+    background-image: url("../graphics/BG/paddles-black.png");
+    width: 100vw;
+}
