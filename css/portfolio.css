@@ -64,6 +64,7 @@ body {
 
     transition: 1s, visibility 0s;
     transform-style: preserve-3d;
+    z-index: 2;
 
     /* border: 1px solid yellow; */
 }
