@@ -8,19 +8,20 @@
         <link rel="icon" type="image/x-icon" href="graphics/flavicon.svg">
     </head>
     <body>
-        <img id="titleArt" src="graphics/paddles/paddles-big-cropped.png">
+        <img id="titleArt" src="graphics/paddles/paddles-big-title.png">
         <img id="demoAnimation" src="graphics/paddles/paddles-demo-cropped.apng">
-        <p id="titleDescription">A game for <a href="https://www.renoise.com/">Renoise</a></p>
+        <p class="description">A game for <a href="https://www.renoise.com/products/renoise">Renoise</a></p>
+        <p class="description" style="font-size: 4rem;"><a href="https://www.renoise.com/tools/paddles">Download</a></p>
+        <p class="sectionHeader">Options</p>
+        <hr class="hrLine">
         <div id="controlsReference">
-            <p id="controlsHeader">Controls</p>
-            <hr class="hrLine">
             <div class="control">
                 <img src="graphics/paddles/paddlesize.bmp" alt="">
                 <p>Paddle Size</p>
             </div>
             <div class="control">
                 <img src="graphics/paddles/paddlespeed.bmp" alt="">
-                <p>Paddle Speed</p>
+                <p>Paddle Speed (doesn't affect control sliders)</p>
             </div>
             <div class="control">
                 <img src="graphics/paddles/ballspeed.bmp" alt="">
@@ -28,7 +29,7 @@
             </div>
             <div class="control">
                 <img src="graphics/paddles/ballrange.bmp" alt="">
-                <p>Ball Spawning Area</p>
+                <p>Ball Respawn Area</p>
             </div>
             <div class="control">
                 <img src="graphics/paddles/displayscale.bmp" alt="">
@@ -62,6 +63,30 @@
                 <img src="graphics/paddles/question.bmp" alt="">
                 <p>Help</p>
             </div>
+        </div>
+
+        <p class="sectionHeader">Hotkeys</p>
+        <hr class="hrLine">
+        <div id="controlsReference">
+            <div class="control">
+                <img src="graphics/paddles/arrow-up.png" alt="">
+                <p>P1 Paddle Up</p>
+            </div>
+            <div class="control">
+                <img src="graphics/paddles/arrow-down.png" alt="">
+                <p>P1 Paddle Down</p>
+            </div>
+            <div class="control">
+                <img src="graphics/paddles/spacebar.png" alt="">
+                <p>Start/Stop Game</p>
+            </div>
+        </div>
+
+        <p class="sectionHeader">Links</p>
+        <hr class="hrLine">
+        <div id="links">
+            <a href="https://www.renoise.com/tools/paddles"><img class="link" src="graphics/paddles/renoise-logo.png" alt="Renoise Tool Page"></a>
+            <a href="https://github.com/M-O-Marmalade/Paddles"><img class="link" src="graphics/paddles/github-logo.png" alt="GitHub"></a>
         </div>
     </body>
 </html>

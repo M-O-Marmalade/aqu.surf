@@ -25,33 +25,35 @@ a {
 
 #titleArt {
     display: block;
-    margin: 5px auto;
-    min-width: 50%;
+    margin: 10px auto;
+    width: 600px;
     max-width: 100%;
+    image-rendering: pixelated;
 }
 
 #demoAnimation {
     display: block;
+    image-rendering: pixelated;
     margin: 5px auto;
     max-width: 100%;
 }
 
-#titleDescription {
+.description {
     text-align: center;
-    margin: 5px auto 3rem;
+    margin: 5px auto 1em;
 }
 
-#controlsHeader {
+.sectionHeader {
     text-align: center;
     font-size: 4rem;
-    margin: 0px;
+    margin: 3rem auto 1rem;
 }
 
 .hrLine {
     border: 2px solid white;
     border-radius: 3px;
     width: clamp(50%,500px,90%);
-    margin: 0.5rem auto;
+    margin: 0rem auto 1rem;
 }
 
 #controlsReference {
@@ -79,6 +81,19 @@ a {
 .control img {
     image-rendering: pixelated;
     height: 48px;
+}
+
+#links {
+    margin: 0px auto 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.link {
+    width: 64px;
+    image-rendering: pixelated;
+    margin: 0px 16px;
 }
 
 * {
