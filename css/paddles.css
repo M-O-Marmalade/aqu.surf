@@ -1,14 +1,86 @@
+@font-face {
+    font-family: huskysta;
+    src: url("fonts/CubicCoreMono.ttf");
+}
+
+body {
+    margin: 0px;
+    background-image: url("../graphics/paddles/paddles-black.png");
+}
+
+p {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: xx-large;
+}
+
+a {
+    background-image: url("../graphics/BG/BlueGradient.png");
+    background-size: cover;
+    background-position: left top;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 #titleArt {
     display: block;
-    margin: 10px auto;
+    margin: 5px auto;
+    min-width: 50%;
+    max-width: 100%;
 }
 
 #demoAnimation {
     display: block;
-    margin: 10px auto;
+    margin: 5px auto;
+    max-width: 100%;
 }
 
-body {
-    background-image: url("../graphics/BG/paddles-black.png");
-    width: 100vw;
+#titleDescription {
+    text-align: center;
+    margin: 5px auto 3rem;
+}
+
+#controlsHeader {
+    text-align: center;
+    font-size: 4rem;
+    margin: 0px;
+}
+
+.hrLine {
+    border: 2px solid white;
+    border-radius: 3px;
+    width: clamp(50%,500px,90%);
+    margin: 0.5rem auto;
+}
+
+#controlsReference {
+    display: flex;
+    flex-direction: column;
+}
+
+.control {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+}
+
+.control p {
+    /* display: inline; */
+    /* height: 48px; */
+    /* padding: 20px; */
+    margin: 0px 0.5em;
+    font-size: x-large;
+}
+
+.control img {
+    image-rendering: pixelated;
+    height: 48px;
+}
+
+* {
+    /* border: 1px solid white; */
 }
