@@ -12,28 +12,26 @@
     scrollbar-width: none;  /* Firefox */
 }
 
-:root {
-    --mainColor: #ffffff;
-}
-
 body {
     margin: 0px;
-    background-image: url("../graphics/paddles/paddles-black.png");
+    background-image: url("../graphics/reform/reform-blue-grid.png");
 }
 
 p {
-    color: var(--mainColor);
+    color: white;
     font-family: Arial, Helvetica, sans-serif;
     font-size: xx-large;
 }
 
 a {
-    background-image: url("../graphics/BG/BlueGradient.png");
-    background-size: cover;
+    /* background-image: url("../graphics/reform/reform-blue-gradient.png");
+    background-size: 100%;
     background-position: left top;
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent; */
+    color: var(--mainColor);
+    text-decoration: underline;
 }
 
 #titleArt {
@@ -63,7 +61,7 @@ a {
 }
 
 .hrLine {
-    border: 2px solid var(--mainColor);
+    border: 2px solid white;
     border-radius: 3px;
     width: clamp(50%,500px,90%);
     margin: 0rem auto 1rem;
