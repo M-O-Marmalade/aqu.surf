@@ -36,9 +36,9 @@ a {
 
 #titleArt {
     display: block;
-    margin: 10px auto;
+    margin: 14px auto;
     width: 600px;
-    max-width: 100%;
+    max-width: 94%;
     image-rendering: pixelated;
 }
 
