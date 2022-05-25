@@ -19,7 +19,8 @@ waterCanvas.style.width = "100%";
 waterCanvas.style.height = "100%";
 waterCanvas.style.overflow = "hidden";
 waterCanvas.style.zIndex = -10;
-document.body.appendChild(waterCanvas);
+// document.body.appendChild(waterCanvas);
+document.body.insertBefore(waterCanvas, document.body.firstChild);
 
 const fps = 60;
 const msPerFrame = 1000 / fps;
@@ -201,10 +202,12 @@ gltfLoader.load("graphics/models/james-graham.glb", function (gltf) {
 document.body.addEventListener('mousemove', onMouseMove);
 document.body.addEventListener('touchmove', onTouchMove);
 window.addEventListener("resize", onWindowResize);
+document.addEventListener("visibilitychange", onVisibilityChange);
 
 
 //start the animation
 let prevFrameTime = performance.now();
+let extraFrameTime = 0.0;
 animate();
 
 
@@ -271,14 +274,23 @@ function rippleAnimate() {
 }
 
 function animate(sysTime) {
-
-    if (sysTime - prevFrameTime >= msPerFrame) {
-        prevFrameTime = sysTime;
+    const cumulativeTime = extraFrameTime + sysTime - prevFrameTime;
+    if (cumulativeTime >= msPerFrame) {
+        extraFrameTime = cumulativeTime - msPerFrame;
+        prevFrameTime = performance.now();
+        // console.log("prev: " + prevFrameTime);
+        // console.log("extra: " + extraFrameTime);
         rippleAnimate();
         renderer.render(scene, camera);
     }
 
     requestAnimationFrame(animate)
+}
+
+function onVisibilityChange(e) {
+    if (document.visibilityState === 'visible') {
+      prevFrameTime = performance.now();
+    }
 }
 
 function onWindowResize() {

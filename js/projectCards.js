@@ -21,10 +21,12 @@ document.querySelectorAll('.' + cardClass).forEach(item => {
         clone.id = clone.id + "clone";
         clone.querySelector('.' + closeButtonClass).addEventListener('click', closeFlipCard);
 
-        document.body.insertBefore(clone, document.body.firstChild);
+        document.body.lastChild.after(clone);
 
         this.style.visibility = 'hidden';   //hide the original element
         
+        clone.style.transform = 'translateZ(999px)';
+        clone.style.transition = '1s, visibility 0s';
         clone.style.position = 'fixed'; //set the clone's starting position/size to be transitioned from
         clone.style.margin = '0px';
         clone.style.top = origRect.top + 'px';
@@ -35,15 +37,14 @@ document.querySelectorAll('.' + cardClass).forEach(item => {
 
         requestAnimationFrame(function() {  //set the clone's ending position/size to be transitioned to on the next frame, so it will actually transition
             requestAnimationFrame(function() {
-                clone.style.width = '90vw';
-                clone.style.height = '90vh';
                 clone.style.top = '5vh'
                 clone.style.left = '5vw';
+                clone.style.width = '90vw';
+                clone.style.height = '90vh';
                 clone.style.transform = 'rotateY(180deg) translateZ(-43px)';
                 clone.style.zIndex = 10;
                 clone.querySelector('.' + frontClass).style.position = 'absolute';
                 clone.querySelector('.' + backClass).style.position = 'static';
-                clone.style.position = 'fixed';
             });
         });
 
