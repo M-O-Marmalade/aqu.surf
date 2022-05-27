@@ -9,29 +9,142 @@
     </head>
     <body>
         <img id="titleArt" src="graphics/reform/reform-big-cropped.png">
-        <p class="description" style="font-size: xx-large;">A note-transformation tool for <a href="https://www.renoise.com/products/renoise">Renoise</a></p>
-        <p class="description" style="font-size: 4rem;"><a href="https://www.renoise.com/tools/reform">Download</a></p>
+        <p id="description">A note-transformation tool for <a href="https://www.renoise.com/products/renoise">Renoise</a></p>
+        <h1><a href="https://www.renoise.com/tools/reform">Download</a></h1>
 
-        <p class="sectionHeader">Features</p>
-        <hr class="hrLine">        
-        <div id="features">
-            <div class="feature">
-                <h2>Time Scaling</h1>
-                <div class="featureDetails">
-                    <p>
-                        Expand or shrink the selected notes. The Anchor control sets the coordinate where the notes expand from/shrink to.
-                    </p>
-                    <img src="graphics/reform/demos/reform-demo-scaling2.apng" alt="Time Scaling Demo">
-                </div>                
+        <h1>Controls</h1>
+        <hr class="hr1">
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/scale.png">
+                    <h2>Scale</h2>
+                </div>
+                <p>Expand or shrink the selected notes. Precise values can be typed in the valuebox above the slider. The Anchor control sets the coordinate where the notes expand from/shrink to.</p>
             </div>
+            <img src="graphics/reform/demos/reform-demo-scaling2.apng" alt="Time Scaling Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/curve.png">
+                    <h2>Curve</h2>
+                </div>
+                <p>Redistribute selected notes' timings along a curve. The Curve Type control allows selection of 2 different curve types. The Anchor control sets this transformation to happen in either Note-Range or Selection-Range.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-curve2.apng" alt="Time Shift Demo">
         </div>
 
-        <p class="sectionHeader">Links</p>
-        <hr class="hrLine">
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/shift.png">
+                    <h2>Shift</h2>
+                </div>
+                <p>Shift all of the selected notes forward or backward equally.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-shifting.apng" alt="Time Shift Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/overflow.png">
+                    <h2>Overflow</h2>
+                </div>
+                <p>Use available empty columns when necessary to avoid notes being overwritten.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-overflow.apng" alt="Overflow Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/condense.png">
+                    <h2>Condense</h2>
+                </div>
+                <p>Use as few columns as possible without notes being overwritten.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-condense.apng" alt="Condense Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/redistribute.png">
+                    <h2>Redistribute</h2>
+                </div>
+                <p>Redistribute note timings evenly. The Anchor control sets this transformation to happen in either Note-Range or Selection-Range.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-redistribute.apng" alt="Redistribute Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/collisions.png">
+                    <h2>Collision Control</h2>
+                </div>
+                <p>Determines which notes are overwritten in the event of note collisions. The options are to keep earlier notes, later notes, notes which are selected, and notes which are not selected.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-collisions2.apng" alt="Collision Control Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/anchor.png">
+                    <h2>Anchor</h2>
+                </div>
+                <p>Determines the coordinate from which notes are Scaled, and the range within which notes are Curved and Redistributed. Note-Range: from the first to the last note in the selection. Selection-Range: from the top to the bottom of the selection box.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-anchors2.apng" alt="Anchor Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/volbutton.png">
+                    <h2>Volume Transform</h2>
+                </div>
+                <p>Remap Volume-Column values to a new range, curve their distribution, and redistribute them evenly from the first note to the last.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-vol.apng" alt="Volume Transform Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/panbutton.png">
+                    <h2>Panning Transform</h2>
+                </div>
+                <p>Remap Panning-Column values to a new range, curve their distribution, and redistribute them evenly from the first note to the last.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-pan.apng" alt="Panning Transform Demo">
+        </div>
+        
+        <div class="control">
+            <div class="details">
+                <div class="heading">
+                    <img src="graphics/reform/control-icons/fxbutton.png">
+                    <h2>FX Amount Transform</h2>
+                </div>
+                <p>Remap FX-Amount-Column values to a new range, curve their distribution, and redistribute them evenly from the first note to the last.</p>
+            </div>
+            <img src="graphics/reform/demos/reform-demo-fx.apng" alt="FX Amount Transform Demo">
+        </div>
+        
+        <h1>Focused Hotkeys</h1>
+        <hr class="hr1">
+
+        
+        <h1>Links</h1>
+        <hr class="hr1">
         <div id="links">
-            <a href="https://www.renoise.com/tools/reform"><img class="link" src="graphics/reform/renoise-logo.png" alt="Renoise Tool Page"></a>
-            <a href="https://github.com/M-O-Marmalade/Reform"><img class="link" src="graphics/reform/github-logo.png" alt="GitHub"></a>
-            <a href="https://forum.renoise.com"><img class="link" src="graphics/reform/forum-logo.png" alt="Forum Discussion"></a>
+            <a href="https://www.renoise.com/tools/reform"><img src="graphics/reform/renoise-logo.png" alt="Renoise Tool Page"></a>
+            <a href="https://github.com/M-O-Marmalade/Reform"><img src="graphics/reform/github-logo.png" alt="GitHub"></a>
+            <a href="https://forum.renoise.com"><img src="graphics/reform/forum-logo.png" alt="Forum Discussion"></a>
         </div>
     </body>
 </html>

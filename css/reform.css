@@ -12,19 +12,36 @@
     scrollbar-width: none;  /* Firefox */
 }
 
+:root {
+    --fs-xxl: 4rem;
+    --fs-xl: 2rem;
+    --fs-l: 1.75rem;
+    --fs-m: 1.33rem;
+    --fs-s: small;
+    --fs-xs: x-small;
+    --fs-xxs: xx-small;
+
+    --rf-white: white;
+}
+
 body {
     margin: 0px;
     background-image: url("../graphics/reform/reform-blue-grid.png");
 }
 
 p, h1, h2, h3 {
-    color: white;
+    color: var(--rf-white);
     font-family: Arial, Helvetica, sans-serif;
-    margin: 5px;
+    text-align: center;
+}
+
+h1 {
+    font-size: var(--fs-xxl);
+    margin: 1em auto 0.25em;
 }
 
 h2 {
-    font-size: xx-large;
+    font-size: var(--fs-l);
 }
 
 a {
@@ -40,54 +57,62 @@ a {
     image-rendering: pixelated;
 }
 
-.description {
+#description {
+    font-size: var(--fs-xl);
     text-align: center;
     margin: 5px auto 1em;
 }
 
-.sectionHeader {
-    text-align: center;
-    font-size: 4rem;
-    margin: 3rem auto 1rem;
-}
-
-.hrLine {
-    border: 2px dashed white;
+.hr1 {
+    border: 2px dashed var(--rf-white);
     width: clamp(50%,500px,90%);
-    margin: 1rem auto 1rem;
+    margin: 1rem auto;
 }
 
-#features {
-
-}
-
-.feature {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.featureDetails {
+.control {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
-    width: 94%;
+    margin: 2rem 1rem;
+}
+
+.control .details {
+    flex-grow: 1;
+    flex-basis: 30%;
+    max-width: 36rem;
+
+}
+
+.control .details .heading {
+    padding: 0.4rem;
+    border: 2px var(--rf-white);
+    border-style: dashed none none dashed;
+    display: inline-flex;
+    gap: 7px;
+}
+
+.control .details .heading h2 {
+    display: inline-block;
     margin: 0px;
+    text-align: left;
 }
 
-.featureDetails p {
-    margin: 0px auto auto;
-    min-width: 40%;
-    max-width: 400px;
-    font-size: x-large;
+.control .details .heading img {
+    image-rendering: pixelated;
+    display: inline;
 }
 
-.featureDetails img {
+.control .details p {
+    font-size: var(--fs-m);
+    text-align: left;
+    margin: 0em 1em 1em;
+}
+
+.control img {
     max-width: 100%;
+    align-self: center;
 }
 
 #links {
@@ -97,12 +122,12 @@ a {
     justify-content: center;
 }
 
-.link {
+#links img {
     width: 64px;
     image-rendering: pixelated;
     margin: 0px 16px;
 }
 
 /* * {
-    border: 1px solid white;
+    border: 1px solid var(--rf-white);
 } */
