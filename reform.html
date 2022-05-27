@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
         <meta name="description" content="Reform - A tool for Renoise">
         <title>Reform</title>
         <link rel="stylesheet" href="css/reform.css">
@@ -20,7 +20,7 @@
                     <img src="graphics/reform/control-icons/scale.png">
                     <h2>Scale</h2>
                 </div>
-                <p>Expand or shrink the selected notes. Precise values can be typed in the valuebox above the slider. The Anchor control sets the coordinate where the notes expand from/shrink to.</p>
+                <p>Expand or shrink the selected notes' timings. Anchor sets the coordinate where notes expand from/shrink to.</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-scaling2.apng" alt="Time Scaling Demo">
         </div>
@@ -31,7 +31,7 @@
                     <img src="graphics/reform/control-icons/curve.png">
                     <h2>Curve</h2>
                 </div>
-                <p>Redistribute selected notes' timings along a curve. The Curve Type control allows selection of 2 different curve types. The Anchor control sets this transformation to happen in either Note-Range or Selection-Range.</p>
+                <p>Redistribute the selected notes' timings along one of the available curve types. Anchor controls whether this happens in Note-Range or Selection-Range.</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-curve2.apng" alt="Time Shift Demo">
         </div>
@@ -75,7 +75,7 @@
                     <img src="graphics/reform/control-icons/redistribute.png">
                     <h2>Redistribute</h2>
                 </div>
-                <p>Redistribute note timings evenly. The Anchor control sets this transformation to happen in either Note-Range or Selection-Range.</p>
+                <p>Redistribute note timings evenly. Anchor controls whether this happens in Note-Range or Selection-Range.</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-redistribute.apng" alt="Redistribute Demo">
         </div>
@@ -86,7 +86,7 @@
                     <img src="graphics/reform/control-icons/collisions.png">
                     <h2>Collision Control</h2>
                 </div>
-                <p>Determines which notes are overwritten in the event of note collisions. The options are to keep earlier notes, later notes, notes which are selected, and notes which are not selected.</p>
+                <p>Determines which notes are preserved in the event of note collisions. The options are to keep earlier notes, later notes, notes which are selected, and notes which are not selected.</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-collisions2.apng" alt="Collision Control Demo">
         </div>
@@ -97,7 +97,7 @@
                     <img src="graphics/reform/control-icons/anchor.png">
                     <h2>Anchor</h2>
                 </div>
-                <p>Determines the coordinate from which notes are Scaled, and the range within which notes are Curved and Redistributed. Note-Range: from the first to the last note in the selection. Selection-Range: from the top to the bottom of the selection box.</p>
+                <p>Controls the coordinate from which notes are Scaled, and the range within which notes are Curved and Redistributed. (Note-Range: from the first to the last note in the selection. Selection-Range: from the top to the bottom of the selection box.)</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-anchors2.apng" alt="Anchor Demo">
         </div>
@@ -108,7 +108,7 @@
                     <img src="graphics/reform/control-icons/volbutton.png">
                     <h2>Volume Transform</h2>
                 </div>
-                <p>Remap Volume-Column values to a new range, curve their distribution, and redistribute them evenly from the first note to the last.</p>
+                <p>Remap Volume values to a new range and curve, and redistribute them evenly.</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-vol.apng" alt="Volume Transform Demo">
         </div>
@@ -119,7 +119,7 @@
                     <img src="graphics/reform/control-icons/panbutton.png">
                     <h2>Panning Transform</h2>
                 </div>
-                <p>Remap Panning-Column values to a new range, curve their distribution, and redistribute them evenly from the first note to the last.</p>
+                <p>Remap Panning values to a new range and curve, and redistribute them evenly.</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-pan.apng" alt="Panning Transform Demo">
         </div>
@@ -128,9 +128,9 @@
             <div class="details">
                 <div class="heading">
                     <img src="graphics/reform/control-icons/fxbutton.png">
-                    <h2>FX Amount Transform</h2>
+                    <h2>FX Transform</h2>
                 </div>
-                <p>Remap FX-Amount-Column values to a new range, curve their distribution, and redistribute them evenly from the first note to the last.</p>
+                <p>Remap Local FX Amount values to a new range and curve, and redistribute them evenly.</p>
             </div>
             <img src="graphics/reform/demos/reform-demo-fx.apng" alt="FX Amount Transform Demo">
         </div>
