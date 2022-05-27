@@ -81,7 +81,14 @@ a {
 .details {
     flex-grow: 1;
     flex-basis: 30%;
+}
+
+.control .details {
     max-width: 36rem;
+}
+
+.hotkey .details {
+    max-width: 40rem;
 }
 
 .heading {
@@ -89,6 +96,7 @@ a {
     border: 2px var(--rf-white);
     border-style: dashed none none dashed;
     display: inline-flex;
+    flex-wrap: wrap;
     gap: 7px;
 }
 
