@@ -104,7 +104,7 @@ a {
 }
 
 .link {
-    width: 64px;
+    /* width: 64px; */
     image-rendering: pixelated;
     margin: 0px 16px;
 }

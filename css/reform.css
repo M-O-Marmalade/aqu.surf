@@ -69,7 +69,7 @@ a {
     margin: 1rem auto;
 }
 
-.control {
+.control, .hotkey {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -78,14 +78,13 @@ a {
     margin: 2rem 1rem;
 }
 
-.control .details {
+.details {
     flex-grow: 1;
     flex-basis: 30%;
     max-width: 36rem;
-
 }
 
-.control .details .heading {
+.heading {
     padding: 0.4rem;
     border: 2px var(--rf-white);
     border-style: dashed none none dashed;
@@ -93,21 +92,23 @@ a {
     gap: 7px;
 }
 
-.control .details .heading h2 {
+.heading h2 {
     display: inline-block;
     margin: 0px;
     text-align: left;
 }
 
-.control .details .heading img {
+.heading img {
     image-rendering: pixelated;
     display: inline;
+    max-width: 100%;
+    align-self: center;
 }
 
-.control .details p {
+.details p {
     font-size: var(--fs-m);
     text-align: left;
-    margin: 0em 1em 1em;
+    margin: 0.75em 1em 1em;
 }
 
 .control img {
@@ -123,7 +124,6 @@ a {
 }
 
 #links img {
-    width: 64px;
     image-rendering: pixelated;
     margin: 0px 16px;
 }
