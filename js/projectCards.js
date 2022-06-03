@@ -1,10 +1,10 @@
 let isACardFlipped = false;
 let flipCardUniqueIDCounter = 0;
 
-const cardClass = "projectCard";
+const cardClass = "project";
 const closeButtonClass = "closeCardButton";
-const frontClass = "projectCardFront";
-const backClass = "projectCardBack";
+const frontClass = "projectFront";
+const backClass = "projectBack";
 
 
 document.querySelectorAll('.' + cardClass).forEach(item => {

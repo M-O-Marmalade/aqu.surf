@@ -29,11 +29,21 @@
     --orange-1: #ff9100;
     --orange-2: #ffb800;
     --orange-3: #ffda00;
+    --coral: #ffe4ff;
+    --hot-coral: #ffa0ff;
 
     --glass: #44c1ff60;
     --glass-2: rgba(6, 75, 139, 0.992);
 
     --project-text-color: var(--dark-2);
+
+    --fs-xxl: 3rem;
+    --fs-xl: 2.5rem;
+    --fs-l: 2rem;
+    --fs-m: 1.5rem;
+    --fs-s: 1rem;
+    --fs-xs: 0.9rem;
+    --fs-xxs: xx-small;
 }
 
 body {
@@ -45,8 +55,24 @@ body {
     background-attachment: fixed;
 }
 
-.projectsFlex {
-    margin: 100vh 0 0;
+img {
+    image-rendering: auto;
+}
+@media screen and (resolution: 1dppx), 
+       screen and (resolution: 2dppx), 
+       screen and (resolution: 3dppx), 
+       screen and (resolution: 4dppx), 
+       screen and (-webkit-device-pixel-ratio: 1), 
+       screen and (-webkit-device-pixel-ratio: 2), 
+       screen and (-webkit-device-pixel-ratio: 3), 
+       screen and (-webkit-device-pixel-ratio: 4) {
+    img {
+        image-rendering: pixelated;
+    }
+}
+
+#projects {
+    margin: 100vh 0 100vh;
 
     display: flex;
     flex-direction: row;
@@ -59,7 +85,7 @@ body {
     /* border: 1px solid yellow; */
 }
 
-.projectCard {
+.project {
     margin: 25px;
 
     transition: 1s, visibility 0s, transform 0s;
@@ -69,7 +95,7 @@ body {
     /* border: 1px solid yellow; */
 }
 
-.projectCardFront, .projectCardBack {
+.projectFront, .projectBack {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     box-sizing: border-box;
@@ -77,7 +103,7 @@ body {
     height: 100%;
 }
 
-.projectCardFront {
+.projectFront {
     padding: 14px;
 
     display: flex;
@@ -93,31 +119,61 @@ body {
     box-shadow: 5px 14px 4px 0 rgba(7, 0, 142, 0.096);
 }
 
-.projectCardBack {
+.projectBack {
     position: absolute; 
-
+    overflow: hidden;
+    
     transform: rotateY(180deg);
-
-    color: white;
+    
     background-color: var(--glass-2);
-
+    font-family: monof55;
+    color: var(--coral);
+    
     transition: border-radius 2s;
     border: 14px outset var(--glass-2);
     border-radius: clamp(5vw, 50px, 50px);
     box-shadow: 5px 14px 4px 0 rgba(7, 0, 142, 0.096);
 }
 
+.closeCardButton {
+    content:url("../graphics/closeCardButton.svg");
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    filter: invert(63%) sepia(30%) saturate(3651%) hue-rotate(316deg) brightness(102%) contrast(105%);
+}
+
+.projectTitle {
+    font-size: var(--fs-xxl);
+    margin: 0.5rem auto;
+    width: fit-content;
+    text-align: center;
+    border-style: none none solid none;
+    border-radius: 15%;
+}
+
+.projectBackLinks {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
 .projectWriteup {
+    margin: 0 auto;
     padding: 30px;
     width: 100%;
-    height: 100%;
+    height: 84%;
     box-sizing: border-box;
     overflow: scroll;
 
+    /* border: 3px solid white; */
+
     display: flex;
     flex-direction: column;
-
-    color: black;
 }
 /* hide writeUp's scrollbar */
 .projectWriteup::-webkit-scrollbar {
@@ -128,40 +184,64 @@ body {
     scrollbar-width: none;  /* Firefox */
 }
 
-.closeCardButton {    
-    position: absolute;
-    top: 2em;
-    right: 2em;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    filter: invert(14%) sepia(56%) saturate(3860%) hue-rotate(231deg) brightness(87%) contrast(119%);
+.writeupSection {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+}
+
+.writeupSection .text {
+    flex-grow: 1;
+    flex-basis: 69%;
+    /* max-width: 36rem; */
+}
+
+.projectWriteup h1 {
+    font-size: var(--fs-xl);
+    margin: 0.5em 0 0.25em;
+    text-decoration: underline;
+}
+
+.projectWriteup h2 {
+    font-size: var(--fs-l);
+    margin: 0.25em;
+    text-decoration: underline dotted;
+}
+
+.projectWriteup p {
+    font-size: var(--fs-m);
+    text-indent: 2ch;
+    margin: 0.5em 2ch;
+}
+
+.projectWriteup a {
+    color: var(--hot-coral);
+    transition: 0.25s;
+}
+
+.projectWriteup a:hover {
+    background-color: #00b3ff38;
+}
+
+.projectWriteup img {
+    /* min-width: 30%; */
+    max-width: 100%;
+    align-self: center;
+    margin: 0 auto;
 }
 
 .projectPic {
     max-width: 100%;
     max-height: 100%;
-    image-rendering: auto;
     margin: 0;
-}
-
-@media screen and (resolution: 1dppx), 
-       screen and (resolution: 2dppx), 
-       screen and (resolution: 3dppx), 
-       screen and (resolution: 4dppx), 
-       screen and (-webkit-device-pixel-ratio: 1), 
-       screen and (-webkit-device-pixel-ratio: 2), 
-       screen and (-webkit-device-pixel-ratio: 3), 
-       screen and (-webkit-device-pixel-ratio: 4) {
-    .projectPic {
-        image-rendering: pixelated;
-    }
 }
 
 .projectTech {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
 }
 
 .projectTech p {
@@ -169,11 +249,17 @@ body {
     margin: 0;
     font-family: interceptor;
     border: 2px solid var(--project-text-color);
-
-    font-size: 0.9em;
+    
+    font-size: var(--fs-xs);
     padding: 0.2em 0.75em 0.14em 0.75em;
     border-bottom-right-radius: 2em;
     border-top-left-radius: 2em;
+}
+
+.projectTech p:first-child {
+    border: 2px solid var(--project-text-color);
+    padding: 0.2em 0.75em 0.14em 0.5em;
+    border-top-left-radius: 0em;
 }
 
 /* .projectTech :nth-child(1) {
@@ -191,7 +277,7 @@ body {
 .projectDesc {
     margin: .25em;
     font-family: monof55;
-    font-size: x-large;
+    font-size: var(--fs-m);
     color: var(--project-text-color);
     /* background-image: url("graphics/BG/BlueGradient.png");
     background-size: cover;
@@ -201,9 +287,9 @@ body {
     -webkit-text-fill-color: transparent; */
 }
 
-.projectDescLink {
-    font-style: oblique;
-    font-weight: 900;
+#websiteCard {
+    padding-top: 64vh;
+    width: 74vw;
 }
 
 /* * {
