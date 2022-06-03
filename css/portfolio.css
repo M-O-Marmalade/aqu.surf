@@ -225,11 +225,22 @@ img {
     background-color: #00b3ff38;
 }
 
-.projectWriteup img {
+.projectWriteup .image {
+    max-width: 100%;
+    align-self: center;
+    margin: 0 auto;
+}
+
+.projectWriteup .image img {
     /* min-width: 30%; */
     max-width: 100%;
     align-self: center;
     margin: 0 auto;
+}
+
+.projectWriteup .image p {
+    text-align: center;
+    font-size: var(--fs-s);
 }
 
 .projectPic {
