@@ -62,32 +62,104 @@
                         <div class="writeupSection">
                             <div class="text">
                                 <h1>The Concept</h1>
-                                <p>Being a musician (drums, synths), one of my favorite programs is <a href="https://www.renoise.com/products/renoise">Renoise</a>. After learning to program, I remembered that Renoise offers a <a href="https://github.com/renoise/xrnx">Lua API</a> to create extensions of the program! I decided to make a game within Renoise. Wanting something classic, I decided on Pong. The only other game made using the Renoise API is a <a href="https://www.renoise.com/tools/nibbles">port of Nibbles</a> ("Nibbles" is a <a href="https://youtu.be/bo2rr1X4dOg?t=82">Snake clone included in FastTracker2</a>).</p>
+                                <p>
+                                    Being a musician (drums, synths), one of my favorite programs is <a href="https://www.renoise.com/products/renoise">Renoise</a>. 
+                                    After learning to program, I remembered that Renoise offers a <a href="https://github.com/renoise/xrnx">Lua API</a> to create extensions of the program! 
+                                    I decided to make a game within Renoise. 
+                                    Wanting something classic, I decided on Pong. 
+                                    The only other game made using the Renoise API is a <a href="https://www.renoise.com/tools/nibbles">port of Nibbles</a> ("Nibbles" is a <a href="https://youtu.be/bo2rr1X4dOg?t=82">Snake clone included in FastTracker2</a>).
+                                </p>
                             </div>
                             <div class="image">
                                 <img src="graphics/paddles/nibbles.apng" alt="Nibbles Gameplay">
-                                <p>Renoise port of Nibbles</p>
+                                <p>Renoise port of "Nibbles"</p>
                             </div>
-
                         </div>
                         <h1>The Development</h1>
                         <h2>Learning Lua</h2>
-                        <p>I started learning Lua using the official <a href="https://www.lua.org/pil/contents.html">guide</a> and <a href="https://www.lua.org/manual/5.1/">documentation</a>. I already had a decent understanding of dynamically typed languages, garbage collection, etc, from dabbling in C#. As I worked with Lua, I found my favorite feature of the language to be tables. Compared to having to choose between structs, arrays, vectors, hashmaps, etc, on a case-by-case basis in C++, tables were so simple and flexible! Of course there is some performance trade-off for that ease of use, but I really enjoyed working with them!</p>
-                        <h2>Engineering a Display</h2>
-                        <p>The Renoise API offers a limited set of GUI elements for use in building your tool&#39;s interface. One of those elements is a bitmap that can be loaded from file. I found that by creating and dynamically updating a grid of bitmaps, I was able to create a &quot;virtual screen&quot; within my tool&#39;s GUI! Renoise can only handle updating a limited amount of these bitmaps at once, though. As a result, I had to manually update only bitmaps that needed to change from the previous frame one by one at runtime (eg, setting the bitmap at the ball&#39;s current position to white, then setting its previous position to black), rather than clearing the whole screen and redrawing everything fresh each frame.</p>
-                        <h1>The Launch</h1>
-                        <p>After some development, the game was becoming pretty fun, with a rainbow that trailed behind the ball, an AI opponent, a 2-player mode, sound effects (via loading instruments and note sequences into the currently open Renoise project and starting/stopping playback), and more! Within 24 hours of its release on <a href="www.renoise.com">the official Renoise website</a>, it was featured on the <a href="https://www.renoise.com/tools">front page</a> of the website&#39;s &quot;Tools&quot; section (where it still remains featured after almost a year and a half, despite many other tools being released since), and received recognition from Renoise&#39;s lead programmer and CEO Eduard Müller (aka taktik).</p>
+                        <p>
+                            I learned Lua using the official <a href="https://www.lua.org/pil/contents.html">guide</a> and <a href="https://www.lua.org/manual/5.1/">documentation</a>. 
+                            I found my favorite feature of the language to be tables. 
+                            Tables are so simple in contrast to C++'s structs, arrays, enums, vectors, hashmaps, etc. 
+                            If you understand how they work under the hood, they can be very performant, too!
+                        </p>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Engineering a Display</h2>
+                                <p>
+                                    The Renoise API doesn't really offer a way to directly control pixels. 
+                                    Instead, it offers elements like sliders, knobs, text boxes, etc. 
+                                    However, I found that I could control a grid of tiny bitmaps (loaded from the filesystem) to create a "virtual screen"! 
+                                    Each frame, I had to manually update bitmaps, rather than blanking the whole screen and redrawing everything as graphics engines typically do, because Renoise isn't very fast at updating large amounts of bitmaps (it can handle ~100 bitmaps at 25 frames/second).
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/paddles/renoise-controls-and-bitmaps.apng" alt="Renoise Controls">
+                                <p>Renoise ViewBuilder API controls & my bitmaps</p>
+                            </div>
+                        </div>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h1>The Launch</h1>
+                                <p>
+                                    After some development, the game had a rainbow that trailed behind the ball, an AI opponent, a 2-player mode, sound effects, and more! 
+                                    Within 24 hours of its release, it was featured on the <a href="https://www.renoise.com/tools">front page of the Renoise website's "Tools" section</a> (where it still remains today), and even received recognition from Renoise's lead programmer and CEO; Eduard Müller (aka "taktik").
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/paddles/paddles-demo-early.gif" alt="Early Paddles Demo">
+                                <p>Early release of Paddles</p>
+                            </div>
+                        </div>
                         <h1>The Update</h1>
-                        <h2>Upgrading the Display</h2>
-                        <p>After its release, I wanted to capitalize on the exposure the game was getting by adding more visual effects the game. The game ran at 25 frames/second, but at this speed I could only update about ~100 bitmaps each frame—not a good budget to enhance the visuals any further. I had considered using a lookup table of larger bitmaps that would &quot;puzzle-piece together&quot; to create each frame, requiring Renoise to update less than 100 bitmaps each frame, while giving the appearance of a very high-resolution display, but I ended up finding a better solution (although the &quot;puzzle piece&quot; method sounded like a lot of fun to implement). I discovered that Renoise provided another GUI element more capable for my purposes than the bitmaps I was using.</p>
-                        <h2>Buttons</h2>
-                        <p>Buttons are an element type that can be customized in many ways, including their <code>width</code>, <code>height</code>, and—most importantly—<code>color</code>. Buttons are the only Renoise API element that offer the ability to set their color to a HEX color-code! If the <code>width</code>,  <code>height</code> , and <code>margin</code> properties are set low enough, the buttons have no borders, and fill their occupied pixels completely with the <code>color</code> you set them to. This meant I now had a full 8-bit color display, capable of easily displaying 16,777,216 different colors, fully controllable through code! To my delight, I also found that Renoise can update them 9x faster than bitmaps, at ~900 buttons/frame at 25 frames/second! This allowed me to clear the frame buffer and redraw everything from scratch each frame, instead of manually clearing individual bitmaps. I then implemented a system that compared the current frame buffer to the previous frame&#39;s buffer, and then only pushed color updates to the buttons that had changed color since the previous frame, offering a performance boost whenever less than ~900 buttons were actually changing color each frame!</p>
-                        <h2>Utilizing the New Display</h2>
-                        <p>I had been studying some <a href="https://web.archive.org/web/20160418004149/http://freespace.virgin.net/hugo.elias/graphics/x_water.htm">water simulation algorithms</a> for use in my 3D graphics projects, and realized that given these optimizations, I could implement a water simulation in my Pong game for some fun visuals! The latest update to the game at the time of writing this, consisted of this water effect, some small GUI changes, and the switch from bitmaps to buttons as a display method.</p>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Upgrading the Display</h2>
+                                <p>
+                                    After the game's release, I discovered that Renoise provided another GUI element capable of creating a "virtual screen". 
+                                    Buttons can be scaled, and colored via a HEX color-code. 
+                                    This change offered a full 8-bit color display—capable of displaying 16,777,216 colors! 
+                                    To top it off, Renoise updates them 9x faster than bitmaps! 
+                                    I also implemented a double frame buffer system that only pushed updates to buttons that needed it. 
+                                    This allowed for more complex graphics, as I could now blank the screen each frame!
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/paddles/button-demo.apng" alt="Button Demonstration">
+                                <p>A button</p>
+                            </div>
+                        </div>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Utilizing the New Display</h2>
+                                <p>
+                                    I had been studying some <a href="https://web.archive.org/web/20160418004149/http://freespace.virgin.net/hugo.elias/graphics/x_water.htm">water simulation algorithms</a> for use in my 3D graphics projects, and decided to implement a water simulation in my Pong game for some nice visuals! 
+                                    The update was released and received more positive feedback from the Renoise community!
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/paddles/paddles-demo.apng" alt="Paddles V3.0 Demo">
+                                <p>Latest release of Paddles</p>
+                            </div>
+                        </div>
                         <h1>Reflecting</h1>
-                        <p>If I were to continue working on this project, I would spice up the sound effects and how they react to gameplay, and I would add a Breakout-style game mode. The work I did on this project inspired me with plans to write a 3D renderer using Renoise&#39;s Lua API, and create a small 3D game using it. Other projects are currently higher priorities, but it does sound really fun, and I do plan on doing it soon!</p>
-                        <h2>Hopes</h2>
-                        <p>I love Renoise as a program, but I worry that they don&#39;t make much of a profit as a business. Renoise has a niche approach to music composition in today&#39;s market. Its <a href="https://en.wikipedia.org/wiki/Music_tracker">tracker-style approach</a> allows for efficient music composition using only keyboard commands—no mouse required. Back in the 80s and 90s this was a common way to create MIDI compositions. However, most users today are not looking for this approach in a music program. One of my hopes is that the games that I create for Renoise will attract more like-minded users to the program, and keep its development alive for years to come.</p>
+                        <p>If I were to continue working on this project, I would enhance the sound effects, and add a Breakout-style game mode. 
+                            I would also like to write a 3D renderer for Renoise's Lua API someday, and create a small 3D game using it, though other projects are currently higher priorites.
+                        </p>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Hopes</h2>
+                                <p>
+                                    I sometimes worry that Renoise will cease development. 
+                                    Its keyboard–only <a href="https://en.wikipedia.org/wiki/Music_tracker">tracker-style approach</a> was common from the 1980's to the early 2000's, but most users today prefer a piano–roll interface. 
+                                    I hope that my Renoise tools will attract more like-minded users to the program, and keep its development alive for years to come.
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/paddles/piano-roll-vs-tracker.apng" alt="Piano Roll vs. Tracker">
+                                <p>The same MIDI sequence in a piano roll and a tracker</p>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </article>
@@ -105,6 +177,74 @@
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
+                    <h1 class="projectTitle">Curves</h1>
+                    <div class="projectBackLinks">
+                        <a href="https://github.com/M-O-Marmalade/Curves" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <desc>Download more icon variants from https://tabler-icons.io/i/brand-github</desc>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+                             </svg>
+                        </a>
+                    </div>
+                    <section class="projectWriteup">
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h1 id="the-purpose">The Purpose</h1>
+                                <p>
+                                    While working on Reform (the project after this one on this webpage) I decided I wanted the tool to provide the ability to bend note timings, similar to the "Time Tension" knob in <a href="https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/html/pianoroll_strum.htm">FL Studio&#39;s &quot;Strumizer&quot; tool</a>. 
+                                    I was able to achieve a rough result using logarithmic functions, but that was only one type of curve, and I wanted multiple types like <a href="https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/html/img_shot/playlist_automation_edit.png">the kind that FL Studio offers in its many Line Editors</a>. 
+                                    I also decided I wanted to be able to show a visual representation of the curve as an animated icon above the slider that would control the curve. 
+                                    I ended up going down a rabbit hole of math and 2D rasterization algorithms that gave me the result I had envisioned, creating the tool you see here as a testing ground where I could isolate this task.
+                                </p>
+                            </div>
+                            <!-- <div class="image">
+                                
+                                
+                            </div> -->
+                        </div>
+                        <h1 id="the-development">The Development</h1>
+                        <h2 id="infinite-degree-b-zier-curves">Infinite-Degree Bézier Curves</h2>
+                        <p>
+                            First, I had to dig quite a bit to even find out the correct terminologies to phrase my question accurately in a Google search! 
+                            I ended up finding <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier Curves</a>. 
+                            There are <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Linear_B%C3%A9zier_curves">Linear Bézier curves</a> with 2 control points (which are practically just lines), <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Quadratic_B%C3%A9zier_curves">Quadratic Bézier curves</a> with 3 control points, <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Cubic_B%C3%A9zier_curves">Cubic Bézier curves</a> with 4 points... 
+                            But I wanted a solution that would support an infinite number of points per curve. 
+                            I found this <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Recursive_definition">recursive definition of a Bézier curve</a>. 
+                            After implementing this in code—along with the associated functions for calculating <a href="https://en.m.wikipedia.org/wiki/Binomial_coefficient">Binomial Coefficients</a>, <a href="https://en.wikipedia.org/wiki/Bernstein_polynomial">Bernstein Basis Polynomials</a>, and more—I was able to freely add and remove an infinite amount of points to a curve! 
+                            A very proud moment indeed!
+                        </p>
+                        <h2 id="tension">Tension</h2>
+                        <p>
+                            However, at this point, in order to get a tighter bend, you needed to stack multiple points at the same coordinates. 
+                            Instead, I wanted each point on the curve to have a variable &quot;weight&quot;—or, &quot;tension&quot;, as FL Studio referes to it—that would allow the line to be pulled tighter or looser to each point. 
+                            I found a very in-depth resource called <a href="https://pomax.github.io/bezierinfo/">A Primer on Bézier Curves</a> by Mike Kamermans (aka Pomax). 
+                            This wonderful wealth of knowledge includes a <a href="https://pomax.github.io/bezierinfo/#weightcontrol">chapter on adding rationalization (or, &quot;weight&quot;) to individual points on a curve</a>! 
+                            I implemented this new logic, and now had functioning infinite-degree, weighted, Bézier curves!
+                        </p>
+                        <h2 id="rasterization">Rasterization</h2>
+                        <p>
+                            The next issue to tackle was rendering the curve. 
+                            The difficulty with rendering Bézier curves, is that you can&#39;t just solve for X or Y coordinates; you have to sample along the path of the curve based on <code>t</code>—a value from 0–1 corresponding to the path between the two endpoints of the curve. 
+                            As a result, areas in the curve that have more tension, have dense distributions of sampled points, while relaxed areas have a sparse distribution. 
+                            During prototyping, I was just sampling a very large number of points of the curve, and filling the pixels where each point sat. 
+                            This crude approach resulted in the curve being way too thick in high–tension segments, and causing visible breaks in low–tension segments.
+                        </p>
+                        <h2 id="pixel-perfect">Pixel-Perfect</h2>
+                        <p>
+                            To solve this, my solution was to sample a reasonable amount of points, and then render straight line segments between them (while writing, I just now discovered this is called <a href="https://pomax.github.io/bezierinfo/#flattening">&quot;flattening&quot; the curve</a>. 
+                            More robust solutions for rasterizing rational Bézier curves have been documented (such as in Chapter 4 of <a href="https://api.semanticscholar.org/CorpusID:61935445">A Rasterizing Algorithm for Drawing Curves</a> by <a href="https://www.semanticscholar.org/author/Alois-Zingl/70155051">Alois Zingl</a>), but for the requirements of this project, this was a solution that would be nearly indistinguishable from a better one. 
+                            I wanted the lines of the curve to appear pixel–perfect and non–aliased, and found the <a href="https://en.m.wikipedia.org/wiki/Bresenham%27s_line_algorithm">Bresenham algorithm</a>, which detailed a method for rendering pixel–perfect, non–aliased lines! 
+                            After implementing the Bresenham algorithm to connect the points sampled from my Bézier curves, I had a beautiful result!
+                        </p>
+                        <h1 id="finished-">Finished!</h1>
+                        <p>
+                            Now complete; the nice, modular code was easily implemented into Reform. 
+                            While learning how to render these curves, I ended up adding some rainbow coloring to them, intuitive mouse controls, and more. 
+                            The result is actually very beautiful and satisfying to play with, and only a small portion of the functionality is currently included in Reform, so I decided to include this tool here in my portfolio as well! :) 
+                            I will definitely be utilizing the knowledge from this project in future projects! I can already imagine the possibilities of what can be created using these techniques!
+                        </p> 
+                    </section>
                 </div>
             </article>
             
@@ -121,6 +261,112 @@
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
+                    <h1 class="projectTitle">Reform</h1>
+                    <div class="projectBackLinks">
+                        <a href="https://www.aqu.surf/reform" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-world" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <!-- <desc>Download more icon variants from https://tabler-icons.io/i/world</desc> -->
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="12" cy="12" r="9"></circle>
+                                <line x1="3.6" y1="9" x2="20.4" y2="9"></line>
+                                <line x1="3.6" y1="15" x2="20.4" y2="15"></line>
+                                <path d="M11.5 3a17 17 0 0 0 0 18"></path>
+                                <path d="M12.5 3a17 17 0 0 1 0 18"></path>
+                             </svg>
+                        </a>
+                        <a href="https://github.com/M-O-Marmalade/Reform" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <desc>Download more icon variants from https://tabler-icons.io/i/brand-github</desc>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+                             </svg>
+                        </a>
+                        <!-- <a href="https://www.renoise.com/tools/reform" target="_blank">
+                            <img src="graphics/renoise-logo.png" alt="Renoise Download Page">
+                        </a> -->
+                        <a href="https://forum.renoise.com/t/new-tool-3-1-reform/67295" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <desc>Download more icon variants from https://tabler-icons.io/i/message-circle</desc>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"></path>
+                                <line x1="12" y1="12" x2="12" y2="12.01"></line>
+                                <line x1="8" y1="12" x2="8" y2="12.01"></line>
+                                <line x1="16" y1="12" x2="16" y2="12.01"></line>
+                             </svg>
+                        </a>
+                    </div>
+                    <section class="projectWriteup"> 
+                        <h1 id="the-concept">The Concept</h1>
+                        <h2 id="the-inspiration">The Inspiration</h2>
+                        <p>
+                            If you already read my write–up for my game &quot;Paddles&quot;, you&#39;ll know that one of my favorite music programs—<a href="https://www.renoise.com/products/renoise">Renoise</a>—offers a <a href="https://github.com/renoise/xrnx">Lua API</a> for users to create their own extensions that integrate with the program. 
+                            Paddles was the first tool that I created for the program, but it didn&#39;t add actual functionality to the program—it was just a game. 
+                            I decided that I wanted to create a tool that would actually improve my workflow in the program when composing music. 
+                            The inspiration for my tool came from a practical problem: creating strum–like effects in Renoise can be a tedious process.
+                        </p>
+                        <h2 id="the-problem">The Problem</h2>
+                        <p>
+                            Being a <a href="https://en.wikipedia.org/wiki/Music_tracker">tracker</a>, Renoise represents musical notes as text on a spreadsheet. 
+                            By default, each cell on the spreadsheet corresponds to a 16th note. 
+                            The result of this, is that if you wanted to create a &quot;strum&quot; of notes, you would probably just quickly input them as 16th notes on this grid. 
+                            For a quick and dirty solution while in the flow of composing, this can often be sufficient. However; if you need notes to trigger in–between this 16th–note grid, you have to type a hexadecimal value between 00–80 into the &quot;delay&quot; column next to the note in question. 
+                            This all adds up to be a somewhat inefficient process for fine–tuning your strum later on.
+                        </p>
+                        <h2 id="the-problem-in-detail">The Problem In–Detail</h2>
+                        <p>
+                            For example; let&#39;s say you made a strum by typing these 16th notes on their individual lines, and now want the strum to be quicker than the 16th notes offered by the grid. 
+                            You would likely be cutting and pasting notes from/to different lines, and manually editing each individual note&#39;s delay value; one by one. 
+                            You listen to the strum after editing it, hear that it&#39;s still not perfect, and manually edit all the individual text values of every note again—one by one, again, and again. 
+                            Your other option would be to compose at a higher time division setting, so that each line could correspond to a 32nd note, or even a 64th note—instead of the default 16th note. 
+                            The drawback here, is that this setting doesn&#39;t just apply to your strum; it applies to all instruments in the project. 
+                            This is impractical and inefficient for compositions that aren&#39;t fully structured around a high time division setting.
+                        </p>
+                        <h2 id="who-did-it-better">Who Did It Better</h2>
+                        <p>
+                            In contrast to this dilemma, let&#39;s look at how easy it is to create and fine-tune strums in a different program: <a href="https://www.image-line.com/fl-studio/">FL Studio</a>. 
+                            You input your notes, select them, and activate the <a href="https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/html/pianoroll_strum.htm">&quot;Strumizer&quot; tool</a>. 
+                            You tweak the knobs it offers to quickly and intuitively edit the notes&#39; timings and velocities. 
+                            You press the spacebar to hear the selection as you make changes. 
+                            You see the changes happening to the notes in realtime as you tweak the knobs. 
+                            This allows you to fully fine–tune a strum so quickly, that you could even do it during the flow of composing without losing your focus.
+                        </p>
+                        <h2 id="my-solution">My Solution</h2>
+                        <p>
+                            I decided I would create a tool for Renoise that resembled the Strumizer tool from FL Studio. 
+                            I wanted the result of tweaking the controls to be intuitive, providing instantaneous visual feedback of the notes updating in realtime, with the ability to playback the selection by hitting the spacebar. 
+                            I wanted robust control over note collisions during editing, I wanted the ability to manipulate notes across pattern boundaries freely, I wanted to be able to manually edit notes in the current selection and then continue processing them using the tool. 
+                            This all added up to be quite a challenge to implement in a tracker-based environment.
+                        </p>
+                        <h1 id="the-development">The Development</h1>
+                        <p>
+                            The development for the tool ended up being quite deep—too much to cover here (be my guest to have a look at the <a href="https://github.com/M-O-Marmalade/Reform/blob/master/main.lua">source code</a> though if you&#39;d like). 
+                            I will cover a few of the noteworthy stages of development here though.</p>
+                        <h2 id="cache-it">Cache It</h2>
+                        <p>
+                            To allow manipulated notes to overflow into other patterns, I needed to know the length of all the patterns involved. 
+                            This isn&#39;t a big deal for a four notes overflowing into in one neighboring pattern, but once you&#39;re dealing with 180 notes spanning across 20 patterns, getting those 20 patterns&#39; lengths from the Renoise API 180 times is a big performance hit. 
+                            The solution was to cache each pattern length after I got it, storing it alongside a &quot;valid&quot; flag that indicated whether or not that cached data was still accurate, and then using the <a href="https://en.wikipedia.org/wiki/Observer_pattern">Observer–style</a> notifiers that Renoise provides to detect changes to that pattern&#39;s length, invalidating our flag whenever the length of that pattern changed. 
+                            This is a very efficient way of getting song data from Renoise hundreds of times per second. 
+                            I&#39;m planning on releasing a library that provides alternative getter methods to the ones the Renoise API provides that will incorporate this functionality, making it easy for Renoise tool developers to be able to retrieve song data freely at very minimal performance cost.
+                        </p>
+                        <h2 id="bend-it">Bend It</h2>
+                        <p>
+                            I studied <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Beziér curves</a>, and implemented them in the tool to allow selections of notes to have their timings redistributed according to a curve. 
+                            Note timings are treated as if they are distributed linearly upon selection, and can then be redistributed along a Quadratic Beziér curve, or an S-shaped Cubic curve. 
+                            I could easily add more curves, and even allow users to create custom curves, but for the majority of use-cases, these two curve types are pretty robust.
+                        </p>
+                        <h1 id="the-result">The Result</h1>
+                        <h2 id="capabilities">Capabilities</h2>
+                        <p>
+                            In its finished form, the tool provides the following methods of transforming selections of notes: time scaling, time bending, time shifting, velocity/panning/fx bending, velocity/panning/fx range remapping, note collision control, transform anchor point selection, selection preview playback, hotkey controls, and more. 
+                            Users can tweak controls through knobs and sliders, or type precise values (such as scaling by 2.5x, shifting by 4.0 lines, applying a 50% bend, etc).
+                        </p>
+                        <h2 id="retrospect">Retrospect</h2>
+                        <p>
+                            This is my most organized, in–depth project to date, and required a lot of math, benchmarking, and optimizing to get the accurate, performant result that was achieved. 
+                            I&#39;m happy with the finished project, and do not have any plans to add any features at the current time. 
+                            I consider this project to be fully-featured, and polished to a professional degree that I&#39;m proud of.
+                        </p>
                 </div>
             </article>
 
@@ -138,6 +384,44 @@
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
+                    <h1 class="projectTitle">SNEK</h1>
+                    <div class="projectBackLinks">
+                        <a href="https://github.com/M-O-Marmalade/SNEK" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <desc>Download more icon variants from https://tabler-icons.io/i/brand-github</desc>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+                             </svg>
+                        </a>
+                    </div>
+                    <section class="projectWriteup"> 
+                        <h1 id="starting-out">Starting Out</h1>
+                        <p>
+                            This was my first substantial programming project. 
+                            I chose C++ as my first programming language because I wanted a low–level foundation for my understanding of programming, and because I find working with computers at a low level to be fun and interesting (for these reasons, I&#39;ve also dabbled in <a href="https://rgbds.gbdev.io/docs/v0.5.1/gbz80.7/">GBZ80 assembly</a>, and the circuitry of GameBoy modding). 
+                            I chose the Windows Console for my first project because it has a very simple API that would allow me to focus on learning fundamental programming concepts.
+                        </p>
+                        <h1 id="rendering">Rendering</h1>
+                        <p>
+                            The game was first rendered using <code>cout</code> statements, but this didn&#39;t result in a framerate–capable runtime (although it did have a cool film–like effect). 
+                            So I learned and refactored my code to write directly to the console buffer, which resulted in a stable image capable of faster framerates. 
+                            It also allowed me to easily add some color to the game.
+                        </p>
+                        <h1 id="sound">Sound</h1>
+                        <p>
+                            As the project matured, I wanted to add sound to the game, and decided to learn <a href="https://www.fmod.com/studio">FMOD Studio</a> and the <a href="https://www.fmod.com/resources/documentation-api?version=2.02&amp;page=studio-guide.html">FMOD Studio API</a>. 
+                            From this endeavor I learned how to read API documentation, which assured me that I would be able to learn and use any libraries I want for future projects. 
+                            I did successfully add sound effects, as well as music that is synced to the player&#39;s movement (each frame that the snake moves corresponds to an 8th note in the music). 
+                            The music also reacts when the player eats a fruit exactly on a downbeat, gets a new high score, and more.
+                        </p>
+                        <h1 id="reflecting">Reflecting</h1>
+                        <p>
+                            Now that I&#39;ve matured as a developer, I can see there are areas in this project where code can be cleaned up, and more elegant solutions can be implemented for certain features. 
+                            But, I&#39;ve decided to leave it as–is for the time being, and learn new technologies with more potential for a wider impact. 
+                            If I were to return to this project, my first priority would be to make it cross–platform with Windows, Linux, and Mac. 
+                            Then I would add more gameplay features and visual effects.
+                        </p>
+                    </section>
                 </div>
             </article>
 

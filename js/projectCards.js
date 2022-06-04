@@ -38,8 +38,8 @@ document.querySelectorAll('.' + cardClass).forEach(item => {
         requestAnimationFrame(function() {  //set the clone's ending position/size to be transitioned to on the next frame, so it will actually transition
             requestAnimationFrame(function() {
                 clone.style.top = '5vh'
-                clone.style.left = '5vw';
-                clone.style.width = '90vw';
+                clone.style.left = '3vw';
+                clone.style.width = '94vw';
                 clone.style.height = '90vh';
                 clone.style.transform = 'rotateY(180deg) translateZ(-43px)';
                 clone.style.zIndex = 10;
