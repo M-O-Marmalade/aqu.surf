@@ -201,7 +201,7 @@ img {
 
 .writeupSection .text {
     flex-grow: 1;
-    flex-basis: 40%;
+    flex-basis: clamp(54ch, 40%, 40%);
     margin-right: 1ch;
     /* align-self: center; */
     /* max-width: 36rem; */

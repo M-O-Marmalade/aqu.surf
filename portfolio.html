@@ -26,7 +26,7 @@
                     <img class="closeCardButton">
                     <h1 class="projectTitle">Paddles</h1>
                     <div class="projectBackLinks">
-                        <a href="https://www.aqu.surf/paddles" target="_blank">
+                        <a href="https://aqu.surf/paddles" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-world" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <!-- <desc>Download more icon variants from https://tabler-icons.io/i/world</desc> -->
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -192,10 +192,11 @@
                             <div class="text">
                                 <h1 id="the-purpose">The Purpose</h1>
                                 <p>
-                                    While working on Reform (the project after this one on this webpage) I decided I wanted the tool to provide the ability to bend note timings, similar to the "Time Tension" knob in <a href="https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/html/pianoroll_strum.htm">FL Studio&#39;s &quot;Strumizer&quot; tool</a>. 
-                                    I was able to achieve a rough result using logarithmic functions, but that was only one type of curve, and I wanted multiple types like <a href="https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/html/img_shot/playlist_automation_edit.png">the kind that FL Studio offers in its many Line Editors</a>. 
-                                    I also decided I wanted to be able to show a visual representation of the curve as an animated icon above the slider that would control the curve. 
-                                    I ended up going down a rabbit hole of math and 2D rasterization algorithms that gave me the result I had envisioned, creating the tool you see here as a testing ground where I could isolate this task.
+                                    During development on <a href="https://aqu.surf/reform">Reform</a>, the need arose for the calculation and rasterization of various curves. 
+                                    My first solution was to use logarithmic functions. 
+                                    They worked, but implementing discrete mathematical functions for different curve shapes wasn't a very robust solution. 
+                                    I ended up going down a rabbit hole of math and 2D rasterization that yielded the desired result. 
+                                    This project was the testing ground where I isolated this task.
                                 </p>
                             </div>
                             <!-- <div class="image">
@@ -203,47 +204,92 @@
                                 
                             </div> -->
                         </div>
-                        <h1 id="the-development">The Development</h1>
-                        <h2 id="infinite-degree-b-zier-curves">Infinite-Degree Bézier Curves</h2>
-                        <p>
-                            First, I had to dig quite a bit to even find out the correct terminologies to phrase my question accurately in a Google search! 
-                            I ended up finding <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier Curves</a>. 
-                            There are <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Linear_B%C3%A9zier_curves">Linear Bézier curves</a> with 2 control points (which are practically just lines), <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Quadratic_B%C3%A9zier_curves">Quadratic Bézier curves</a> with 3 control points, <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Cubic_B%C3%A9zier_curves">Cubic Bézier curves</a> with 4 points... 
-                            But I wanted a solution that would support an infinite number of points per curve. 
-                            I found this <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Recursive_definition">recursive definition of a Bézier curve</a>. 
-                            After implementing this in code—along with the associated functions for calculating <a href="https://en.m.wikipedia.org/wiki/Binomial_coefficient">Binomial Coefficients</a>, <a href="https://en.wikipedia.org/wiki/Bernstein_polynomial">Bernstein Basis Polynomials</a>, and more—I was able to freely add and remove an infinite amount of points to a curve! 
-                            A very proud moment indeed!
-                        </p>
-                        <h2 id="tension">Tension</h2>
-                        <p>
-                            However, at this point, in order to get a tighter bend, you needed to stack multiple points at the same coordinates. 
-                            Instead, I wanted each point on the curve to have a variable &quot;weight&quot;—or, &quot;tension&quot;, as FL Studio referes to it—that would allow the line to be pulled tighter or looser to each point. 
-                            I found a very in-depth resource called <a href="https://pomax.github.io/bezierinfo/">A Primer on Bézier Curves</a> by Mike Kamermans (aka Pomax). 
-                            This wonderful wealth of knowledge includes a <a href="https://pomax.github.io/bezierinfo/#weightcontrol">chapter on adding rationalization (or, &quot;weight&quot;) to individual points on a curve</a>! 
-                            I implemented this new logic, and now had functioning infinite-degree, weighted, Bézier curves!
-                        </p>
-                        <h2 id="rasterization">Rasterization</h2>
-                        <p>
-                            The next issue to tackle was rendering the curve. 
-                            The difficulty with rendering Bézier curves, is that you can&#39;t just solve for X or Y coordinates; you have to sample along the path of the curve based on <code>t</code>—a value from 0–1 corresponding to the path between the two endpoints of the curve. 
-                            As a result, areas in the curve that have more tension, have dense distributions of sampled points, while relaxed areas have a sparse distribution. 
-                            During prototyping, I was just sampling a very large number of points of the curve, and filling the pixels where each point sat. 
-                            This crude approach resulted in the curve being way too thick in high–tension segments, and causing visible breaks in low–tension segments.
-                        </p>
-                        <h2 id="pixel-perfect">Pixel-Perfect</h2>
-                        <p>
-                            To solve this, my solution was to sample a reasonable amount of points, and then render straight line segments between them (while writing, I just now discovered this is called <a href="https://pomax.github.io/bezierinfo/#flattening">&quot;flattening&quot; the curve</a>. 
-                            More robust solutions for rasterizing rational Bézier curves have been documented (such as in Chapter 4 of <a href="https://api.semanticscholar.org/CorpusID:61935445">A Rasterizing Algorithm for Drawing Curves</a> by <a href="https://www.semanticscholar.org/author/Alois-Zingl/70155051">Alois Zingl</a>), but for the requirements of this project, this was a solution that would be nearly indistinguishable from a better one. 
-                            I wanted the lines of the curve to appear pixel–perfect and non–aliased, and found the <a href="https://en.m.wikipedia.org/wiki/Bresenham%27s_line_algorithm">Bresenham algorithm</a>, which detailed a method for rendering pixel–perfect, non–aliased lines! 
-                            After implementing the Bresenham algorithm to connect the points sampled from my Bézier curves, I had a beautiful result!
-                        </p>
-                        <h1 id="finished-">Finished!</h1>
-                        <p>
-                            Now complete; the nice, modular code was easily implemented into Reform. 
-                            While learning how to render these curves, I ended up adding some rainbow coloring to them, intuitive mouse controls, and more. 
-                            The result is actually very beautiful and satisfying to play with, and only a small portion of the functionality is currently included in Reform, so I decided to include this tool here in my portfolio as well! :) 
-                            I will definitely be utilizing the knowledge from this project in future projects! I can already imagine the possibilities of what can be created using these techniques!
-                        </p> 
+                        <h1>The Development</h1>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Infinite-Degree Bézier Curves</h2>
+                                <p>
+                                    After a lot of digging, I found <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier Curves</a>. 
+                                    Compared to Linear, Quadratic, and Cubic Bézier curves, I wanted my curves to support an infinite number of control points. 
+                                    I found this <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Recursive_definition">recursive definition of a Bézier curve</a>. 
+                                    After implementing this—along with the associated functions for <a href="https://en.m.wikipedia.org/wiki/Binomial_coefficient">Binomial Coefficients</a> and <a href="https://en.wikipedia.org/wiki/Bernstein_polynomial">Bernstein Basis Polynomials</a>—my curves supported an infinite number of control points! 
+                                    A very proud moment indeed!
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/curves/curve-degrees.apng" alt="Curves of Varying Degrees">
+                                <p>Curves of varying degrees</p>
+                            </div>
+                        </div>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Tension</h2>
+                                <p>
+                                    Instead of stacking multiple control points at the same coordinates, I wanted each control point to have a variable "weight" (or "tension") to control each point's strength on the curve. 
+                                    I found an <i>amazing</i> resource called <a href="https://pomax.github.io/bezierinfo/">A Primer on Bézier Curves</a> by Mike Kamermans (aka "Pomax"), which contains a <a href="https://pomax.github.io/bezierinfo/#weightcontrol">chapter on adding this "weight"</a>! 
+                                    After implemented this new math, I now had infinite-degree, weighted, Bézier curves!
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/curves/curve-tension.apng" alt="Curve Tension">
+                                <p>Adjusting weight</p>
+                            </div>
+                        </div>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Rasterization</h2>
+                                <p>
+                                    Bézier curves are rendered in a unique way.
+                                    Rather than solving for X / Y coordinates per–pixel, you have to solve for <code>t</code>—which represents an interpolation between the curve's endpoints. 
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/B%C3%A9zier_4_big.gif" alt="Showing t interpolation">
+                                <p><code>t</code> being interpolated</p>
+                            </div>
+                        </div>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Naiveté</h2>
+                                <p>
+                                    A naive approach is to just sample a high number of points, and fill the pixels where those points lie.
+                                    The result of this approach is a curve that's too thick in high–tension segments, and breaking apart in low–tension segments.
+                                    A better approach was clearly needed.
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/curves/curve-sampling.apng" alt="Curve sample sizes">
+                                <p>Uneven <code>t</code> distribution</p>
+                            </div>
+                        </div>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h2>Pixel-Perfect</h2>
+                                <p>
+                                    My solution was to sample a moderate amount of points, and connect them with line segments, which are easier to rasterize (which I later discovered is called <a href="https://pomax.github.io/bezierinfo/#flattening">&quot;flattening&quot; the curve</a>). 
+                                    More robust solutions have been documented (such as in Chapter 4 of <a href="https://api.semanticscholar.org/CorpusID:61935445">A Rasterizing Algorithm for Drawing Curves</a> by <a href="https://www.semanticscholar.org/author/Alois-Zingl/70155051">Alois Zingl</a>), but this solution would be sufficient, and quicker to implement. 
+                                    Wanting pixel–perfect, non–aliased lines, I found the <a href="http://members.chello.at/~easyfilter/bresenham.html">Bresenham algorithm</a>, which yielded a beautiful result!
+                                </p>
+                            </div>
+                            <div class="image">
+                                <img src="graphics/curves/curve-flattening.apng" alt="Flattening the curve">
+                                <p>Flattening a curve</p>
+                            </div>
+                        </div>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h1>Finished!</h1>
+                                <p>
+                                    Being modular/loosely coupled, my finished code was easily implemented into Reform, with 2 curve types available now, and a custom curve editor to come in a future update.
+                                    I will definitely be utilizing the knowledge from this project in other future projects as well! 
+                                    I can already imagine the possibilities of what can be created using these techniques!
+                                </p> 
+                            </div>
+                            <div class="image">
+                                <img src="graphics/reform//demos/reform-demo-curve2.apng" alt="Reform Curve Demo">
+                                <p>Bézier curves implementation in Reform</p>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </article>
@@ -263,7 +309,7 @@
                     <img class="closeCardButton">
                     <h1 class="projectTitle">Reform</h1>
                     <div class="projectBackLinks">
-                        <a href="https://www.aqu.surf/reform" target="_blank">
+                        <a href="https://aqu.surf/reform" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-world" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <!-- <desc>Download more icon variants from https://tabler-icons.io/i/world</desc> -->
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
