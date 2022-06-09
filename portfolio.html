@@ -345,74 +345,48 @@
                         <h1 id="the-concept">The Concept</h1>
                         <h2 id="the-inspiration">The Inspiration</h2>
                         <p>
-                            If you already read my write–up for my game &quot;Paddles&quot;, you&#39;ll know that one of my favorite music programs—<a href="https://www.renoise.com/products/renoise">Renoise</a>—offers a <a href="https://github.com/renoise/xrnx">Lua API</a> for users to create their own extensions that integrate with the program. 
-                            Paddles was the first tool that I created for the program, but it didn&#39;t add actual functionality to the program—it was just a game. 
-                            I decided that I wanted to create a tool that would actually improve my workflow in the program when composing music. 
-                            The inspiration for my tool came from a practical problem: creating strum–like effects in Renoise can be a tedious process.
+			    After the initial release of Paddles, I got another idea for a Renoise tool; a tool that makes it quick and easy to powerfully fine–tune strums.
+			    The idea was inspired by FL Studio's <a href="https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/html/pianoroll_strum.htm">&quot;Strumizer&quot; tool</a>. 
+                            It offers knobs and sliders to quickly and easily edit timings and velocities.
+                            You see the changes happen to the notes in realtime. 
+			    Pressing the spacebar allows you to quickly hear the strum. 
+                            This allows you to create and fine–tune strums very quickly.
                         </p>
                         <h2 id="the-problem">The Problem</h2>
                         <p>
                             Being a <a href="https://en.wikipedia.org/wiki/Music_tracker">tracker</a>, Renoise represents musical notes as text on a spreadsheet. 
                             By default, each cell on the spreadsheet corresponds to a 16th note. 
-                            The result of this, is that if you wanted to create a &quot;strum&quot; of notes, you would probably just quickly input them as 16th notes on this grid. 
-                            For a quick and dirty solution while in the flow of composing, this can often be sufficient. However; if you need notes to trigger in–between this 16th–note grid, you have to type a hexadecimal value between 00–80 into the &quot;delay&quot; column next to the note in question. 
-                            This all adds up to be a somewhat inefficient process for fine–tuning your strum later on.
-                        </p>
-                        <h2 id="the-problem-in-detail">The Problem In–Detail</h2>
-                        <p>
-                            For example; let&#39;s say you made a strum by typing these 16th notes on their individual lines, and now want the strum to be quicker than the 16th notes offered by the grid. 
-                            You would likely be cutting and pasting notes from/to different lines, and manually editing each individual note&#39;s delay value; one by one. 
-                            You listen to the strum after editing it, hear that it&#39;s still not perfect, and manually edit all the individual text values of every note again—one by one, again, and again. 
-                            Your other option would be to compose at a higher time division setting, so that each line could correspond to a 32nd note, or even a 64th note—instead of the default 16th note. 
-                            The drawback here, is that this setting doesn&#39;t just apply to your strum; it applies to all instruments in the project. 
-                            This is impractical and inefficient for compositions that aren&#39;t fully structured around a high time division setting.
-                        </p>
-                        <h2 id="who-did-it-better">Who Did It Better</h2>
-                        <p>
-                            In contrast to this dilemma, let&#39;s look at how easy it is to create and fine-tune strums in a different program: <a href="https://www.image-line.com/fl-studio/">FL Studio</a>. 
-                            You input your notes, select them, and activate the <a href="https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/html/pianoroll_strum.htm">&quot;Strumizer&quot; tool</a>. 
-                            You tweak the knobs it offers to quickly and intuitively edit the notes&#39; timings and velocities. 
-                            You press the spacebar to hear the selection as you make changes. 
-                            You see the changes happening to the notes in realtime as you tweak the knobs. 
-                            This allows you to fully fine–tune a strum so quickly, that you could even do it during the flow of composing without losing your focus.
+                            To have notes trigger in–between this 16th–note grid, you must type a hexadecimal value 0x00–0x80 into the "delay" column next to the note. 
+                            This results in an inefficient process for creating strums that are not in sync with the grid's time division.
                         </p>
                         <h2 id="my-solution">My Solution</h2>
                         <p>
-                            I decided I would create a tool for Renoise that resembled the Strumizer tool from FL Studio. 
-                            I wanted the result of tweaking the controls to be intuitive, providing instantaneous visual feedback of the notes updating in realtime, with the ability to playback the selection by hitting the spacebar. 
-                            I wanted robust control over note collisions during editing, I wanted the ability to manipulate notes across pattern boundaries freely, I wanted to be able to manually edit notes in the current selection and then continue processing them using the tool. 
-                            This all added up to be quite a challenge to implement in a tracker-based environment.
+                            I decided to create a tool for Renoise that resembled FL Studio's Strumizer.
+                            Some priorites of the project included... intuitive controls, notes updating in realtime, easy preview playback, strumming across pattern boundaries, and more. 
+                            This all added up to be quite a big project for a tracker-based environment.
                         </p>
                         <h1 id="the-development">The Development</h1>
                         <p>
-                            The development for the tool ended up being quite deep—too much to cover here (be my guest to have a look at the <a href="https://github.com/M-O-Marmalade/Reform/blob/master/main.lua">source code</a> though if you&#39;d like). 
-                            I will cover a few of the noteworthy stages of development here though.</p>
+                            It would take much too long to discuss every stage of Reform's development (be my guest to have a look at the <a href="https://github.com/M-O-Marmalade/Reform/blob/master/main.lua">source code</a> though if you&#39;d like), but I will cover some of the noteworthy stages of development.</p>
                         <h2 id="cache-it">Cache It</h2>
                         <p>
-                            To allow manipulated notes to overflow into other patterns, I needed to know the length of all the patterns involved. 
-                            This isn&#39;t a big deal for a four notes overflowing into in one neighboring pattern, but once you&#39;re dealing with 180 notes spanning across 20 patterns, getting those 20 patterns&#39; lengths from the Renoise API 180 times is a big performance hit. 
-                            The solution was to cache each pattern length after I got it, storing it alongside a &quot;valid&quot; flag that indicated whether or not that cached data was still accurate, and then using the <a href="https://en.wikipedia.org/wiki/Observer_pattern">Observer–style</a> notifiers that Renoise provides to detect changes to that pattern&#39;s length, invalidating our flag whenever the length of that pattern changed. 
-                            This is a very efficient way of getting song data from Renoise hundreds of times per second. 
-                            I&#39;m planning on releasing a library that provides alternative getter methods to the ones the Renoise API provides that will incorporate this functionality, making it easy for Renoise tool developers to be able to retrieve song data freely at very minimal performance cost.
+                            To allow manipulated notes to overflow into other patterns, avoid colliding with other notes, and wrap from the end of the song to the beginning, I needed to know pattern lengths, song lengths, and more. 
+                            When you're dealing with a large amount of notes spanning across multiple patterns, getting that data from Renoise's API becomes very slow.
+                            My solution was to cache the data Lua-side after retrieving it from Renoise, and use the <a href="https://en.wikipedia.org/wiki/Observer_pattern">Observer–style</a> notifiers that Renoise provides to detect when the cached data is no longer accurate, queueing the retrieval of new data from Renoise. 
                         </p>
                         <h2 id="bend-it">Bend It</h2>
                         <p>
                             I studied <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Beziér curves</a>, and implemented them in the tool to allow selections of notes to have their timings redistributed according to a curve. 
                             Note timings are treated as if they are distributed linearly upon selection, and can then be redistributed along a Quadratic Beziér curve, or an S-shaped Cubic curve. 
-                            I could easily add more curves, and even allow users to create custom curves, but for the majority of use-cases, these two curve types are pretty robust.
+                            I could easily add more curves, and even allow users to create custom curves, but for the majority of use-cases, these two curve types are robust.
                         </p>
                         <h1 id="the-result">The Result</h1>
-                        <h2 id="capabilities">Capabilities</h2>
                         <p>
-                            In its finished form, the tool provides the following methods of transforming selections of notes: time scaling, time bending, time shifting, velocity/panning/fx bending, velocity/panning/fx range remapping, note collision control, transform anchor point selection, selection preview playback, hotkey controls, and more. 
-                            Users can tweak controls through knobs and sliders, or type precise values (such as scaling by 2.5x, shifting by 4.0 lines, applying a 50% bend, etc).
-                        </p>
-                        <h2 id="retrospect">Retrospect</h2>
-                        <p>
-                            This is my most organized, in–depth project to date, and required a lot of math, benchmarking, and optimizing to get the accurate, performant result that was achieved. 
-                            I&#39;m happy with the finished project, and do not have any plans to add any features at the current time. 
-                            I consider this project to be fully-featured, and polished to a professional degree that I&#39;m proud of.
-                        </p>
+                            This is my most organized, in–depth project to date, requiring a lot of learning, problem-solving, and optimizations to get the accurate, performant result that was achieved. 
+                            Although I'm happy with the finished project, I do have some features I plan to add later on, such as undo/redo support, note-length preservation, quantize/humanize control, granular anchor placement, and a custom curve editor (based on my "Curves" editor). 
+                            Despite this to-do list, I consider this project to be very full-featured and polished to a highly professional degree.
+			    I decided to provide the tool for free, out of love for Renoise and the many good times I've had with it.
+			</p>
                 </div>
             </article>
 
