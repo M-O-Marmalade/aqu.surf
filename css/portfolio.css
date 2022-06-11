@@ -196,6 +196,7 @@ img {
     background-color: var(--dark-4);
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
+    font-size: 0.8em;
 }
 
 .writeupSection {

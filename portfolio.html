@@ -480,15 +480,14 @@
                                 <h1 id="rendering">Rendering</h1>
                                 <p>
                                     The game was first rendered using <code>cout</code> statements, but this didn&#39;t result in a framerate–capable runtime (although it did have a cool film–like effect). 
-                                    So I learned and refactored my code to write directly to the console buffer, which resulted in a stable image capable of faster framerates. 
+                                    So I learned and refactored my code to write directly to the console buffer using the <code>WriteConsoleOutputCharacter()</code> and <code>WriteConsoleOutputAttribute()</code> functions, which resulted in a stable image capable of faster framerates. 
                                     It also allowed me to easily add some color to the game.
                                 </p>
                             </div>
                             <div class="image">
-                                <img src="graphics/snek-demo.apng" alt="SNEK Demo">
+                                <img src="graphics/SNEK-old-vs-new.apng" alt="SNEK Old Version vs New Version">
                                 <p>
-                                    Rendering done via <code>WriteConsoleOutputCharacter()</code><br>
-                                    and <code>WriteConsoleOutputAttribute()</code> functions
+                                    Rendering comparison: <code>cout</code> vs <code>WriteConsoleOutput()</code>
                                 </p>
                             </div>
                         </div>
