@@ -31,6 +31,7 @@
     --orange-3: #ffda00;
     --coral: #ffe4ff;
     --hot-coral: #ffa0ff;
+    --code: #ff0073;
 
     --glass: #44c1ff60;
     --glass-2: rgba(6, 75, 139, 0.992);
@@ -190,6 +191,13 @@ img {
     scrollbar-width: none;  /* Firefox */
 }
 
+.projectWriteup code {
+    color: var(--code);
+    background-color: var(--dark-4);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
 .writeupSection {
     display: flex;
     flex-direction: row;
@@ -228,6 +236,7 @@ img {
 .projectWriteup a {
     color: var(--hot-coral);
     transition: 0.25s;
+    cursor: pointer;
 }
 
 .projectWriteup a:hover {
