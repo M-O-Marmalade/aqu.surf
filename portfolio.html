@@ -480,8 +480,8 @@
                                 <h1 id="rendering">Rendering</h1>
                                 <p>
                                     The game was first rendered using <code>cout</code> statements, but this didn&#39;t result in a framerate–capable runtime (although it did have a cool film–like effect). 
-                                    So I learned and refactored my code to write directly to the console buffer using the <code>WriteConsoleOutputCharacter()</code> and <code>WriteConsoleOutputAttribute()</code> functions, which resulted in a stable image capable of faster framerates. 
-                                    It also allowed me to easily add some color to the game.
+                                    So I learned and refactored my code to write directly to the console buffer using the <code>WriteConsoleOutputCharacter()</code> function, which resulted in a stable image capable of faster framerates. 
+                                    It also allowed me to easily add some color to the game, using the <code>WriteConsoleOutputAttribute()</code> function.
                                 </p>
                             </div>
                             <div class="image">
@@ -491,13 +491,25 @@
                                 </p>
                             </div>
                         </div>
-                        <h1 id="sound">Sound</h1>
-                        <p>
-                            As the project matured, I wanted to add sound to the game, and decided to learn <a href="https://www.fmod.com/studio">FMOD Studio</a> and the <a href="https://www.fmod.com/resources/documentation-api?version=2.02&amp;page=studio-guide.html">FMOD Studio API</a>. 
-                            From this endeavor I learned how to read API documentation, which assured me that I would be able to learn and use any libraries I want for future projects. 
-                            I did successfully add sound effects, as well as music that is synced to the player&#39;s movement (each frame that the snake moves corresponds to an 8th note in the music). 
-                            The music also reacts when the player eats a fruit exactly on a downbeat, gets a new high score, and more.
-                        </p>
+                        <div class="writeupSection">
+                            <div class="text">
+                                <h1 id="sound">Sound</h1>
+                                <p>
+                                    As the project matured, I wanted to add sound to the game, and decided to learn <a href="https://www.fmod.com/studio">FMOD Studio</a> and the <a href="https://www.fmod.com/resources/documentation-api?version=2.02&amp;page=studio-guide.html">FMOD Studio API</a>. 
+                                    From this endeavor I learned how to read API documentation, which assured me that I would be able to learn and use any libraries I want for future projects. 
+                                    I did successfully add sound effects, as well as music that is synced to the player&#39;s movement (each frame that the snake moves corresponds to an 8th note in the music). 
+                                    The music also reacts when the player eats a fruit exactly on a downbeat, gets a new high score, and more.
+                                </p>
+                            </div>
+                            <div class="image">
+                                <audio src="sounds/snek-audio.mp3" controls>Your browser doesn't support MP3? What year are you living in?</audio>
+                                <p>
+                                    Music from the game<br>
+                                    (Song sections progress as<br>
+                                    the player's score increases)
+                                </p>
+                            </div>
+                        </div>
                         <h1 id="reflecting">Reflecting</h1>
                         <p>
                             Now that I&#39;ve matured as a developer, I can see there are areas in this project where code can be cleaned up, and more elegant solutions can be implemented for certain features. 
