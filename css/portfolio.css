@@ -47,13 +47,15 @@
     --fs-xxs: xx-small;
 }
 
-body {
-    margin: 0px;
-
+html {
     background-image: url("../graphics/BG/BlueGradient.png");
     background-size: cover;
     background-position: left top;
     background-attachment: fixed;
+}
+
+body {
+    margin: 0;   
 }
 
 img {
@@ -73,7 +75,7 @@ img {
 }
 
 #projects {
-    margin: 100vh 0 100vh;
+    margin: 100vh 0 0;
 
     display: flex;
     flex-direction: row;
@@ -326,6 +328,27 @@ img {
 #websiteCard {
     padding-top: 64vh;
     width: 74vw;
+}
+
+#waterPlayground {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+    padding: 5vh;
+    box-sizing: border-box;
+}
+
+#toggleScroll {
+    width: clamp(10ch, 80vw, 1000px);
+    height: 80px;
+    background-color: var(--glass);
+    cursor: pointer;
+    border: 5px outset var(--glass);
+    border-radius: 30px;
+    font-size: var(--fs-m);
+    color: var(--coral);
 }
 
 /* * {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
         <meta name="description" content="James Graham's Portfolio">
         <title>James Graham</title>
         <link rel="stylesheet" href="css/portfolio.css">
@@ -540,6 +540,12 @@
 
         </section>
 
+        <div id="waterPlayground">
+            <button id="toggleScroll" onclick="toggleScrolling()">
+                Disable Touch Scroll
+            </button>
+        </div>
+
         <!-- Import maps polyfill -->
 		<!-- Remove this when import maps will be widely supported -->
 		<script async src="https://unpkg.com/es-module-shims@latest/dist/es-module-shims.js"></script>
@@ -553,5 +559,23 @@
         </script>
         <script src="js/projectCards.js"></script>
 		<script type="module" src="js/waterCanvas.js"></script>
+        <script>
+            let scrollingEnabled = true;
+            function toggleScrolling(){
+                scrollingEnabled = !scrollingEnabled;
+                if (scrollingEnabled) {
+                    document.body.style.touchAction = 'auto'; // enable touch scroll
+                    document.getElementById("toggleScroll").innerHTML = 'Disable Touch Scroll';
+                }
+                else {
+                    document.body.style.touchAction = 'none'; // disable touch scroll
+                    document.getElementById("toggleScroll").innerHTML = 'Enable Touch Scroll';
+                }
+            }
+
+            if (mobileBrowser) {
+                document.getElementById("toggleScroll").style.visibility = 'visible';
+            }
+        </script>
     </body>
 </html>
