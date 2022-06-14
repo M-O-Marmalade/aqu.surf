@@ -541,8 +541,16 @@
         </section>
 
         <div id="waterPlayground">
-            <button id="toggleScroll" onclick="toggleScrolling()">
-                Disable Touch Scroll
+            <button id="toggleScroll" onclick="toggleScrolling()" style="visibility: hidden;">
+                <p>Disable Scroll/Zoom</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-down-up" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <desc>Download more icon variants from https://tabler-icons.io/i/arrows-down-up</desc>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="17" y1="3" x2="17" y2="21"></line>
+                    <path d="M10 18l-3 3l-3 -3"></path>
+                    <line x1="7" y1="21" x2="7" y2="3"></line>
+                    <path d="M20 6l-3 -3l-3 3"></path>
+                 </svg>
             </button>
         </div>
 
@@ -560,22 +568,28 @@
         <script src="js/projectCards.js"></script>
 		<script type="module" src="js/waterCanvas.js"></script>
         <script>
+            const scrollButton = document.getElementById("toggleScroll");
+            const buttonWidth = scrollButton.style.width;
             let scrollingEnabled = true;
             function toggleScrolling(){
                 scrollingEnabled = !scrollingEnabled;
                 if (scrollingEnabled) {
                     document.body.style.touchAction = 'auto'; // enable touch scroll
-                    document.getElementById("toggleScroll").innerHTML = 'Disable Touch Scroll';
+                    // scrollButton.firstElementChild.innerHTML = 'Disable Scroll/Zoom';
+                    scrollButton.style.width = buttonWidth;
+                    scrollButton.style.margin = '1rem 10vw 1rem auto';
                 }
                 else {
                     document.body.style.touchAction = 'none'; // disable touch scroll
-                    document.getElementById("toggleScroll").innerHTML = 'Enable Touch Scroll';
+                    // scrollButton.firstElementChild.innerHTML = '';
+                    scrollButton.style.width = '80px';
+                    scrollButton.style.margin = '1rem 1rem 1rem auto';
                 }
             }
 
-            if (mobileBrowser) {
+            document.body.addEventListener('touchmove', function(){
                 document.getElementById("toggleScroll").style.visibility = 'visible';
-            }
+            });
         </script>
     </body>
 </html>
