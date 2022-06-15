@@ -53,9 +53,9 @@ const gltfLoader = new GLTFLoader();
 const renderer = new THREE.WebGLRenderer({
     canvas: waterCanvas
 });
-if (!portrait) {
+//if (!portrait) {
     renderer.setPixelRatio(window.devicePixelRatio);
-}
+//}
 renderer.setSize(wX, wY);
 
 
@@ -170,14 +170,14 @@ scene.add(torusMesh);
 
 
 //add name plane to scene
-const nameGeometry = new THREE.PlaneGeometry(26, 13);
-const nameTex = textureLoader.load('graphics/textures/texture4.png');
+const nameGeometry = new THREE.PlaneGeometry(32, 32);
+const nameTex = textureLoader.load('graphics/textures/texture.png');
 const nameMat = new THREE.MeshBasicMaterial({map: nameTex});
 const nameMesh = new THREE.Mesh( nameGeometry, nameMat );
 nameMesh.position.z = -5;
 nameMesh.position.y = -1;
 if (wAspectFloat < 1) {
-    nameMesh.scale.set(0.02,0.02,0.02);
+    nameMesh.scale.set(0.2,0.2,0.2);
     // nameMesh.position.y = .5 * (1 - wAspectFloat);
 }
 scene.add( nameMesh );
