@@ -350,8 +350,8 @@ function animate(sysTime) {
 		torusMesh.rotation.y += 0.003;
     }
     
-    lastRenderTime = performance.now();
     renderer.render(scene, camera);
+    lastRenderTime = performance.now();
     requestAnimationFrame(animate)
 }
 
