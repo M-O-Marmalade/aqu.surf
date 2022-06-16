@@ -331,7 +331,7 @@ function animate(sysTime) {
         const avgFPS = sum / 10;
         console.log(avgFPS);
     
-        if (avgFPS > 27) {
+        if (avgFPS > 36) {
             pixelDensity = Math.max(pixelDensity * 0.94, 1);
             renderer.setPixelRatio(pixelDensity);
         }
