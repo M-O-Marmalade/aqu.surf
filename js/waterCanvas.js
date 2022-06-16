@@ -15,8 +15,8 @@ const waterCanvas = document.createElement("canvas");
 waterCanvas.style.position = "fixed";
 waterCanvas.style.top = 0;
 waterCanvas.style.margin = 0;
-waterCanvas.style.width = "100%";
-waterCanvas.style.height = "100%";
+waterCanvas.style.width = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : "100%";
+waterCanvas.style.height = portrait ? window.innerHeight > window.innerWidth ? screen.height : screen.width : "100%";
 waterCanvas.style.overflow = "hidden";
 waterCanvas.style.zIndex = -10;
 // document.body.appendChild(waterCanvas);
@@ -25,12 +25,12 @@ document.body.insertBefore(waterCanvas, document.body.firstChild);
 const fps = 60;
 const msPerFrame = 1000 / fps;
 const damping = 0.984;
-const pointerStrength = 0.177;
+const pointerStrength = 0.277;
 const pointerSize = 2;
 
-const totalSegments = 48000;
-let wX = window.innerWidth;
-let wY = window.innerHeight;
+const totalSegments = portrait ? 27000 : 48000;
+let wX = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : window.innerWidth;
+let wY = portrait ? window.innerHeight > window.innerWidth ? screen.height : screen.width : window.innerHeight;
 let wAspectFloat = wX / wY;
 let wXYgcd = gcd(wX, wY);
 let aspectScale = aspectScaleSolve(wX / wXYgcd, wY / wXYgcd, totalSegments);
@@ -51,7 +51,12 @@ const gltfLoader = new GLTFLoader();
 
 //renderer
 const renderer = new THREE.WebGLRenderer({
-    canvas: waterCanvas
+    canvas: waterCanvas,
+    powerPreference: "high-performance",
+    // precision: 'lowp',
+    // depth: false,
+    // stencil: false
+    // antialias: true
 });
 //if (!portrait) {
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -162,7 +167,8 @@ scene.add(waterMesh);
 //add torus to scene
 const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 256, 64);
 const torusMesh = new THREE.Mesh(torusGeometry, normalMat);
-torusMesh.position.z = -0.5;
+torusMesh.position.z = -1;
+torusMesh.position.y = -5.5;
 torusMesh.scale.x = 0.06;
 torusMesh.scale.y = 0.032;
 torusMesh.scale.z = 0.04;
@@ -170,30 +176,34 @@ scene.add(torusMesh);
 
 
 //add name plane to scene
-const nameGeometry = new THREE.PlaneGeometry(32, 32);
-const nameTex = textureLoader.load('graphics/textures/texture.png');
-const nameMat = new THREE.MeshBasicMaterial({map: nameTex});
-const nameMesh = new THREE.Mesh( nameGeometry, nameMat );
-nameMesh.position.z = -5;
-nameMesh.position.y = -1;
-if (wAspectFloat < 1) {
-    nameMesh.scale.set(0.2,0.2,0.2);
-    // nameMesh.position.y = .5 * (1 - wAspectFloat);
-}
-scene.add( nameMesh );
+// const nameGeometry = new THREE.PlaneGeometry(32, 32);
+// const nameTex = textureLoader.load('graphics/textures/texture.png');
+// const nameMat = new THREE.MeshBasicMaterial({map: nameTex});
+// const nameMesh = new THREE.Mesh( nameGeometry, nameMat );
+// nameMesh.position.z = -5;
+// nameMesh.position.y = -1;
+// if (wAspectFloat < 1) {
+//     nameMesh.scale.set(0.2,0.2,0.2);
+//     // nameMesh.position.y = .5 * (1 - wAspectFloat);
+// }
+// scene.add( nameMesh );
 
 
-//add name model to scene
+//add blender scene
 gltfLoader.load("graphics/models/james-graham.glb", function (gltf) {
-    gltf.scene.position.z = -0.25;
+    gltf.scene.position.z = -1.25;
     if (wAspectFloat < 1) {
         gltf.scene.scale.set(wAspectFloat, wAspectFloat, wAspectFloat);
         // nameMesh.position.y = .5 * (1 - wAspectFloat);
     }
     gltf.scene.traverse((o) => {
-        if (o.name === "Text") {
-            o.material = normalMat;
-        }
+        // if (o.name === "Text") {
+        //     o.material = normalMat;
+        // }
+        // if (o.name === "Cloth") {
+        //     o.material = normalMat;
+        // }
+        o.material = normalMat;
     })
     scene.add(gltf.scene);
 })
@@ -275,21 +285,25 @@ function rippleAnimate() {
 }
 
 function scrollAnimate() {
-    const scrolledPages = window.scrollY / window.innerHeight;
-    const offsetAmount = -0.9;
+    const scrolledPages = window.scrollY / document.body.offsetHeight;
+    const offsetAmount = -5.5;
     camera.position.y = scrolledPages * offsetAmount;
     waterMesh.position.y = scrolledPages * offsetAmount;
 }
 
 function animate(sysTime) {
-    const cumulativeTime = extraFrameTime + sysTime - prevFrameTime;
+    let cumulativeTime = extraFrameTime + sysTime - prevFrameTime;
     if (cumulativeTime >= msPerFrame) {
-        extraFrameTime = cumulativeTime - msPerFrame;
         prevFrameTime = performance.now();
-        // console.log("prev: " + prevFrameTime);
-        // console.log("extra: " + extraFrameTime);
-        rippleAnimate();
+        while (cumulativeTime >= msPerFrame) {
+            rippleAnimate();
+            cumulativeTime -= msPerFrame;
+        }
+        extraFrameTime = cumulativeTime;
+
         scrollAnimate();
+        torusMesh.rotation.x += 0.01;
+		torusMesh.rotation.y += 0.01;
         renderer.render(scene, camera);
     }
 
@@ -303,9 +317,11 @@ function onVisibilityChange(e) {
 }
 
 function onWindowResize() {
-    wX = window.innerWidth;
-    wY = window.innerHeight;
-    wXYgcd = gcd(wX, wY);
+    if (!portrait) {
+        wX = window.innerWidth;
+        wY = window.innerHeight;
+        wXYgcd = gcd(wX, wY);
+    }
     renderer.setSize(wX, wY);
 }
 
