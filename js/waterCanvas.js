@@ -213,7 +213,6 @@ gltfLoader.load("graphics/models/james-graham.glb", function (gltf) {
 //add document event handlers
 document.body.addEventListener('mousemove', onMouseMove);
 document.body.addEventListener('touchmove', onTouchMove);
-document.body.addEventListener('pointerdown', onPointerDown);
 document.body.addEventListener('mousedown', onMouseDown);
 document.body.addEventListener('mouseup', onMouseUp);
 window.addEventListener("resize", onWindowResize);
@@ -258,15 +257,12 @@ function onMouseMove(e) {
 }
 
 function onMouseDown(e) {
+    affectWater(e.clientX, e.clientY, pointerStrength*50);
     mouseDown = true;
 }
 
 function onMouseUp(e) {
     mouseDown = false;
-}
-
-function onPointerDown(e) {
-    affectWater(e.clientX, e.clientY, pointerStrength*50);
 }
 
 function rippleAnimate() {
