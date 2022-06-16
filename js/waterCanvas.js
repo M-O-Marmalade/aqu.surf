@@ -25,8 +25,9 @@ document.body.insertBefore(waterCanvas, document.body.firstChild);
 const fps = 60;
 const msPerFrame = 1000 / fps;
 const damping = 0.984;
-const pointerStrength = 0.277;
+const pointerStrength = 0.2;
 const pointerSize = 2;
+let mouseDown = false;
 
 const totalSegments = portrait ? 27000 : 48000;
 let wX = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : window.innerWidth;
@@ -169,9 +170,9 @@ const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 256, 64);
 const torusMesh = new THREE.Mesh(torusGeometry, normalMat);
 torusMesh.position.z = -1;
 torusMesh.position.y = -5.5;
-torusMesh.scale.x = 0.06;
-torusMesh.scale.y = 0.032;
-torusMesh.scale.z = 0.04;
+torusMesh.scale.x = 0.05;
+torusMesh.scale.y = 0.027;
+torusMesh.scale.z = 0.03;
 scene.add(torusMesh);
 
 
@@ -212,6 +213,9 @@ gltfLoader.load("graphics/models/james-graham.glb", function (gltf) {
 //add document event handlers
 document.body.addEventListener('mousemove', onMouseMove);
 document.body.addEventListener('touchmove', onTouchMove);
+document.body.addEventListener('pointerdown', onPointerDown);
+document.body.addEventListener('mousedown', onMouseDown);
+document.body.addEventListener('mouseup', onMouseUp);
 window.addEventListener("resize", onWindowResize);
 document.addEventListener("visibilitychange", onVisibilityChange);
 
@@ -222,7 +226,7 @@ let extraFrameTime = 0.0;
 animate();
 
 
-function pointerMove(x, y) {
+function affectWater(x, y, p) {
     //determine which vertex the cursor is closest to
     const indX = Math.floor((x / wX) * xPoi);
     const indY = Math.floor((1 - y / wY) * yPoi);
@@ -234,7 +238,7 @@ function pointerMove(x, y) {
             const ytemp = j + indY;
             if (0 < xtemp && xtemp < xSeg && 0 < ytemp && ytemp < ySeg) {
                 const indtemp = xtemp + (ytemp * xPoi);
-                prev[indtemp] += pointerStrength * (pointerSize - (Math.abs(i) + Math.abs(j))) / pointerSize;
+                prev[indtemp] += p * (pointerSize - (Math.abs(i) + Math.abs(j))) / pointerSize;
             }
         }
     }
@@ -245,12 +249,24 @@ function onTouchMove(e) {
         e.preventDefault();
     }
     for (let i = 0; i < e.touches.length; i++) {
-        pointerMove(e.touches[i].clientX, e.touches[i].clientY);
+        affectWater(e.touches[i].clientX, e.touches[i].clientY, pointerStrength);
     }
 }
 
 function onMouseMove(e) {
-    pointerMove(e.clientX, e.clientY)
+    affectWater(e.clientX, e.clientY, mouseDown ? pointerStrength*2 : pointerStrength);
+}
+
+function onMouseDown(e) {
+    mouseDown = true;
+}
+
+function onMouseUp(e) {
+    mouseDown = false;
+}
+
+function onPointerDown(e) {
+    affectWater(e.clientX, e.clientY, pointerStrength*50);
 }
 
 function rippleAnimate() {
@@ -302,8 +318,8 @@ function animate(sysTime) {
         extraFrameTime = cumulativeTime;
 
         scrollAnimate();
-        torusMesh.rotation.x += 0.01;
-		torusMesh.rotation.y += 0.01;
+        torusMesh.rotation.x += 0.003;
+		torusMesh.rotation.y += 0.003;
         renderer.render(scene, camera);
     }
 
