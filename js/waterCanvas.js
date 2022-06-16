@@ -28,6 +28,19 @@ const damping = 0.984;
 const pointerStrength = 0.2;
 const pointerSize = 2;
 let mouseDown = false;
+let pixelDensity = window.devicePixelRatio;
+let lastRenderTimes = [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+];
 
 const totalSegments = portrait ? 27000 : 48000;
 let wX = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : window.innerWidth;
@@ -59,9 +72,7 @@ const renderer = new THREE.WebGLRenderer({
     // stencil: false
     // antialias: true
 });
-//if (!portrait) {
-    renderer.setPixelRatio(window.devicePixelRatio);
-//}
+renderer.setPixelRatio(pixelDensity);
 renderer.setSize(wX, wY);
 
 
@@ -218,10 +229,10 @@ document.body.addEventListener('mouseup', onMouseUp);
 window.addEventListener("resize", onWindowResize);
 document.addEventListener("visibilitychange", onVisibilityChange);
 
-
-//start the animation
-let prevFrameTime = performance.now();
-let extraFrameTime = 0.0;
+//start the animation after 500ms (after screen refresh rate has been determined)
+let prevRippleTime = performance.now();
+let extraRippleTime = 0.0;
+let lastRenderTime = performance.now();
 animate();
 
 
@@ -304,27 +315,49 @@ function scrollAnimate() {
 }
 
 function animate(sysTime) {
-    let cumulativeTime = extraFrameTime + sysTime - prevFrameTime;
-    if (cumulativeTime >= msPerFrame) {
-        prevFrameTime = performance.now();
-        while (cumulativeTime >= msPerFrame) {
-            rippleAnimate();
-            cumulativeTime -= msPerFrame;
+    let cumulativeRippleTime = extraRippleTime + sysTime - prevRippleTime;
+    
+    if (pixelDensity > 1) {
+        const renderDeltaTime = sysTime - lastRenderTime;
+        lastRenderTimes.shift();
+        if (!isNaN(renderDeltaTime)) {
+            lastRenderTimes.push(renderDeltaTime);
         }
-        extraFrameTime = cumulativeTime;
+
+        let sum = 0;
+        lastRenderTimes.forEach(item => {
+            sum += item;
+        });
+        const avgFPS = sum / 10;
+        console.log(avgFPS);
+    
+        if (avgFPS > 27) {
+            pixelDensity = Math.max(pixelDensity * 0.94, 1);
+            renderer.setPixelRatio(pixelDensity);
+        }
+    }
+
+    if (cumulativeRippleTime >= msPerFrame) {
+        prevRippleTime = performance.now();
+        while (cumulativeRippleTime >= msPerFrame) {
+            cumulativeRippleTime -= msPerFrame;
+            rippleAnimate();
+        }
+        extraRippleTime = cumulativeRippleTime;
 
         scrollAnimate();
         torusMesh.rotation.x += 0.003;
 		torusMesh.rotation.y += 0.003;
-        renderer.render(scene, camera);
     }
-
+    
+    lastRenderTime = performance.now();
+    renderer.render(scene, camera);
     requestAnimationFrame(animate)
 }
 
 function onVisibilityChange(e) {
     if (document.visibilityState === 'visible') {
-      prevFrameTime = performance.now();
+      prevRippleTime = performance.now();
     }
 }
 
