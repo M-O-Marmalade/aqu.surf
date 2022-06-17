@@ -90,7 +90,7 @@
                                     The Renoise API doesn't really offer a way to directly control pixels. 
                                     Instead, it offers elements like sliders, knobs, text boxes, etc. 
                                     However, I found that I could control a grid of tiny bitmaps (loaded from the filesystem) to create a "virtual screen"! 
-                                    Each frame, I had to manually update bitmaps, rather than blanking the whole screen and redrawing everything as graphics engines typically do, because Renoise isn't very fast at updating large amounts of bitmaps (it can handle ~100 bitmaps at 25 frames/second).
+                                    Each frame, I had to manually update bitmaps, rather than blanking the whole screen and redrawing everything as graphics engines typically do, because Renoise isn't very fast at updating large amounts of bitmaps (it can update ~100 bitmaps at 25 frames/second).
                                 </p>
                             </div>
                             <div class="image">
@@ -225,9 +225,9 @@
                             <div class="text">
                                 <h2>Tension</h2>
                                 <p>
-                                    Instead of stacking multiple control points at the same coordinates, I wanted each control point to have a variable "weight" (or "tension") to control each point's strength on the curve. 
+                                    I wanted each control point to have a variable "weight" (or "tension") to control its influence on the curve. 
                                     I found an <i>amazing</i> resource called <a href="https://pomax.github.io/bezierinfo/">A Primer on Bézier Curves</a> by Mike Kamermans (aka "Pomax"), which contains a <a href="https://pomax.github.io/bezierinfo/#weightcontrol">chapter on adding this "weight"</a>! 
-                                    After implemented this new math, I now had infinite-degree, weighted, Bézier curves!
+                                    After implementing this new math, I now had infinite-degree, weighted, Bézier curves!
                                 </p>
                             </div>
                             <div class="image">
@@ -523,7 +523,7 @@
 
             <article class="project">
                 <div class="projectFront" id="websiteCard">
-                    <section>                    
+                    <section>
                         <section class="projectTech">
                             <p>HTML</p>
                             <p>CSS</p>
@@ -535,6 +535,30 @@
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
+                    <h1 class="projectTitle">aqu.surf</h1>
+                    <div class="projectBackLinks">
+                        <a href="https://github.com/M-O-Marmalade/aqu.surf" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <desc>Download more icon variants from https://tabler-icons.io/i/brand-github</desc>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+                             </svg>
+                        </a>
+                    </div>
+                    <section class="projectWriteup"> 
+                        <h1>My Portfolio</h1>
+                        <p>
+                            For my portfolio, I wanted something fun and impressive, that shows my passion and curiosity for technology and design.
+                            I absolutely love 3D graphics, especially refraction effects, and <i>especially</i> water.
+                            I wrote the water simulation and flip cards in pure JavaScript.
+                            I'm using <a href="https://threejs.org/">three.js</a> to render the 3D scene after updating the water mesh's geometry each frame.
+                        </p>
+                        <h1>Adaptive Performance</h1>
+                        <p>
+                            To accomodate a wide range of devices, I'm constantly detecting the frame-rate and lowering three.js's rendering resolution if the framerate dips below 60fps.
+                            This way high-end devices get a nice HD experience, and low-spec devices will still run smoothly after a few seconds when the renderer drops to a lower resolution.
+                        </p>
+                    </section>
                 </div>
             </article>
 

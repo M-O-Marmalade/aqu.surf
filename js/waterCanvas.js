@@ -24,37 +24,75 @@ document.body.insertBefore(waterCanvas, document.body.firstChild);
 
 const fps = 60;
 const msPerFrame = 1000 / fps;
+const minMsPerFrame = 1000 / 55;
 const damping = 0.984;
 const pointerStrength = 0.2;
 const pointerSize = 2;
 let mouseDown = false;
 let pixelDensity = window.devicePixelRatio;
+const minPixelDensity = 1;
 let lastRenderTimes = [
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
 ];
 
 const totalSegments = portrait ? 27000 : 48000;
-let wX = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : window.innerWidth;
-let wY = portrait ? window.innerHeight > window.innerWidth ? screen.height : screen.width : window.innerHeight;
-let wAspectFloat = wX / wY;
-let wXYgcd = gcd(wX, wY);
-let aspectScale = aspectScaleSolve(wX / wXYgcd, wY / wXYgcd, totalSegments);
-const xSeg = Math.floor(wX / wXYgcd * aspectScale);
-const ySeg = Math.floor(wY / wXYgcd * aspectScale);
-const yPoi = ySeg + 1;
-const xPoi = xSeg + 1;
+let wX;
+let wY;
+let wAspectFloat;
+let wXYgcd;
+let aspectScale;
+let xSeg;
+let ySeg;
+let yPoi;
+let xPoi;
 
-const prev = new Array(xPoi * yPoi).fill(0);
-const curr = new Array(xPoi * yPoi).fill(0);
+let prev;
+let curr;
+
+calculateWaterSettings();
+
+function calculateWaterSettings(){
+    wX = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : window.innerWidth;
+    wY = portrait ? window.innerHeight > window.innerWidth ? screen.height : screen.width : window.innerHeight
+    wAspectFloat = wX / wY;
+    wXYgcd = gcd(wX, wY);
+    aspectScale = aspectScaleSolve(wX / wXYgcd, wY / wXYgcd, totalSegments);
+    xSeg = Math.floor(wX / wXYgcd * aspectScale);
+    ySeg = Math.floor(wY / wXYgcd * aspectScale);
+    yPoi = ySeg + 1;
+    xPoi = xSeg + 1;
+    prev = new Array(xPoi * yPoi).fill(0);
+    curr = new Array(xPoi * yPoi).fill(0);
+}
 
 
 //Three.js settings
@@ -124,55 +162,20 @@ const phongMat = new THREE.MeshPhongMaterial({
 });
 
 // water geometry
-const waterGeometry = new THREE.BufferGeometry();
+let waterGeometry = new THREE.BufferGeometry();
 
 //water attributes
-const waterIndices = [];
-const waterPositions = [];
-const waterNormals = [];
-// const waterUVs = [];
-
+let waterIndices;
+let waterPositions;
+let waterNormals;
+let positionsA;
+let normalsA;
+let waterMesh;
+// const waterUVs;
 const waterScale = 1;
-// generate water positions, normals and UVs for a simple grid geometry
-for (let i = 0; i < yPoi; i++) {
 
-    const y = i / ySeg - 0.5;    //set y position from 0 - 1
-
-    for (let j = 0; j < xPoi; j++) {
-
-        const x = j / xSeg - 0.5;    //set x position from 0 - 1
-
-        waterPositions.push(x * waterScale * wAspectFloat, y * waterScale, 0);
-        waterNormals.push(0, 0, 1);
-        // waterUVs.push(x,y);
-    }
-}
-
-// generate water indices (data for element array buffer)
-for (let i = 0; i < ySeg; i++) {
-
-    for (let j = 0; j < xSeg; j++) {
-
-        const a = i * (xSeg + 1) + (j + 1);
-        const b = i * (xSeg + 1) + j;
-        const c = (i + 1) * (xSeg + 1) + j;
-        const d = (i + 1) * (xSeg + 1) + (j + 1);
-
-        // generate two faces (triangles) per iteration
-        waterIndices.push(d, b, a); // face one
-        waterIndices.push(d, c, b); // face two
-    }
-}
-
-//set water mesh data and add to scene
-waterGeometry.setIndex(waterIndices);
-const positionsA = new THREE.Float32BufferAttribute(waterPositions, 3);
-const normalsA = new THREE.Float32BufferAttribute(waterNormals, 3);
-// const UVsA = new THREE.Float32BufferAttribute(waterUVs,2);
-waterGeometry.setAttribute('position', positionsA);
-waterGeometry.setAttribute('normal', normalsA);
-// waterGeometry.setAttribute( 'uv', UVsA) ;
-const waterMesh = new THREE.Mesh(waterGeometry, refractiveMat);
+createWater();
+waterMesh = new THREE.Mesh(waterGeometry, refractiveMat);
 scene.add(waterMesh);
 
 
@@ -202,6 +205,7 @@ scene.add(torusMesh);
 
 
 //add blender scene
+let blenderScene;
 gltfLoader.load("graphics/models/james-graham.glb", function (gltf) {
     gltf.scene.position.z = -1.25;
     if (wAspectFloat < 1) {
@@ -229,12 +233,61 @@ document.body.addEventListener('mouseup', onMouseUp);
 window.addEventListener("resize", onWindowResize);
 document.addEventListener("visibilitychange", onVisibilityChange);
 
-//start the animation after 500ms (after screen refresh rate has been determined)
+//start the animation
 let prevRippleTime = performance.now();
 let extraRippleTime = 0.0;
 let lastRenderTime = performance.now();
 animate();
 
+
+function createWater(){
+    calculateWaterSettings();
+
+    waterIndices = [];
+    waterPositions = [];
+    waterNormals = [];
+    // waterUVs = [];
+    
+    // generate water positions, normals and UVs for a simple grid geometry
+    for (let i = 0; i < yPoi; i++) {
+    
+        const y = i / ySeg - 0.5;    //set y position from 0 - 1
+    
+        for (let j = 0; j < xPoi; j++) {
+    
+            const x = j / xSeg - 0.5;    //set x position from 0 - 1
+    
+            waterPositions.push(x * waterScale * wAspectFloat, y * waterScale, 0);
+            waterNormals.push(0, 0, 1);
+            // waterUVs.push(x,y);
+        }
+    }
+    
+    // generate water indices (data for element array buffer)
+    for (let i = 0; i < ySeg; i++) {
+    
+        for (let j = 0; j < xSeg; j++) {
+    
+            const a = i * (xSeg + 1) + (j + 1);
+            const b = i * (xSeg + 1) + j;
+            const c = (i + 1) * (xSeg + 1) + j;
+            const d = (i + 1) * (xSeg + 1) + (j + 1);
+    
+            // generate two faces (triangles) per iteration
+            waterIndices.push(d, b, a); // face one
+            waterIndices.push(d, c, b); // face two
+        }
+    }
+    
+    //set water mesh data and add to scene
+    waterGeometry.setIndex(waterIndices);
+    positionsA = new THREE.Float32BufferAttribute(waterPositions, 3);
+    normalsA = new THREE.Float32BufferAttribute(waterNormals, 3);
+    // const UVsA = new THREE.Float32BufferAttribute(waterUVs,2);
+    waterGeometry.setAttribute('position', positionsA);
+    waterGeometry.setAttribute('normal', normalsA);
+    // waterGeometry.setAttribute( 'uv', UVsA) ;
+};
 
 function affectWater(x, y, p) {
     //determine which vertex the cursor is closest to
@@ -317,10 +370,10 @@ function scrollAnimate() {
 function animate(sysTime) {
     let cumulativeRippleTime = extraRippleTime + sysTime - prevRippleTime;
     
-    if (pixelDensity > 1) {
+    if (pixelDensity > minPixelDensity) {
         const renderDeltaTime = sysTime - lastRenderTime;
-        lastRenderTimes.shift();
         if (!isNaN(renderDeltaTime)) {
+            lastRenderTimes.shift();
             lastRenderTimes.push(renderDeltaTime);
         }
 
@@ -328,11 +381,11 @@ function animate(sysTime) {
         lastRenderTimes.forEach(item => {
             sum += item;
         });
-        const avgFPS = sum / 10;
-        console.log(avgFPS);
+        const avgFPS = sum / 30;
+        // console.log(avgFPS);
     
-        if (avgFPS > 36) {
-            pixelDensity = Math.max(pixelDensity * 0.94, 1);
+        if (avgFPS > minMsPerFrame) {
+            pixelDensity = Math.max(pixelDensity * 0.98, minPixelDensity);
             renderer.setPixelRatio(pixelDensity);
         }
     }
@@ -364,9 +417,12 @@ function onVisibilityChange(e) {
 
 function onWindowResize() {
     if (!portrait) {
-        wX = window.innerWidth;
-        wY = window.innerHeight;
-        wXYgcd = gcd(wX, wY);
+        createWater();
+        camera.aspect = wAspectFloat;
+        camera.updateProjectionMatrix();
+        waterGeometry.setIndex(waterIndices);
+        positionsA.needsUpdate = true;
+        normalsA.needsUpdate = true;
     }
     renderer.setSize(wX, wY);
 }

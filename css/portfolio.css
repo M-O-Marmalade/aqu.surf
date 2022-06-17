@@ -156,7 +156,8 @@ img {
     width: fit-content;
     text-align: center;
     border-style: none none solid none;
-    border-radius: 15%;
+    border-bottom-left-radius: 15%;
+    border-bottom-right-radius: 15%;
     color: var(--coral);
 }
 
@@ -168,7 +169,8 @@ img {
     width: 320px;
     max-width: 80%;
     border-style: none none solid none;
-    border-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
     color: var(--coral);
 }
 
