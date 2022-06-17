@@ -358,6 +358,7 @@ function animate(sysTime) {
 function onVisibilityChange(e) {
     if (document.visibilityState === 'visible') {
       prevRippleTime = performance.now();
+      lastRenderTime = performance.now();
     }
 }
 
