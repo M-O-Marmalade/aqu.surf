@@ -372,6 +372,25 @@ img {
     overflow: visible;
 }
 
+#linksSection {
+    margin: 1rem auto;
+    padding: 1rem;
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid var(--coral);
+    border-radius: 10rem;
+}
+
+h2 {
+    font-size: var(--fs-xxl);
+    font-family: monof55;
+    color: var(--coral);
+    text-align: center;
+    margin: 1rem;
+}
+
 /* * {
     border: 1px solid black;
 } */
