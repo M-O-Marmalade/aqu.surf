@@ -9,7 +9,6 @@ const backClass = "projectBack";
 
 function openFlipCard(card) {
     if (!card.id) {card.id = "flipCardUniqueID" + flipCardUniqueIDCounter++;}
-    console.log(card.id + " clicked!");
     
     if (isACardFlipped) {return;}   //exit if a card is already flipped
     isACardFlipped = true;  //record that we have a card flipped
@@ -35,7 +34,7 @@ function openFlipCard(card) {
     clone.style.width = origRect.width + 'px';
     clone.style.height = origRect.height + 'px';
 
-
+    
     requestAnimationFrame(function() {  //set the clone's ending position/size to be transitioned to on the next frame, so it will actually transition
         requestAnimationFrame(function() {
             clone.style.top = '5vh'
@@ -46,6 +45,8 @@ function openFlipCard(card) {
             clone.style.zIndex = 10;
             clone.querySelector('.' + frontClass).style.position = 'absolute';
             clone.querySelector('.' + backClass).style.position = 'static';
+            
+            clone.querySelector('.projectWriteup').style.overflow = 'scroll';
         });
     });
 }
