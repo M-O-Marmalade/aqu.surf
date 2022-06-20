@@ -268,7 +268,7 @@
                                 <p>
                                     My solution was to sample a moderate amount of points, and connect them with line segments, which are easier to rasterize (which I later discovered is called <a href="https://pomax.github.io/bezierinfo/#flattening">&quot;flattening&quot; the curve</a>). 
                                     More robust solutions have been documented (such as in Chapter 4 of <a href="https://api.semanticscholar.org/CorpusID:61935445">A Rasterizing Algorithm for Drawing Curves</a> by <a href="https://www.semanticscholar.org/author/Alois-Zingl/70155051">Alois Zingl</a>), but this solution would be sufficient, and quicker to implement. 
-                                    Wanting pixel–perfect, non–aliased lines, I found the <a href="http://members.chello.at/~easyfilter/bresenham.html">Bresenham algorithm</a>, which yielded a beautiful result!
+                                    Wanting pixel–perfect, aliased lines, I found the <a href="http://members.chello.at/~easyfilter/bresenham.html">Bresenham algorithm</a>, which yielded a beautiful result!
                                 </p>
                             </div>
                             <div class="image">
