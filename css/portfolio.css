@@ -34,7 +34,8 @@
     --code: #ff0073;
 
     --glass: #44c1ff60;
-    --glass-2: rgba(6, 75, 139, 0.992);
+    --glass-2: #44c1ff67;
+    --card-back: rgba(6, 75, 139, 0.992);
 
     --project-text-color: var(--dark-2);
 
@@ -129,12 +130,12 @@ img {
     
     transform: rotateY(180deg);
     
-    background-color: var(--glass-2);
+    background-color: var(--card-back);
     font-family: monof55;
     color: var(--coral);
     
     transition: border-radius 2s;
-    /* border: 7px outset var(--glass-2); */
+    /* border: 7px outset var(--card-back); */
     border-radius: clamp(5vw, 50px, 50px);
     box-shadow: 5px 14px 4px 0 rgba(7, 0, 142, 0.096);
 }
@@ -382,8 +383,9 @@ h2 {
 }
 
 #meSection {
+    box-sizing: border-box;
     margin: 1rem auto;
-    padding: clamp(16px, 1rem, 64px);
+    padding: clamp(16px, 1.5rem, 64px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -391,7 +393,7 @@ h2 {
     border: 5px solid var(--coral);
     border-radius: clamp(16px, 5rem, 64px);
     gap: 4px;
-    max-width: clamp(1px, 90vw, 1500px);
+    width: clamp(1px, 90vw, 1500px);
     background-color: var(--glass);
 }
 
@@ -409,6 +411,7 @@ h2 {
 }
 
 #skillsSection {
+    box-sizing: border-box;
     margin: 1rem auto;
     padding: clamp(16px, 1rem, 64px);
     display: flex;
@@ -432,6 +435,7 @@ h2 {
     border: 1px dashed var(--hot-coral);
     border-radius: 16px;
     padding: 0.25rem;
+    /* background-color: var(--glass-2); */
 }
 
 #skillsSection img {
