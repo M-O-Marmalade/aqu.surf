@@ -29,24 +29,61 @@ body {
     background-image: url("../graphics/reform/reform-blue-grid.png");
 }
 
-p, h1, h2, h3 {
+p, h1, h2, h3, button {
     color: var(--rf-white);
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
 
+p {
+    font-size: var(--fs-m);
+    margin: 0.5rem 3rem;
+}
+
 h1 {
     font-size: var(--fs-xxl);
-    margin: 1em auto 0.25em;
+    margin: 2rem auto 0.25em;
 }
 
 h2 {
     font-size: var(--fs-l);
 }
 
+h3 {
+    font-size: var(--fs-m);
+    margin: 0.2rem auto;
+    text-decoration: underline;
+}
+
 a {
     color: var(--mainColor);
     text-decoration: underline;
+}
+
+button {
+    display: block;
+    width: clamp(350px, 50vw, 90vw);
+    height: 4rem;
+    margin: 1rem auto;
+    background-color: #0062ff55;
+    border: 0.1rem solid white;
+    border-radius: 1.25rem;
+    font-size: var(--fs-xl);
+    transition: 0.5s;
+}
+
+button:hover {
+    border-radius: 3rem;
+    background-color: #008cff29;
+    cursor: pointer;
+}
+
+#basicDemo {
+    display: block;
+    margin: 1rem auto;
+    max-width: 100%;
+    padding: 2px;
+    border: 2px dashed white;
 }
 
 #titleArt {
@@ -104,8 +141,8 @@ a {
 }
 
 .control .heading {
-    padding: 0.4rem;    
     border-style: dashed none none dashed;
+    padding: 0.4rem; 
 }
 
 .hotkey .heading {
@@ -127,7 +164,6 @@ a {
 }
 
 .details p {
-    font-size: var(--fs-m);
     text-align: left;
     margin: 0.75em 1em 1em;
 }
@@ -136,9 +172,11 @@ a {
     margin: 0.25em;
 }
 
-.control img {
+.control > img {
     max-width: 100%;
     align-self: center;
+    padding: 2px;
+    border: 2px dashed white;
 }
 
 #links {
