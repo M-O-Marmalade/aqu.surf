@@ -373,6 +373,80 @@ img {
     overflow: visible;
 }
 
+h2 {
+    font-size: var(--fs-xxl);
+    margin: 1rem;
+    font-family: monof55;
+    color: var(--coral);
+    text-align: center;
+}
+
+#meSection {
+    margin: 1rem auto;
+    padding: clamp(16px, 1rem, 64px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid var(--coral);
+    border-radius: clamp(16px, 5rem, 64px);
+    gap: 4px;
+    max-width: clamp(1px, 90vw, 1500px);
+    background-color: var(--glass);
+}
+
+#meSection img {
+    width: clamp(128px, 25vw, 256px);
+    border-radius: 32px;
+}
+
+#meSection p {
+    font-size: var(--fs-m);
+    margin: 0.5rem 0;
+    font-family: monof55;
+    color: var(--coral);
+    text-align: center;
+}
+
+#skillsSection {
+    margin: 1rem auto;
+    padding: clamp(16px, 1rem, 64px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid var(--coral);
+    border-radius: clamp(16px, 5rem, 64px);
+    gap: 4px;
+    max-width: clamp(1px, 90vw, 1500px);
+    background-color: var(--glass);
+}
+
+#skillsSection div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: clamp(64px, 5vw, 128px);
+    min-height: clamp(64px, 5vw, 128px);
+    border: 1px dashed var(--hot-coral);
+    border-radius: 16px;
+    padding: 0.25rem;
+}
+
+#skillsSection img {
+    margin: 0.25rem auto;
+    width: clamp(48px, 5vw, 56px);
+}
+
+#skillsSection p {
+    font-size: var(--fs-m);
+    margin: 0.5rem 0;
+    font-family: monof55;
+    color: var(--coral);
+    text-align: center;
+}
+
 #linksSection {
     margin: 1rem auto;
     padding: 1rem;
@@ -382,14 +456,6 @@ img {
     align-items: center;
     border: 5px solid var(--coral);
     border-radius: 10rem;
-}
-
-h2 {
-    font-size: var(--fs-xxl);
-    margin: 1rem;
-    font-family: monof55;
-    color: var(--coral);
-    text-align: center;
 }
 
 /* * {
