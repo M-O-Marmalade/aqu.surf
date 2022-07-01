@@ -134,7 +134,7 @@ light.position.set(-2, 2, 10);
 scene.add(light);
 
 // materials
-const refractiveMat = new THREE.MeshPhysicalMaterial({
+const matRefractive = new THREE.MeshPhysicalMaterial({
     side: THREE.FrontSide,
     transmission: 1.0,
     roughness: 0,
@@ -144,17 +144,21 @@ const refractiveMat = new THREE.MeshPhysicalMaterial({
     // reflectivity: 1,
 });
 
-const normalMat = new THREE.MeshNormalMaterial({
+const matNormalFlat = new THREE.MeshNormalMaterial({
     side: THREE.FrontSide,
     flatShading: true
 });
 
-const vertMat = new THREE.MeshBasicMaterial({
+const matNormalSmooth = new THREE.MeshNormalMaterial({
+    side: THREE.FrontSide
+});
+
+const matVertColor = new THREE.MeshBasicMaterial({
     vertexColors: true,
     side: THREE.FrontSide
 });
 
-const phongMat = new THREE.MeshPhongMaterial({
+const matPhong = new THREE.MeshPhongMaterial({
     color: 0x0060ff,
     specular: 0x0000ff,
     //vertexColors: true,
@@ -175,18 +179,18 @@ let waterMesh;
 const waterScale = 1;
 
 createWater();
-waterMesh = new THREE.Mesh(waterGeometry, refractiveMat);
+waterMesh = new THREE.Mesh(waterGeometry, matRefractive);
 scene.add(waterMesh);
 
 
 //add torus to scene
 const torusGeometry = new THREE.TorusKnotGeometry(10, 2.3, 256, 64);
-const torusMesh = new THREE.Mesh(torusGeometry, normalMat);
+const torusMesh = new THREE.Mesh(torusGeometry, matNormalSmooth);
 torusMesh.position.z = -1;
 torusMesh.position.y = -5.5;
-torusMesh.scale.x = 0.05;
-torusMesh.scale.y = 0.027;
-torusMesh.scale.z = 0.03;
+torusMesh.scale.x = 0.034;
+torusMesh.scale.y = 0.034;
+torusMesh.scale.z = 0.034;
 scene.add(torusMesh);
 
 
@@ -214,12 +218,12 @@ gltfLoader.load("graphics/models/james-graham.glb", function (gltf) {
     }
     gltf.scene.traverse((o) => {
         // if (o.name === "Text") {
-        //     o.material = normalMat;
+        //     o.material = matNormalFlat;
         // }
         // if (o.name === "Cloth") {
-        //     o.material = normalMat;
+        //     o.material = matNormalFlat;
         // }
-        o.material = normalMat;
+        o.material = matNormalFlat;
     })
     scene.add(gltf.scene);
 })
