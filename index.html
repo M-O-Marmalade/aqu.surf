@@ -556,7 +556,14 @@
                         <p>
                             To accomodate a wide range of devices, I'm constantly monitoring the frame-rate and lowering three.js's rendering resolution if the framerate dips below 60fps.
                             This way high-end devices get a nice HD experience, and low-spec devices will still run smoothly after the renderer drops to a lower resolution.
-                        </p>
+			</p>
+		        <h1>Adaptive Display</h1>
+			<p>
+			    I wanted a consistent density of indices for the water's geometry regardless of the aspect ratio of the current HTML document.
+			    To achieve this, I declare a constant that represents the desired amount of points.
+			    I then use the Quadratic formula to solve for the amount of points required in the X and Y axes that would result in a total area equal to the desired amount of points based on the current aspect ratio of the window.
+			    Because the water simulation is geometry-and-framerate-dependent, this process allows the water to move at a consistent speed regardless of the aspect ratio of the device or window being used to run it.
+			</p>
                         <h1>Art</h1>
                         <p>
                             I create all of my own sounds, 3D models, artwork, and code, for all of my projects.
@@ -585,13 +592,13 @@
             </p>
             <p>
                 Over the past 3+ years, I've found a huge passion for programming.
-                I love solving complex problems, reading documentation/manuals/book/blogs, and expanding my understanding!
+                I love solving complex problems, reading documentation/manuals/books/blogs, and expanding my understanding!
                 I love the vast possibilities of what can be created when hardware, software, and creativity come together!
             </p>
             <p>
                 I enjoy lightweight programming with low-level languages like C and C++, and have even dabbled in Assembly (GBZ80).
                 I also enjoy how fast and easy development can be when using high-level languages like Lua, Python, and even JavaScript.
-                Despite C++ being my first language (and probably my favorite), most of my time programming has been in Lua, making tools for Renoise, a Digital Audio Workstation.
+                Despite C++ being my first language (and probably my favorite), most of my time programming has been spent in Lua, making tools for Renoise, a Digital Audio Workstation.
             </p>
             <p>
                 Some of my hobbies include: gaming (especially Nintendo games from Gamecube/DS and earlier), game dev, web dev, sound design & composition, drums, 3D art, pixel art, modding handheld consoles, inline-skating, bike-riding, skateboarding, swimming, and cooking.
