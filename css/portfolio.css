@@ -376,7 +376,7 @@ img {
 
 h2 {
     font-size: var(--fs-xxl);
-    margin: 1rem;
+    margin: 3.5rem auto 1rem;
     font-family: monof55;
     color: var(--coral);
     text-align: center;
