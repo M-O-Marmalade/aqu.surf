@@ -408,6 +408,7 @@ h2 {
     font-family: monof55;
     color: var(--coral);
     text-align: center;
+    max-width: 100%;
 }
 
 #skillsSection {
