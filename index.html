@@ -9,7 +9,12 @@
         <base target="_blank">
     </head>
     <body>
-        <section id="projects">            
+        <div id="projectCardInstructions" class="outlinedSection">
+            <p id="projectCardInstructionsP">
+                Click on a project to read more!
+            </p>
+        </div>
+        <section id="projects">
             <article class="project" id="paddles">
                 <div class="projectFront">
                     <section>
@@ -584,16 +589,16 @@
         </section>
 
         <h2>About Me</h2>
-        <div id="meSection">
+        <div id="meSection" class="outlinedSection">
             <img src="graphics/me.jfif" alt="Picture of me!">
             <p>
                 My name is James Graham! 
-                I love to use technology to create fun and beautiful experiences! 
+                I love the beautiful experiences and versatile tools that can be created with technology!
             </p>
             <p>
                 Over the past 3+ years, I've found a huge passion for programming.
-                I love solving complex problems, reading documentation/manuals/books/blogs, and expanding my understanding!
-                I love the vast possibilities of what can be created when hardware, software, and creativity come together!
+                I love solving complex problems, reading documentation, books, and dev-logs, and improving my understanding!
+                I love the amazing things that can be created when hardware, software, and creativity come together!
             </p>
             <p>
                 I enjoy lightweight programming with low-level languages like C and C++, and have even dabbled in Assembly (GBZ80).
@@ -609,7 +614,7 @@
         </div>
 
         <h2>Skills</h2>
-        <div id="skillsSection">
+        <div id="skillsSection" class="outlinedSection">
             <div>
                 <img src="graphics/skills/C.svg" alt="">
                 <p>C</p>
@@ -698,6 +703,14 @@
                 <img src="graphics/skills/LSDJ-colors.svg" alt="">
                 <p>LSDJ</p>
             </div>
+            <div>
+                <img src="graphics/skills/GBZ80.png" alt="">
+                <p>GBZ80</p>
+            </div>
+            <div>
+                <img src="graphics/skills/Arduino.svg" alt="">
+                <p>Arduino</p>
+            </div>
             
             <h2 style="width: 100%; margin: 1rem;">Learning</h2>
             <div>
@@ -720,18 +733,10 @@
                 <img src="graphics/skills/MSYS2.png" alt="">
                 <p>MSYS2</p>
             </div>
-            <div>
-                <img src="graphics/skills/Assembly.svg" alt="">
-                <p>Assembly</p>
-            </div>
-            <div>
-                <img src="graphics/skills/Arduino.svg" alt="">
-                <p>Arduino</p>
-            </div>
         </div>
         
         <h2>Links</h2>
-        <div id="linksSection">
+        <div id="linksSection" class="outlinedSection">
             <a href="https://github.com/M-O-Marmalade">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="64" height="64" viewBox="0 0 24 24" stroke-width="2" stroke="#ffe4ff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <desc>Download more icon variants from https://tabler-icons.io/i/brand-github</desc>
@@ -812,6 +817,7 @@
             // when a touch screen is detected, we will unhide the button
             document.body.addEventListener('touchmove', function(){
                 document.getElementById("toggleScroll").style.visibility = 'visible';
+                document.getElementById("projectCardInstructionsP").innerHTML = 'Tap on a project to read more!';
             });
         </script>
     </body>

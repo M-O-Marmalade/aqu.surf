@@ -76,8 +76,30 @@ img {
     }
 }
 
+.outlinedSection {
+    border: 5px solid var(--coral);
+    border-radius: clamp(16px, 5rem, 64px);
+}
+
+#projectCardInstructions {
+    margin: 100vh auto 0;
+    max-width: 75vw;
+    min-width: 25vw;
+    width: fit-content;
+    padding: 1rem;
+    background-color: var(--glass);
+}
+
+#projectCardInstructions p {
+    text-align: center;
+    margin: 0;
+    font-size: var(--fs-m);
+    color: var(--coral);
+    font-family: monof55;
+}
+
 #projects {
-    margin: 100vh 0 0;
+    margin: 3.5rem 0 0;
 
     display: flex;
     flex-direction: row;
@@ -390,8 +412,6 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 5px solid var(--coral);
-    border-radius: clamp(16px, 5rem, 64px);
     gap: 4px;
     width: clamp(1px, 90vw, 1500px);
     background-color: var(--glass);
@@ -408,6 +428,7 @@ h2 {
     font-family: monof55;
     color: var(--coral);
     text-align: center;
+    max-width: 100%;
 }
 
 #skillsSection {
@@ -418,7 +439,6 @@ h2 {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    border: 5px solid var(--coral);
     border-radius: clamp(16px, 5rem, 64px);
     gap: 4px;
     max-width: clamp(1px, 90vw, 1500px);
@@ -458,8 +478,7 @@ h2 {
     width: fit-content;
     justify-content: center;
     align-items: center;
-    border: 5px solid var(--coral);
-    border-radius: 10rem;
+    /* border-radius: 10rem; */
 }
 
 /* * {
