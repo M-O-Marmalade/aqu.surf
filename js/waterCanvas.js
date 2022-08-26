@@ -24,13 +24,13 @@ document.body.insertBefore(waterCanvas, document.body.firstChild);
 
 const fps = 60;
 const msPerFrame = 1000 / fps;
-const minMsPerFrame = 1000 / 55;
+const minMsPerFrame = 1000 / 50;
 const damping = 0.984;
 const pointerStrength = 0.2;
 const pointerSize = 2;
 let mouseDown = false;
 let pixelDensity = window.devicePixelRatio;
-const minPixelDensity = 1;
+const minPixelDensity = 0.5;
 let lastRenderTimes = [
     0.1,
     0.1,
