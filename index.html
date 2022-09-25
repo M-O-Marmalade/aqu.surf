@@ -24,7 +24,7 @@
                             <p>Renoise API</p>
                         </section>
                     </section>
-                    <p class="projectDesc">A game for Renoise</p>
+                    <p class="projectDesc">A stylishly updated<br>classic game</p>
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
@@ -63,6 +63,12 @@
                         </a>
                     </div>
                     <section class="projectWriteup">
+                        <div class="projectSummary">
+                            <p>
+                                Paddles is a game written in Lua, that was met with praise upon its release, and is currently featured on the front page of <a href="https://www.renoise.com/tools">Renoise's Tools website</a>.
+                            </p>
+                        </div>
+                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <div class="writeupSection">
                             <div class="text">
                                 <h1>The Concept</h1>
@@ -177,7 +183,7 @@
                             <p>Renoise API</p>
                         </section>
                     </section>
-                    <p class="projectDesc">Pixel-perfect<br>weighted<br>Bézier curves<sup>n→∞</sup></p>
+                    <p class="projectDesc">A Bézier Curve<br>editor</p>
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
@@ -192,6 +198,12 @@
                         </a>
                     </div>
                     <section class="projectWriteup">
+                        <div class="projectSummary">
+                            <p>
+                                Curves is a pixel-perfect, weighted, infinite-degree Bézier curve editor written in Lua, created as a testing ground for a feature being developed for <a onclick="switchCard(this, 'curves', 'reform')">Reform</a>.
+                            </p>
+                        </div>
+                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <div class="writeupSection">
                             <div class="text">
                                 <h1>The Purpose</h1>
@@ -307,7 +319,7 @@
                             <p>Renoise API</p>
                         </section>
                     </section>
-                    <p class="projectDesc">A note transformation tool for Renoise</p>
+                    <p class="projectDesc">A music composition tool for Renoise</p>
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
@@ -345,7 +357,13 @@
                              </svg>
                         </a>
                     </div>
-                    <section class="projectWriteup"> 
+                    <section class="projectWriteup">
+                        <div class="projectSummary">
+                            <p>
+                                Reform is a music composition tool for <a href="https://www.renoise.com/products/renoise">Renoise</a>, that provides users with granular, interactive control over the transformation of selected groups of notes, such as scaling, bending, shifting, volume/panning/fx remapping, and more.
+                            </p>
+                        </div>
+                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <div class="writeupSection">
                             <div class="text">
                                 <h1>The Concept</h1>
@@ -458,7 +476,7 @@
                             <p>FMOD</p>
                         </section>
                     </section>
-                    <p class="projectDesc">A game for the Windows Console</p>
+                    <p class="projectDesc">An ASCII game for the Windows Console</p>
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
@@ -473,6 +491,12 @@
                         </a>
                     </div>
                     <section class="projectWriteup"> 
+                        <div class="projectSummary">
+                            <p>
+                                SNEK is an ASCII-rendered game for the Windows console, and uses the FMOD Studio framework for procedural sound effects, and beat-synced music playback.
+                            </p>
+                        </div>
+                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <h1>Starting Out</h1>
                         <p>
                             This was my first substantial programming project. 
@@ -535,7 +559,7 @@
                             <p>Three.js</p>
                         </section>
                     </section>
-                    <p class="projectDesc">This website!</p>
+                    <p class="projectDesc">This very website!</p>
                 </div>
                 <div class="projectBack">
                     <img class="closeCardButton">
@@ -549,33 +573,34 @@
                              </svg>
                         </a>
                     </div>
-                    <section class="projectWriteup"> 
-                        <h1>My Portfolio</h1>
+                    <section class="projectWriteup">
+                        <div class="projectSummary">
+                            <p>
+                                This is my portfolio website, created with HTML5, CSS3, JavaScript, and Three.js.
+                            </p>
+                        </div>
+                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
+                        <h1>Design</h1>
                         <p>
-                            For my portfolio website, I wanted something fun and impressive, that shows my passion and curiosity for technology and design.
-                            I absolutely love 3D graphics, especially refraction effects, and <i>especially</i> water.
-                            I wrote the water simulation and flip cards in pure JavaScript.
-                            I'm using <a href="https://threejs.org/">three.js</a> to render the 3D scene after updating the water mesh's geometry each frame.
+                            I love 3D graphics.
+                            My favorite 3D effect is refraction, particularly when used to create water.
+                            I thought an interactive water effect would make a website a lot of fun.
                         </p>
                         <h1>Adaptive Performance</h1>
                         <p>
-                            To accomodate a wide range of devices, I'm constantly monitoring the frame-rate and lowering three.js's rendering resolution if the framerate dips below 60fps.
-                            This way high-end devices get a nice HD experience, and low-spec devices will still run smoothly after the renderer drops to a lower resolution.
+                            To accomodate a wide range of devices, Three.js's rendering resolution gets reduced on-the-fly if the current framerate is too low.
+                            This allows for an HD experience on high-end devices, while still maintaining a smooth experience on lower-end devices.
 						</p>
-							<h1>Adaptive Display</h1>
+							<h1>Adaptive Geometry</h1>
 						<p>
-							I wanted a consistent density of indices for the water's geometry regardless of the aspect ratio of the current HTML document.
-							To achieve this, I use the Quadratic formula to solve for the amount of points required in the X and Y axes that would result in a total area equal to the desired amount of points based on the current aspect ratio of the window.
-							Because the water simulation speed is geometry-and-framerate-dependent, this process allows the water to move at a consistent speed regardless of the aspect ratio of the device or window it is running on/in.
+							The Quadratic formula is used to ensure the water's geometry has a consistent density of vertices regardless of the aspect ratio of the HTML document.
+							This means the water simulation moves at the same speed regardless of where or how the website is being viewed.
 						</p>
-                        <h1>Art</h1>
+                        <h1>To-Do</h1>
                         <p>
-                            I always create all of my own sounds, 3D models, artwork, code, etc, for all of my projects.
-                            I like to have full creative control, and to learn about my craft as deeply as I can.
-                        </p>
-                        <h1>Results</h1>
-                        <p>
-                            This was my first time writing HTML, CSS, and JavaScript, and I had a lot of fun with it and learned a lot about web development!
+                            The website is very fun and beautiful, but I think some people might have a hard time understanding how to navigate it.
+                            I think I could make the website more user-friendly, through the addition of some extra text, or buttons to jump to different sections.
+                            I've also considered adding a dark mode button, and some options to control 3D rendering or disable it entirely.
                         </p>
                     </section>
                 </div>

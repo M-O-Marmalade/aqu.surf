@@ -197,6 +197,33 @@ img {
     color: var(--coral);
 }
 
+.projectSummary {
+    margin: 0;
+    padding: 0 3rem;
+    width: 100%;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+
+    display: flex;
+    flex-direction: column;
+}
+/* hide writeUp's scrollbar */
+.projectSummary::-webkit-scrollbar {
+    display: none;  /*Chrome, Safari and Opera */
+}
+.projectSummary {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.projectSummary p {
+    font-size: var(--fs-l) !important;
+    margin: 0.5em 0;
+    text-indent: 0 !important;
+    text-align: center;
+    color: var(--orange-1);
+}
+
 .projectWriteup {
     margin: 0 auto;
     padding: 3%;
@@ -217,6 +244,12 @@ img {
 .projectWriteup {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+}
+
+.projectWriteup .mainHeader {
+    font-size: var(--fs-xxl);
+    margin: 2rem auto;
+    text-decoration: underline;
 }
 
 .projectWriteup code {
