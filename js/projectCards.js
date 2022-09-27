@@ -2,7 +2,7 @@ let isACardFlipped = false;
 let flipCardUniqueIDCounter = 0;
 
 const cardClass = "project";
-const closeButtonClass = "closeCardButton";
+const closeButtonClass = "projectXButton";
 const frontClass = "projectFront";
 const backClass = "projectBack";
 

@@ -23,7 +23,7 @@
     
     --project-text-color: var(--dark-2);
     
-    --fs-xxl: 3rem;
+    --fs-xxl: 3.33rem;
     --fs-xl: 2.5rem;
     --fs-l: 2rem;
     --fs-m: 1.5rem;
@@ -91,6 +91,40 @@ img {
     }
 }
 
+p, h1, h2, h3, h4, h5 {
+    font-family: monof55;
+    color: var(--coral-1);
+}
+
+h1 {
+    margin: 3.5rem auto 1rem;
+    text-align: center;
+    font-size: var(--fs-xxl);
+}
+
+h2 {
+    font-size: var(--fs-xl);
+}
+
+h3 {
+    font-size: var(--fs-l);
+}
+
+p {
+    font-size: var(--fs-m);
+}
+
+p > a {
+    color: var(--coral-2);
+    
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+p > a:hover {
+    background-color: var(--link-hover-back);
+}
+
 .outlinedSection {
     border: 5px solid var(--coral-1);
     border-radius: clamp(16px, 5rem, 64px);
@@ -101,8 +135,6 @@ img {
     max-width: 100%;
 
     text-align: center;
-    font-size: var(--fs-m);
-    font-family: monof55;
     color: var(--coral-1);
 }
 
@@ -147,20 +179,78 @@ img {
 }
 
 .projectFront {
-    padding: 14px;
+    padding: 10px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    gap: 4px;
 
     background-color: var(--glass);
     border: 2px outset var(--glass);
-    border-radius: 15px;
+    border-radius: 10px;
 
     box-shadow: 5px 14px 4px 0 var(--shadow);
     cursor: pointer;
+}
+
+.projectFront > img {
+    margin: 0;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.projectFront p {
+    color: var(--project-text-color);
+}
+
+.projectFront > div {
+    align-self: flex-start;
+    
+    display: flex;
+    flex-direction: row;
+}
+
+.projectFront > div > p {
+    margin: 0;
+    
+    padding: 0.2em 0.75em 0.14em 0.75em;
+    
+    border: 2px solid var(--project-text-color);
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    
+    font-family: interceptor;
+    font-size: var(--fs-xs);
+    
+}
+
+.projectFront > div p:first-child {
+    padding-left: 0.5em;
+    
+    border-top-left-radius: 0em;
+}
+
+.projectFront > p {
+    margin: .25em;
+}
+
+#aqu-surf > .projectFront {
+    min-width: fit-content;
+    width: 74vw;
+    padding-top: 64vh;
+}
+
+#aqu-surf > .projectFront > div {
+    align-self: center;
+}
+
+#aqu-surf > .projectFront > div p:first-child {
+    padding: 0.2em 0.75em 0.14em 0.75em;
+    
+    border-top-left-radius: 2em;
 }
 
 .projectBack {
@@ -168,7 +258,6 @@ img {
     overflow: hidden;
     
     background-color: var(--card-back);
-    font-family: monof55;
     color: var(--coral-1);
     border-radius: clamp(5vw, 50px, 50px);
     
@@ -177,19 +266,19 @@ img {
     box-shadow: 5px 14px 4px 0 var(--shadow);
 }
 
-.closeCardButton {
+.projectXButton {
     position: absolute;
     top: clamp(25px, 2.5vw, 40px);
     right: clamp(25px, 2.5vw, 40px);;
     width: 20px;
     height: 20px;
 
-    content:url("/graphics/closeCardButton.svg");
+    content:url("/graphics/projectXButton.svg");
     filter: invert(63%) sepia(30%) saturate(3651%) hue-rotate(316deg) brightness(102%) contrast(105%);
     cursor: pointer;
 }
 
-.projectTitle {
+.projectBack > h1 {
     margin: 0.5rem auto;
     width: fit-content;
 
@@ -198,7 +287,6 @@ img {
     border-bottom-left-radius: 15%;
     border-bottom-right-radius: 15%;
     
-    font-size: var(--fs-xxl);
     color: var(--coral-1);
 }
 
@@ -218,67 +306,61 @@ img {
     color: var(--coral-1);
 }
 
-.projectSummary {
-    margin: 0.5rem auto;
-    width: 100%;
-    max-width: 1000px;
-    box-sizing: border-box;
-    
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.projectSummary p {
-    text-indent: 0 !important;
-    text-align: center;
-    font-size: var(--fs-l) !important;
-    color: var(--orange-1);
-}
-
-.projectWriteup {
+.projectBackScrollable {
     margin: 0 auto;
     width: 100%;
     height: 80%;
     box-sizing: border-box;
 
-    padding: 3%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    padding: 0 min(3%, 24px);
 
+    overflow: scroll;
 }
 
-.projectWriteup .mainHeader {
-    margin: 2rem auto;
-
-    font-size: var(--fs-xxl);
-    text-decoration: underline;
+.projectBackScrollable::-webkit-scrollbar {
+    width: 0.5rem;
 }
 
-.projectWriteup code {
-    background-color: var(--dark-4);
+.projectBackScrollable::-webkit-scrollbar-track {
+    border-radius: 1rem;
+}
+
+.projectBackScrollable::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+}
+
+.projectSummary {
+    margin: 1rem auto;
+    max-width: min(94%, 1000px);
     
-    font-size: 0.8em;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-    color: var(--coral-3);
+    text-align: center;
+    font-size: var(--fs-l);
+    color: var(--orange-1);
 }
 
-.writeupSection {
-    margin: 0.5em 0;
-
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-
-.writeupSection .text {
-    margin-right: 1ch;
+.projectBackScrollable > h1 {
+    margin: 3.33rem auto 1rem;
+    min-width: 33%;
+    max-width: fit-content;
     
-    flex-grow: 1;
-    flex-basis: clamp(54ch, 40%, 40%);
+    padding: 0.5rem 1rem;
+    text-align: center;
+
+    border: 0.25rem dashed var(--coral-1);
+    border-radius: 2rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.projectWriteup::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+@supports (scrollbar-color: red blue) {
+    .projectWriteup {
+        scrollbar-width: none;
+    }
 }
 
 .projectWriteup h1 {
@@ -286,6 +368,7 @@ img {
     
     font-size: var(--fs-xl);
     text-decoration: underline;
+    text-align: left;
 }
 
 .projectWriteup h2 {
@@ -297,24 +380,37 @@ img {
 }
 
 .projectWriteup p {
-    margin: 0.5em 0 0.5em;
+    margin: 0.5em 0;
     
-    font-size: var(--fs-m);
     text-indent: 2ch;
 }
 
-.projectWriteup a {
-    color: var(--coral-2);
+.projectWriteup code {
+    background-color: var(--dark-4);
     
-    transition: 0.25s;
-    cursor: pointer;
+    font-size: 0.85em;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: var(--coral-3);
 }
 
-.projectWriteup a:hover {
-    background-color: var(--link-hover-back);
+.projectWriteup > section {
+    margin: 0.5em 0 2rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 
-.projectWriteup .image {
+.projectWriteup > section > section {
+    margin-right: 1ch;
+    
+    flex-grow: 1;
+    flex-basis: clamp(54ch, 40%, 40%);
+}
+
+.projectWriteup > section > .image {
     margin: 0 auto;
     max-width: 100%;
     align-self: center;
@@ -326,63 +422,17 @@ img {
     border-radius: 1rem;
 }
 
-.projectWriteup .image img {
+.projectWriteup > section > .image img {
     margin: 0 auto;
     display: block;
     max-width: 100%;
     align-self: center;
 }
 
-.projectWriteup .image p {
+.projectWriteup > section > .image p {
     text-align: center;
     font-size: var(--fs-s);
     text-indent: 0;
-}
-
-.projectPic {
-    margin: 0;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.projectTech {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-}
-
-.projectTech p {
-    margin: 0;
-    
-    padding: 0.2em 0.75em 0.14em 0.75em;
-    
-    border: 2px solid var(--project-text-color);
-    border-bottom-right-radius: 2em;
-    border-top-left-radius: 2em;
-    
-    font-family: interceptor;
-    font-size: var(--fs-xs);
-    color: var(--project-text-color);
-}
-
-.projectTech p:first-child {
-    padding: 0.2em 0.75em 0.14em 0.5em;
-    
-    border: 2px solid var(--project-text-color);
-    border-top-left-radius: 0em;
-}
-
-.projectDesc {
-    margin: .25em;
-    
-    font-family: monof55;
-    font-size: var(--fs-m);
-    color: var(--project-text-color);
-}
-
-#aqu-surf {
-    width: 74vw;
-    padding-top: 64vh;
 }
 
 #waterPlayground {
@@ -410,7 +460,6 @@ img {
     border: 5px outset var(--glass);
     border-radius: 40px;
     
-    font-size: var(--fs-m);
     color: var(--coral-1);
     text-align: center;
     
@@ -425,19 +474,10 @@ img {
 }
 
 #toggleScroll svg {
-    height: 40px;
-    width: 40px;
+    height: 48px;
+    width: 48px;
 
     overflow: visible;
-}
-
-h2 {
-    margin: 3.5rem auto 1rem;
-    
-    font-family: monof55;
-    font-size: var(--fs-xxl);
-    color: var(--coral-1);
-    text-align: center;
 }
 
 #meSection {
@@ -459,6 +499,7 @@ h2 {
     width: clamp(128px, 25vw, 256px);
 
     border-radius: 32px;
+    image-rendering: auto;
 }
 
 #skillsSection {
@@ -494,6 +535,8 @@ h2 {
 #skillsSection img {
     margin: 0.25rem auto;
     width: clamp(48px, 5vw, 56px);
+
+    image-rendering: auto;
 }
 
 #linksSection {
