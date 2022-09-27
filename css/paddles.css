@@ -1,19 +1,27 @@
-@font-face {
-    font-family: huskysta;
-    src: url("fonts/CubicCoreMono.ttf");
-}
-
-/* hide main scrollbar */
-:root::-webkit-scrollbar {
-    display: none;  /*Chrome, Safari and Opera */
-}
-:root {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
 :root {
     --mainColor: #ffffff;
+}
+
+::-webkit-scrollbar {
+    width: 0.80rem;
+}
+
+::-webkit-scrollbar-track {
+    background: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: dimgray;
+}
+
+@supports (scrollbar-color: red blue) {
+    * {
+        scrollbar-color: white black;
+    }
 }
 
 body {

@@ -1,8 +1,3 @@
-@font-face {
-    font-family: huskysta;
-    src: url("fonts/CubicCoreMono.ttf");
-}
-
 /* hide main scrollbar */
 :root::-webkit-scrollbar {
     display: none;  /*Chrome, Safari and Opera */
@@ -26,7 +21,7 @@
 
 body {
     margin: 0px;
-    background-image: url("../graphics/reform/reform-blue-grid.png");
+    background-image: url("/graphics/reform/reform-blue-grid.png");
 }
 
 p, h1, h2, h3, button {

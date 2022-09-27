@@ -10,8 +10,8 @@
     </head>
     <body>
         <div id="projectCardInstructions" class="outlinedSection">
-            <p id="projectCardInstructionsP">
-                Click on a project to read more!
+            <p>
+                Click on a project!
             </p>
         </div>
         <section id="projects">
@@ -68,7 +68,7 @@
                                 Paddles is a game written in Lua, that was met with praise upon its release, and is currently featured on the front page of <a href="https://www.renoise.com/tools">Renoise's Tools website</a>.
                             </p>
                         </div>
-                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
+                        <h1 style="margin-top: 1rem; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <div class="writeupSection">
                             <div class="text">
                                 <h1>The Concept</h1>
@@ -203,7 +203,7 @@
                                 Curves is a pixel-perfect, weighted, infinite-degree Bézier curve editor written in Lua, created as a testing ground for a feature being developed for <a onclick="switchCard(this, 'curves', 'reform')">Reform</a>.
                             </p>
                         </div>
-                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
+                        <h1 style="margin-top: 1rem; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <div class="writeupSection">
                             <div class="text">
                                 <h1>The Purpose</h1>
@@ -360,10 +360,10 @@
                     <section class="projectWriteup">
                         <div class="projectSummary">
                             <p>
-                                Reform is a music composition tool for <a href="https://www.renoise.com/products/renoise">Renoise</a>, that provides users with granular, interactive control over the transformation of selected groups of notes, such as scaling, bending, shifting, volume/panning/fx remapping, and more.
+                                Reform is a music composition tool for <a href="https://www.renoise.com/products/renoise">Renoise</a>, that provides users with granular, interactive control over the transformation of selected groups of notes, performing processes such as scaling, bending, shifting, volume/panning/fx remapping, and more.
                             </p>
                         </div>
-                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
+                        <h1 style="margin-top: 1rem; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <div class="writeupSection">
                             <div class="text">
                                 <h1>The Concept</h1>
@@ -496,7 +496,7 @@
                                 SNEK is an ASCII-rendered game for the Windows console, and uses the FMOD Studio framework for procedural sound effects, and beat-synced music playback.
                             </p>
                         </div>
-                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
+                        <h1 style="margin-top: 1rem; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <h1>Starting Out</h1>
                         <p>
                             This was my first substantial programming project. 
@@ -579,7 +579,7 @@
                                 This is my portfolio website, created with HTML5, CSS3, JavaScript, and Three.js.
                             </p>
                         </div>
-                        <h1 style="margin-top: 1em; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
+                        <h1 style="margin-top: 1rem; margin-right: auto; margin-left: auto; font-size: 4rem;">Write-Up</h1>
                         <h1>Design</h1>
                         <p>
                             I love 3D graphics.
@@ -778,7 +778,7 @@
 
         <div id="waterPlayground">
             <button id="toggleScroll" onclick="toggleScrolling()" style="visibility: hidden;">
-                <p>Disable Scroll/Zoom</p>
+                <p>Play Mode</p>
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-down-up" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <desc>Download more icon variants from https://tabler-icons.io/i/arrows-down-up</desc>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -828,7 +828,7 @@
             // when a touch screen is detected, we will unhide the button
             document.body.addEventListener('touchmove', function(){
                 document.getElementById("toggleScroll").style.visibility = 'visible';
-                document.getElementById("projectCardInstructionsP").innerHTML = 'Tap on a project to read more!';
+                document.getElementById("projectCardInstructions").firstElementChild.innerHTML = 'Tap on a project!';
             });
         </script>
     </body>

@@ -9,14 +9,14 @@ const zAxis = new THREE.Vector3(0, 0, 1);
 // exampleVector.applyAxisAngle(xAxis, 1);
 // console.log(exampleVector.x + ' : ' + exampleVector.y + ' : ' + exampleVector.z);
 
-const portrait = screen.height > screen.width ? true : false;
+const portrait = screen.height > screen.width;
 
 const waterCanvas = document.createElement("canvas");
 waterCanvas.style.position = "fixed";
 waterCanvas.style.top = 0;
 waterCanvas.style.margin = 0;
-waterCanvas.style.width = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : "100%";
-waterCanvas.style.height = portrait ? window.innerHeight > window.innerWidth ? screen.height : screen.width : "100%";
+waterCanvas.style.width = portrait ? window.innerHeight > window.innerWidth ? screen.width : screen.height : "100vw";
+waterCanvas.style.height = portrait ? window.innerHeight > window.innerWidth ? screen.height : screen.width : "100vh";
 waterCanvas.style.overflow = "hidden";
 waterCanvas.style.zIndex = -10;
 // document.body.appendChild(waterCanvas);
