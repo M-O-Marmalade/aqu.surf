@@ -239,8 +239,12 @@ p > a:hover {
 
 #aqu-surf > .projectFront {
     min-width: fit-content;
-    width: 74vw;
-    padding-top: 64vh;
+    width: min(74vw, 800px);
+    height: min(64vh, 500px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
 }
 
 #aqu-surf > .projectFront > div {
@@ -314,7 +318,7 @@ p > a:hover {
 
     padding: 0 min(3%, 24px);
 
-    overflow: scroll;
+    overflow: hidden; /* this will be set to "scroll" when the card is clicked. See flipCards.js */
 }
 
 .projectBackScrollable::-webkit-scrollbar {

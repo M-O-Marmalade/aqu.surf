@@ -5,6 +5,7 @@ const cardClass = "project";
 const closeButtonClass = "projectXButton";
 const frontClass = "projectFront";
 const backClass = "projectBack";
+const backScrollableClass = "projectBackScrollable";
 
 
 function openFlipCard(card) {
@@ -46,7 +47,7 @@ function openFlipCard(card) {
             clone.querySelector('.' + frontClass).style.position = 'absolute';
             clone.querySelector('.' + backClass).style.position = 'static';
             
-            clone.querySelector('.projectWriteup').style.overflow = 'scroll';
+            clone.querySelector('.' + backScrollableClass).style.overflow = 'scroll';
         });
     });
 }
