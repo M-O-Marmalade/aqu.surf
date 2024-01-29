@@ -56,7 +56,7 @@ a {
     display: block;
     image-rendering: pixelated;
     margin: 5px auto;
-    max-width: 100%;
+    max-width: min(100%, 400px);
 }
 
 .description {
